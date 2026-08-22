@@ -1,0 +1,86 @@
+flowchart TD
+    %% 3-Tier Memory Architecture — implementation authority:
+    %% MEMORY.md, CONTEXT_AND_MEMORY.md, core-policies.md, context_routes.yaml, and SKILL.md
+
+    subgraph INSTR["Instruction Tier — Human-Curated, Durable"]
+        POL["corebase-specharness/memories/repo/core-policies.md<br/>Normative CC-* rules, security policy, thresholds"]:::instr
+        PKB["corebase-specharness/memories/repo/project-knowledge-base.md<br/>Durable patterns, watchouts, continuity facts"]:::instr
+        HEUR["corebase-specharness/memories/repo/learned-heuristics.md<br/>Evidence-backed LH-* heuristics"]:::instr
+        ADR_LOG["corebase-specharness/memories/repo/adr-log.md<br/>ADR discoverability ledger"]:::instr
+    end
+
+    subgraph AUTO["Auto Tier — Failure &amp; Health State"]
+        GRUNS["corebase-specharness/generated/gate-runs.json<br/>Gate runner execution history"]:::auto
+        PRUNS["corebase-specharness/generated/provider-runs.json<br/>Provider execution history"]:::auto
+        VRUNS["corebase-specharness/generated/verification-runs.json<br/>Verified closeout run history"]:::auto
+        ASSESS["corebase-specharness/generated/harness-assessment.md<br/>Optional harness health assessment"]:::auto
+    end
+
+    subgraph EXTR["Extracted Tier — Feature Candidates"]
+        EXT["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>EXT-* candidate lessons (`[CANDIDATE]`) · ## Post-Ship Sync"]:::extr
+        PROMO["artifacts/features/&lt;slug&gt;/promotions.md<br/>Proposals for files crossing thresholds"]:::extr
+    end
+
+    subgraph DOMAIN["Domain Packs — Adopter-Owned"]
+        DPACK["corebase-specharness/memories/domain/&lt;name&gt;/<br/>glossary · patterns · anti-patterns · boundaries"]:::domain
+    end
+
+    subgraph ADR_STORE["ADR Records"]
+        ADR_FILE["corebase-specharness/project/adr/ADR-NNN-&lt;slug&gt;.md<br/>Decision records generated via adr-generate"]:::adr
+    end
+
+    subgraph SESSION["Session State"]
+        SESS_MD[".corezero/sessions/&lt;slug&gt;/session.md<br/>Objective · progress updates · handoff updates"]:::session
+    end
+
+    subgraph ROUTER["Routing &amp; Diagnostic Engine"]
+        ROUTES["references/context-routes.yaml<br/>Only named-skill routing authority"]:::router
+        DIAG["cli.py memory-audit / memory-gate<br/>Read-only line &amp; token threshold checks"]:::router
+    end
+
+    %% Routing flow
+    ROUTES -.-> POL
+    ROUTES -.-> PKB
+    ROUTES -.-> HEUR
+    ROUTES -.-> DPACK
+    ROUTES -.-> ADR_LOG
+    ROUTES -.-> SESS_MD
+    ROUTES -.-> EXT
+
+    %% Promotion and triage flow
+    EXT -.->|/context-memory<br/>post-ship sync &amp; extraction triage| HEUR
+    EXT -.->|/context-memory triage| PKB
+    EXT -.->|/context-memory triage| POL
+    EXT -.->|/context-memory triage| DPACK
+    GRUNS -.->|harness-maintain improve<br/>draft heuristics for review| HEUR
+
+    %% Writers
+    VERIFY["harness-verify →<br/>## Post-Ship Sync record"]:::writer --> EXT
+    VERIFY -.->|if threshold crossed| PROMO
+    SESS_END["cli.py session-end --feature &lt;slug&gt;"]:::writer --> EXT
+    SESS_CLI["cli.py skill-enter / session-checkpoint"]:::writer --> SESS_MD
+    ADR_SKILL["spec-adr / cli.py adr-generate"]:::writer --> ADR_FILE
+    ADR_SKILL --> ADR_LOG
+    IMPROVE["harness-maintain improve"]:::writer --> HEUR
+    DOCTOR["harness-maintain assess / cli.py doctor"]:::writer --> ASSESS
+    GATE_RUN["cli.py verify"]:::writer --> GRUNS
+    GATE_RUN --> PRUNS
+    GATE_RUN --> VRUNS
+
+    classDef instr fill:#10b981,stroke:#047857,color:#fff
+    classDef auto fill:#f59e0b,stroke:#b45309,color:#fff
+    classDef extr fill:#8b5cf6,stroke:#6d28d9,color:#fff
+    classDef domain fill:#eef2ff,stroke:#c7d2fe,color:#3730a3
+    classDef adr fill:#fef3c7,stroke:#d97706,color:#78350f
+    classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
+    classDef router fill:#3b82f6,stroke:#1d4ed8,color:#fff
+    classDef writer fill:#fff,stroke:#0d0d0d,color:#0d0d0d
+
+    class POL,PKB,HEUR,ADR_LOG instr
+    class GRUNS,PRUNS,VRUNS,ASSESS auto
+    class EXT,PROMO extr
+    class DPACK domain
+    class ADR_FILE adr
+    class SESS_MD session
+    class ROUTES,DIAG router
+    class VERIFY,SESS_END,SESS_CLI,ADR_SKILL,IMPROVE,DOCTOR,GATE_RUN writer

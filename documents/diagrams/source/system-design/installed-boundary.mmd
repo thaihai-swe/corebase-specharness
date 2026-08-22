@@ -1,0 +1,48 @@
+flowchart TB
+    %% Installed Boundary — implementation authority: manifest.json + install.sh
+
+    INSTALL["kit/corebase-specharness/scripts/install.sh<br/>reads kit/manifest.json"]:::installer --> PACKAGE["Source package rooted at kit/<br/>paths install without a kit/ prefix"]:::package
+    PACKAGE --> TARGET["Adopter repository root<br/>project-local embedded runtime"]:::package
+
+    subgraph OWNERSHIP["Manifest Ownership Classes"]
+        OVERWRITE["files.overwrite<br/>kit-owned payload<br/>backup existing file, then replace"]:::overwrite
+        SEED["files.copyIfMissing<br/>adopter-owned after first copy<br/>copy only when absent"]:::seed
+    end
+
+    TARGET --> OVERWRITE
+    TARGET --> SEED
+
+    OVERWRITE --- OW_DESC["manifest.json · README.md · AGENTS.md · EXTERNAL_SKILLS.md<br/>11 skills + shared files · references/<br/>corebase-specharness/scripts/ · rules/ · CONTEXT_AND_MEMORY.md<br/>state-machine.yaml · validators"]:::overwrite
+    SEED --- SEED_DESC["corebase-specharness/MASTER_INDEX.md<br/>project configuration and provider guides<br/>repository/domain/archive memory seeds<br/>artifacts/features/README.md"]:::seed
+
+    UNMANAGED["Paths not selected by overwrite<br/>adopter-created feature artifacts, sessions,<br/>generated runs, ADRs, memory, and project code"]:::preserve
+    TARGET --> UNMANAGED
+
+    GENERATED["corebase-specharness/generated/<br/>installer creates .gitkeep<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>optional harness-assessment.md"]:::generated
+    SESSION[".corezero/sessions/&lt;slug&gt;/session.md<br/>created or resumed by skill-enter / session-start<br/>retained in place by session-end"]:::session
+    TARGET --> GENERATED
+    TARGET --> SESSION
+
+    VALIDATE["Non-dry-run closeout<br/>chmod shipped scripts · run installed doctor"]:::installer
+    INSTALL --> VALIDATE
+
+    DOC["documents/maintainer/ and documents/diagrams/<br/>source-repository documentation only"]:::external
+    DOC -.->|not selected by manifest| TARGET
+
+    classDef installer fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef package fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef overwrite fill:#fef3c7,stroke:#f59e0b,color:#78350f
+    classDef seed fill:#eef2ff,stroke:#6366f1,color:#312e81
+    classDef preserve fill:#f0fdf4,stroke:#22c55e,color:#14532d
+    classDef generated fill:#f3f4f6,stroke:#9ca3af,stroke-dasharray:4 3,color:#374151
+    classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
+    classDef external fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+
+    class INSTALL,VALIDATE installer
+    class PACKAGE,TARGET package
+    class OVERWRITE,OW_DESC overwrite
+    class SEED,SEED_DESC seed
+    class UNMANAGED preserve
+    class GENERATED generated
+    class SESSION session
+    class DOC external

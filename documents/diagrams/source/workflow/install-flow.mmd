@@ -1,0 +1,50 @@
+flowchart TD
+    %% Install Flow — implementation authority:
+    %% install.sh, manifest.json, INSTALL.md, and ARCHITECTURE.md
+
+    START([Adopter]) --> ENTRY{Invocation}
+    ENTRY -->|Local source checkout| LOCAL["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>[options]"]:::entry
+    ENTRY -->|Release archive| ARCHIVE["tar -xzf corebase-specharness-kit-v*.tar.gz<br/>bash corebase-specharness/scripts/install.sh &lt;target&gt;"]:::entry
+    ENTRY -->|Preview| DRY["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>--dry-run"]:::entry
+
+    LOCAL --> SOURCE["Resolve kit source directory<br/>and manifest.json"]:::action
+    ARCHIVE --> SOURCE
+    DRY --> SOURCE
+
+    SOURCE --> REQ["Validate Python &gt;= 3.10"]:::action
+    REQ --> TARGET["Resolve target directory"]:::action
+
+    TARGET --> OWNERSHIP{Manifest ownership class}:::decision
+    OWNERSHIP -->|files.overwrite| OW["Back up existing target file<br/>to .corezero-backup-&lt;timestamp&gt;/<br/>then replace from kit"]:::overwrite
+    OWNERSHIP -->|files.copyIfMissing| CIM{Target file exists?}:::decision
+    CIM -->|No| SEED["Copy installer seed file"]:::seed
+    CIM -->|Yes| SKIP["Keep adopter-controlled file"]:::seed
+
+    OW --> CLOSE
+    SEED --> CLOSE
+    SKIP --> CLOSE
+
+    CLOSE["Non-dry-run closeout:<br/>create corebase-specharness/generated/.gitkeep<br/>chmod shipped scripts executable"]:::action
+    CLOSE --> DOCTOR["Run installed CLI<br/>python3 corebase-specharness/scripts/core/cli.py doctor"]:::verify
+    DOCTOR --> READY([Ready for peer skills or /starter-init]):::terminal
+
+    DRY --> DRY_REPORT["Report backup, copy, and seed actions<br/>without modifying target or running doctor"]:::dry
+    DRY_REPORT --> PREVIEW([Review dry-run output]):::terminal
+
+    classDef terminal fill:#0d0d0d,stroke:#0d0d0d,color:#fff
+    classDef entry fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef action fill:#fff,stroke:#d0d7de,color:#0d0d0d
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#0d0d0d
+    classDef overwrite fill:#fef3c7,stroke:#f59e0b,color:#78350f
+    classDef seed fill:#eef2ff,stroke:#6366f1,color:#312e81
+    classDef verify fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef dry fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+
+    class START,READY,PREVIEW terminal
+    class LOCAL,ARCHIVE,DRY entry
+    class SOURCE,REQ,TARGET,CLOSE action
+    class OWNERSHIP,CIM decision
+    class OW overwrite
+    class SEED,SKIP seed
+    class DOCTOR verify
+    class DRY_REPORT dry

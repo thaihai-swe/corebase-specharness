@@ -1,0 +1,62 @@
+flowchart LR
+    %% Artifact Data Flow — implementation authority:
+    %% WORKFLOW.md, skills, task_graph.py, artifact_schema.py, and context_engine.py
+
+    STATUS["status.md<br/>durable lifecycle and delivery profile"]:::state
+    AN["analysis.md<br/>spec-research findings, risks, open questions"]:::artifact
+    SP["spec.md<br/>requirements, ACs, invariants, non-goals"]:::artifact
+    PL["plan.md<br/>technical design, boundaries, proof surfaces"]:::artifact
+    TK["tasks.md<br/>T-NNN graph, AC links, status, proof<br/>tasks.json generated sidecar"]:::artifact
+    CODE[("Project source + tests<br/>implementation changes")]:::code
+    PROOF["Fresh validation evidence<br/>task-done --evidence or existing proof"]:::proof
+    REV["review.md<br/>mechanical results plus alignment,<br/>design, and security judgment"]:::review
+
+    AN -->|research evidence when needed| SP
+    SP -->|requirements decomposition| PL
+    PL -->|technical design and proof plan| TK
+    TK -->|ready task scope| CODE
+    CODE -->|local proof| PROOF
+    PROOF -->|recorded against T-NNN| TK
+    TK -->|AC links and completion proof| REV
+    CODE -->|delivered behavior| REV
+
+    STATUS -.->|phase updates by skills| AN
+    STATUS -.->|phase updates by skills| SP
+    STATUS -.->|phase updates by skills| PL
+    STATUS -.->|phase updates by skills| REV
+
+    SESSION[".corezero/sessions/&lt;slug&gt;/session.md<br/>objective, progress, and handoff updates"]:::session
+    PL -.->|checkpoint decisions and risks| SESSION
+    SESSION -.->|read at next skill entry| CODE
+
+    EXTRACT["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>candidate lessons and ## Post-Ship Sync"]:::session
+    CODE -->|non-trivial candidate| EXTRACT
+    REV -->|passing closeout requires sync heading| EXTRACT
+
+    TRIAGE["/context-memory<br/>evidence-backed triage, promotion,<br/>audit, compaction, or archival"]:::memory
+    EXTRACT --> TRIAGE
+    TRIAGE --> HEUR["corebase-specharness/memories/repo/<br/>learned-heuristics.md"]:::memory
+    TRIAGE --> PKB["corebase-specharness/memories/repo/<br/>project-knowledge-base.md"]:::memory
+    TRIAGE --> DOMAIN["corebase-specharness/memories/domain/&lt;name&gt;/<br/>patterns and boundaries"]:::memory
+    TRIAGE --> POLICY["corebase-specharness/memories/repo/<br/>core-policies.md"]:::memory
+
+    ROUTES["references/context-routes.yaml<br/>named-route source declarations"]:::router
+    LOAD["skill-enter / context-load / context-explain<br/>bounded route compilation at runtime"]:::router
+    ROUTES --> LOAD
+    HEUR -.->|included only when declared| LOAD
+    PKB -.->|included only when declared| LOAD
+    DOMAIN -.->|included only when declared| LOAD
+    POLICY -.->|included only when declared| LOAD
+    LOAD -.->|selected context and local evidence| AN
+
+    REV -.->|requirements gap| SP
+    REV -.->|design or task gap| PL
+
+    classDef artifact fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef code fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef proof fill:#fef3c7,stroke:#f59e0b,color:#78350f
+    classDef review fill:#fff7ed,stroke:#ea580c,color:#9a3412
+    classDef state fill:#f3f4f6,stroke:#6b7280,color:#374151
+    classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
+    classDef memory fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef router fill:#eef2ff,stroke:#6366f1,color:#312e81

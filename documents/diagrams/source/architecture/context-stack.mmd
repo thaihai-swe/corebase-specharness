@@ -1,0 +1,51 @@
+flowchart TB
+    %% CoreBase SpecHarness Context Stack — implementation authority:
+    %% ARCHITECTURE.md §3.2, context_engine.py, context-routes.yaml, harness-config.yaml
+    %% Palette: documents/diagrams/source/_shared/palette.md
+
+    DEV["Developer / repository owner<br/>requests outcomes and confirms decisions"]:::actor
+    AGENT["Coding agent<br/>selects a direct skill and executes its procedure"]:::agent
+    REPO[("Adopter repository<br/>source · artifacts · configuration · memory")]:::repository
+
+    DEV -->|request / review / approval| AGENT
+    AGENT -->|bounded reads and focused writes| REPO
+
+    T1["Layer 1 — Portable Entrypoint<br/>AGENTS.md · skills/&lt;name&gt;/SKILL.md<br/><em>Operating contract and selected procedure</em>"]:::t1
+    T2["Layer 2 — Mandatory Bootstrap<br/>corebase-specharness/rules/caveman.md<br/>corebase-specharness/memories/repo/core-policies.md sections<br/><em>Must sources</em>"]:::t2
+    T3["Layer 3 — Named Route Sources<br/>references/context-routes.yaml<br/>project files · rules · durable memory · domain packs<br/><em>Must / Should files and H2 sections</em>"]:::t3
+    T4["Layer 4 — Feature and Session Evidence<br/>artifacts/features/&lt;slug&gt;/ route-declared files<br/>.corezero/sessions/&lt;slug&gt;/session.md · active T-NNN excerpt<br/>session.md last_context_fingerprint auto-delta unless --full<br/><em>Loaded when the named route and feature require it</em>"]:::t4
+    T5["Layer 5 — Retrieved Repository Evidence<br/>bounded matching excerpts from configured roots<br/><em>Intent + feature + task; exclusions and size limits applied</em>"]:::t5
+    T6["Layer 6 — Transient Tool Evidence<br/>command output · tests · provider results · subagent summaries<br/>corebase-specharness/generated/{gate,provider,verification}-runs.json<br/><em>Summarize into proof or handoff; do not bulk-inject</em>"]:::t6
+
+    T1 -->|route selected by --skill| T2
+    T2 -->|add route-declared sources| T3
+    T3 -->|add active feature evidence| T4
+    T4 -->|retrieve bounded local matches| T5
+    T5 -->|run proof and diagnostics| T6
+
+    AGENT -->|skill-enter / context-load / context-explain| T1
+    T3 -->|reads adopter-owned knowledge| REPO
+    T4 -->|reads and writes lifecycle evidence| REPO
+    T5 -->|reads matching source excerpts| REPO
+    T6 -->|records task proof, review, or run history| REPO
+
+    T6 -.->|checkpoint decisions and next action| T4
+    T4 -.->|candidate reusable lessons| T3
+
+    LOAD["Load rules:<br/>context-routes.yaml is the only routing authority<br/>Must sources survive budget pressure; Should sources may be omitted<br/>session auto-delta re-injects only fingerprint changes; --full disables it<br/>context-explain reports provenance, trust, token use, and omission reasons"]:::note
+
+    classDef default fill:#f7f7f5,stroke:#e0e0e0,color:#111
+    classDef t1 fill:#1e3a8a,stroke:#1e40af,color:#fff
+    classDef t2 fill:#3b82f6,stroke:#1d4ed8,color:#fff
+    classDef t3 fill:#6366f1,stroke:#4f46e5,color:#fff
+    classDef t4 fill:#8b5cf6,stroke:#6d28d9,color:#fff
+    classDef t5 fill:#a78bfa,stroke:#7c3aed,color:#fff
+    classDef t6 fill:#c4b5fd,stroke:#8b5cf6,color:#1e1b4b
+    classDef note fill:#f7f7f5,stroke:#e0e0e0,color:#111
+    classDef actor fill:#111827,stroke:#111827,color:#fff
+    classDef agent fill:#475569,stroke:#334155,color:#fff
+    classDef repository fill:#0f766e,stroke:#0f766e,color:#fff
+
+    class DEV actor
+    class AGENT agent
+    class REPO repository

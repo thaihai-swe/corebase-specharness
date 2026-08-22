@@ -1,0 +1,59 @@
+sequenceDiagram
+    autonumber
+    participant V as harness-verify
+    participant M as context-memory
+    participant MI as "MASTER_INDEX.md"
+    participant A as Feature + Session Inputs
+    participant F as Memory Files
+    participant CM as "skills/context-memory/SKILL.md"
+    participant E as Session Extracts
+    participant S as Feature Status
+    participant P as Promotion Proposal
+
+    V->>V: Verdict = Pass and verified: true
+    V->>E: Append ## Post-Ship Sync record
+    V->>S: skill-exit sets status = Done
+    V->>M: Invoke post-ship knowledge sweep (/context-memory)
+    Note over M: Failed / advisory verified:false skips Done
+
+    M->>MI: Enumerate current memory file set
+    alt MASTER_INDEX.md missing
+        M-->>V: STOP — repair MASTER_INDEX.md before sweeping
+    end
+
+    M->>A: Read feature specification, plan, extracts, and ADR evidence
+    A-->>M: Durable changes, candidates, ADR evidence
+
+    alt Extremely Narrow change
+        M->>F: Sweep learned heuristics only
+    else Moderate / Core change
+        loop For each file listed in MASTER_INDEX.md
+            M->>F: Read memory file
+            alt Durable change found
+                M->>F: Apply Update
+                Note over M,F: Update the appropriate domain boundary file
+                M->>M: Distill and deduplicate learned heuristics
+                M->>M: Check promotion thresholds in core-policies.md
+                alt Threshold crossed
+                    M->>CM: Add promotion watchlist entry
+                    M->>P: Write a promotion proposal
+                    Note over P: Proposal only and never automatic promotion
+                end
+            else No change needed
+                M->>M: Record Untouched with concrete 1-line reason
+            else Domain load condition unmet
+                M->>M: Record Skipped (domain files only)
+            end
+        end
+    end
+
+    M->>E: Mark candidates triaged and update post-ship sync
+    M->>M: Verify evidence-backed updates and concrete reasons
+
+    alt Sweep verification passes
+        M-->>V: OK — sync record complete
+    else Generic skip or gaps found
+        M-->>V: REJECT — require explicit concrete reasons
+    end
+
+    Note over V,P: Scope promotion and stop rules are owned by context-memory

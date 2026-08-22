@@ -1,0 +1,160 @@
+# Canonical direct-skill contract and context-route registry.
+skills:
+  - skill: starter-init
+    phase: Bootstrap
+    profile: bootstrap
+    feature: optional
+    prerequisites: []
+    feature_artifacts: []
+    writes:
+      - corebase-specharness/project
+      - corebase-specharness/memories/repo
+    handoff: [spec-research, spec-requirements]
+    sources:
+      - {path: corebase-specharness/project/harness-config.yaml, tier: Must, sections: []}
+      - {path: corebase-specharness/project/project-constraints.md, tier: Should, sections: [Performance Budgets, Technology Constraints, Operational Constraints]}
+      - {path: corebase-specharness/project/tech-stack.md, tier: Should, sections: [Languages & Runtimes, Frameworks, Development Tools]}
+  - skill: spec-research
+    phase: Spec
+    enter: Researching
+    exit: ResearchComplete
+    profile: research
+    feature: required
+    prerequisites: []
+    feature_artifacts: [status.md]
+    writes:
+      - analysis.md
+      - {path: status.md, required: false}
+    handoff: [spec-requirements, spec-adr]
+    sources:
+      - {path: corebase-specharness/project/architecture.md, tier: Should, sections: [System Snapshot, Top-Level Components, Runtime Boundaries]}
+  - skill: spec-requirements
+    phase: Spec
+    enter: Specifying
+    exit: SpecApproved
+    profile: requirements
+    feature: required
+    prerequisites: []
+    feature_artifacts: [status.md, analysis.md]
+    writes:
+      - spec.md
+      - {path: proposal.md, required: false}
+      - {path: requirements-review.md, required: false}
+      - {path: status.md, required: false}
+    handoff: [spec-plan, spec-research]
+    sources:
+      - {path: corebase-specharness/project/product-sense.md, tier: Must, sections: [Product Vision, Problem Statement, Domain Context & Business Rules, Success Metrics]}
+      - {path: corebase-specharness/project/project-constraints.md, tier: Must, sections: [Performance Budgets, Compliance Requirements, Security Requirements, Operational Constraints]}
+  - skill: spec-plan
+    phase: Plan
+    enter: Planning
+    exit: Planning
+    profile: planning
+    feature: required
+    prerequisites: [spec.md]
+    feature_artifacts: [status.md, spec.md, {kind: session, name: session.md}]
+    writes:
+      - plan.md
+      - {path: status.md, required: false}
+    handoff: [spec-tasks, spec-research, spec-adr]
+    sources:
+      - {path: corebase-specharness/project/architecture.md, tier: Must, sections: [System Snapshot, Top-Level Components, Runtime Boundaries, Safe Change Guidance]}
+      - {path: corebase-specharness/rules/ponytail.md, tier: Must, sections: [Decision Matrix: Should You Create an Abstraction?]}
+      - {path: corebase-specharness/rules/code-design.md, tier: Should, sections: [Abstraction Check & Deep Modules, Clean Architecture & Layering, Domain-Driven Design (DDD)]}
+  - skill: spec-tasks
+    phase: Plan
+    enter: TaskPlanning
+    exit: PlanApproved
+    profile: planning
+    feature: required
+    prerequisites: [spec.md, plan.md]
+    feature_artifacts: [status.md, spec.md, plan.md, {kind: session, name: session.md}]
+    writes:
+      - tasks.md
+      - {path: status.md, required: false}
+    handoff: [spec-implement, spec-plan]
+    sources:
+      - {path: corebase-specharness/project/architecture.md, tier: Should, sections: [System Snapshot, Top-Level Components]}
+      - {path: corebase-specharness/rules/code-design.md, tier: Must, sections: [Read before you write]}
+  - skill: spec-implement
+    phase: Implement
+    enter: Implementing
+    exit: Implementing
+    profile: implement
+    feature: required
+    prerequisites: [spec.md, plan.md, tasks.md]
+    feature_artifacts: [status.md, spec.md, plan.md, tasks.md, {kind: session, name: session.md}]
+    writes:
+      - {path: tasks.md, required: false}
+      - {path: status.md, required: false}
+      - {path: session-extracts.md, required: false}
+      - project-source
+    handoff: [harness-verify, spec-plan, spec-requirements]
+    sources:
+      - {path: corebase-specharness/rules/security.md, tier: Must, sections: [Core Rules, Shell and Script Safety, File and Artifact Boundaries, Verification]}
+      - {path: corebase-specharness/rules/code-design.md, tier: Must, sections: [Read before you write, Abstraction Check & Deep Modules, Clean Architecture & Layering, Failures must reach a decision-maker, Verify the path you claim to have fixed]}
+  - skill: harness-verify
+    phase: Verify
+    enter: Verifying
+    exit: Done
+    profile: verify
+    feature: required
+    prerequisites: [spec.md, plan.md, tasks.md]
+    feature_artifacts: [status.md, tasks.md, plan.md, spec.md, {kind: session, name: session.md}]
+    writes:
+      - review.md
+      - {path: status.md, required: false}
+    handoff: [context-memory, spec-implement, spec-plan]
+    sources:
+      - {path: corebase-specharness/rules/security.md, tier: Must, sections: [Verification]}
+      - {path: corebase-specharness/project/harness-config.yaml, tier: Must, sections: []}
+  - skill: context-memory
+    phase: Verify
+    profile: compact
+    feature: optional
+    prerequisites: []
+    feature_artifacts: [status.md, session-extracts.md, {kind: session, name: session.md}]
+    writes:
+      - corebase-specharness/memories/repo
+      - corebase-specharness/memories/domain
+      - {path: session-extracts.md, required: false}
+    handoff: [harness-verify]
+    sources:
+      - {path: corebase-specharness/memories/repo/core-policies.md, tier: Must, sections: [Memory Promotion Thresholds, Security Policy]}
+      - {path: corebase-specharness/memories/repo/learned-heuristics.md, tier: Must, sections: [Heuristics]}
+  - skill: harness-maintain
+    phase: Verify
+    profile: verify
+    feature: optional
+    prerequisites: []
+    feature_artifacts: [status.md]
+    writes:
+      - {path: corebase-specharness/generated/harness-assessment.md, required: false}
+      - {path: corebase-specharness/memories/repo/learned-heuristics.md, required: false}
+    handoff: []
+    sources:
+      - {path: corebase-specharness/project/harness-config.yaml, tier: Must, sections: []}
+  - skill: spec-adr
+    phase: Plan
+    profile: planning
+    feature: optional
+    prerequisites: []
+    feature_artifacts: [status.md, spec.md, plan.md]
+    writes:
+      - corebase-specharness/project/adr
+      - {path: corebase-specharness/memories/repo/adr-log.md, required: false}
+    handoff: []
+    sources:
+      - {path: corebase-specharness/project/architecture.md, tier: Must, sections: [System Snapshot, Runtime Boundaries, Safe Change Guidance]}
+      - {path: corebase-specharness/rules/code-design.md, tier: Should, sections: [Clean Architecture & Layering, Domain-Driven Design (DDD)]}
+  - skill: spec-testing-scenario
+    phase: Verify
+    profile: verify
+    feature: required
+    prerequisites: [spec.md]
+    feature_artifacts: [status.md, spec.md, plan.md, tasks.md]
+    writes:
+      - testing-scenarios.md
+    handoff: []
+    sources:
+      - {path: corebase-specharness/project/project-constraints.md, tier: Should, sections: [Performance Budgets, Compliance Requirements, Security Requirements, Operational Constraints]}

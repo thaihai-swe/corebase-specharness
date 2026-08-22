@@ -1,0 +1,62 @@
+sequenceDiagram
+    autonumber
+    actor Dev as Developer / Repository Owner
+    participant Agent as Coding Agent
+    participant Router as "AGENTS.md"
+    participant CLI as corebase-specharness CLI
+    participant Routes as "context-routes.yaml"
+    participant Skills as "Peer Skills"
+    participant Feat as "artifacts/features/<slug>/"
+    participant Session as ".corezero/sessions/<slug>/session.md"
+    participant Harness as "Confirmed Gates"
+    participant KB as Durable Memory
+
+    Dev->>Agent: Request a feature or maintenance task
+    Agent->>Router: Read operating contract<br/>direct skill entry · deterministic CLI operations
+    Agent->>CLI: skill-enter(skill, feature, intent)
+    CLI->>Routes: Read phase, profile, feature requirement, and sources
+    CLI->>Feat: Create status.md if needed and write enter token
+    CLI->>Feat: Read route-declared feature artifacts
+    CLI->>Session: Create session.md or resume it in place
+    CLI-->>Agent: Selected and omitted context with token estimates
+
+    Agent->>Skills: Execute named skill procedure<br/>(e.g. /spec-requirements, /spec-plan, /spec-tasks)
+    Skills->>Feat: Write spec.md, plan.md, or tasks.md
+    Agent->>CLI: session-checkpoint(feature, progress, next-action)
+    CLI->>Session: Append progress and handoff updates
+
+    alt Implement Phase — Task Loop
+        loop For each ready task in tasks.md
+            Agent->>CLI: task-check(feature)
+            Agent->>CLI: task-start(feature, task: T-NNN)
+            Agent->>Agent: Edit source, run local proof
+            Agent->>CLI: task-done(feature, task: T-NNN, evidence)
+            CLI->>Feat: Record evidence, mark T-NNN Done, sync tasks.json
+            Agent->>CLI: session-checkpoint(feature, progress)
+        end
+    end
+
+    Agent->>Skills: Run /harness-verify
+    Agent->>CLI: skill-enter(skill: harness-verify, feature)
+    Skills->>CLI: phase-check + artifact-check(trace) + verify(skill: harness-verify)
+    CLI->>Feat: Validate readiness, schema, and AC traceability
+    CLI->>Harness: Run confirmed argv-safe project gates
+    Harness-->>CLI: Gate results
+    CLI-->>Skills: Mechanical verification outcome<br/>ok / deferred / failed · details.verified
+
+    alt Gate Fail / Traceability Error / Design Gap / verified: false
+        Skills->>CLI: skill-exit(phase: ChangesRequested, handoff: spec-implement)
+        CLI->>Feat: Reopen tasks or return to spec/plan
+        Agent-->>Dev: Fail or deferred verdict + findings
+    else Verdict Pass and details.verified is true
+        Skills->>Feat: Write review.md and ## Post-Ship Sync
+        Skills->>CLI: skill-exit(skill: harness-verify, handoff: context-memory)
+        CLI->>Feat: Set status.md phase to Done
+        Skills->>KB: /context-memory
+        KB->>Feat: Triage session-extracts.md and record sync
+        Agent->>CLI: session-end(feature, next-action, candidate)
+        CLI->>Session: Append final handoff and retain session.md
+        Agent-->>Dev: Done verdict + summary
+    end
+
+    Note over Agent,KB: Installed paths are project-local. kit/ is used only when maintaining or installing the source package.

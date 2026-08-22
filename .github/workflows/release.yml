@@ -1,0 +1,67 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  validate:
+    uses: ./.github/workflows/ci.yml
+
+  release:
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify version matches tag
+        run: |
+          tag="${GITHUB_REF#refs/tags/v}"
+          python3 - "$tag" <<'PY'
+          import json, sys
+          from pathlib import Path
+          actual=json.loads(Path('kit/manifest.json').read_text())['version']
+          if actual != sys.argv[1]:
+              raise SystemExit(f'tag v{sys.argv[1]} does not match manifest version {actual}')
+          PY
+      - name: Package embedded kit
+        run: |
+          set -euo pipefail
+          asset="corebase-specharness-kit-v${GITHUB_REF#refs/tags/v}.tar.gz"
+          tar -czf "$asset" --exclude='__pycache__' --exclude='*.pyc' --exclude='.DS_Store' -C kit .
+          tar -tzf "$asset" | grep -E '(^|/)corebase-specharness/scripts/core/cli.py$' >/dev/null
+          tar -tzf "$asset" | grep -E '(^|/)manifest.json$' >/dev/null
+          echo "asset=$asset" >> "$GITHUB_ENV"
+      - name: Smoke test packaged archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          asset="${{ env.asset }}"
+          extract="$(mktemp -d)"
+          target="$(mktemp -d)"
+          tar -xzf "$asset" -C "$extract"
+          test -f "$extract/corebase-specharness/scripts/install.sh"
+          test -f "$extract/manifest.json"
+          bash "$extract/corebase-specharness/scripts/install.sh" "$target"
+          python3 "$target/corebase-specharness/scripts/core/cli.py" doctor --root "$target" --json
+          rm -rf "$extract" "$target"
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: ${{ env.asset }}
+          body: |
+            ## Embedded project-local kit
+
+            Extract or clone this release, then install CoreBase SpecHarness into a project:
+
+            ```bash
+            bash corebase-specharness/scripts/install.sh /path/to/project
+            cd /path/to/project
+            python3 corebase-specharness/scripts/core/cli.py doctor
+            ```
+
+            The installed project contains the local runtime. No global engine,
+            `COREBASE_SPECHARNESS_ENGINE_DIR`, PATH setup, or `bin/corebase-specharness` launcher is used.

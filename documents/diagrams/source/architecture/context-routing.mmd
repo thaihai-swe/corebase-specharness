@@ -1,0 +1,57 @@
+flowchart TD
+    %% CoreBase SpecHarness Context Routing — implementation authority:
+    %% ARCHITECTURE.md §3.2 / §4.4, context_engine.py, references/context-routes.yaml
+
+    START(["skill-enter / context-pack / context-load / context-explain<br/>--skill &lt;name&gt;"]):::terminal
+    START --> REGISTRY["references/context-routes.yaml<br/>canonical registry for 11 named skill routes"]:::source
+    REGISTRY --> RESOLVE{Known skill route?}:::decision
+    RESOLVE -->|No| ERROR["Fail: unknown route"]:::fail
+    RESOLVE -->|Yes| FEATURE{Route feature requirement}:::decision
+
+    FEATURE -->|required and missing| FEATURE_ERROR["Fail: --feature is required"]:::fail
+    FEATURE -->|feature supplied| PREREQ{Prerequisite artifacts present?}:::decision
+    FEATURE -->|optional and omitted| ASSEMBLE
+    PREREQ -->|No| PREREQ_ERROR["Fail: list missing prerequisites"]:::fail
+    PREREQ -->|Yes| ASSEMBLE["Assemble candidate sources"]:::group
+
+    BASE["Always-required bootstrap<br/>corebase-specharness/rules/caveman.md<br/>corebase-specharness/memories/repo/core-policies.md sections"]:::core --> ASSEMBLE
+    DECLARED["Route-declared Must / Should sources<br/>and requested H2 sections"]:::source --> ASSEMBLE
+    ARTIFACTS["Route-declared feature artifacts<br/>artifacts/features/&lt;slug&gt;/...<br/>.corezero/sessions/&lt;slug&gt;/session.md"]:::feature --> ASSEMBLE
+    TASK["--task &lt;T-NNN&gt;<br/>bounded tasks.md excerpt"]:::feature -.-> ASSEMBLE
+    EXPLICIT["repeatable --add-source<br/>validated repository-relative file"]:::feature -.-> ASSEMBLE
+
+    ASSEMBLE --> INTENT{Intent / feature / task query?}:::decision
+    INTENT -->|Yes| RETRIEVE["Bounded automatic local retrieval<br/>configured roots and exclusions<br/>matching excerpts only"]:::retrieved
+    INTENT -->|No| SCORE
+    RETRIEVE --> SCORE["Score and order candidates<br/>tier · keyword score · token size · path"]:::group
+
+    CONFIG["corebase-specharness/project/harness-config.yaml<br/>profile payload · injected ceiling<br/>channel limits · retrieval limits"]:::source --> BUDGET
+    SCORE --> BUDGET["Apply payload and channel budgets"]:::group
+    BUDGET --> MUST["Retain every Must source<br/>report mandatory overruns"]:::core
+    BUDGET --> SHOULD["Select or omit Should sources<br/>with explicit reasons"]:::group
+
+    MUST --> PACK
+    SHOULD --> PACK
+    PACK["Inspectable context pack<br/>selected + omitted + fingerprints<br/>provenance + trust + tokens + warnings"]:::output
+    PACK --> DELTA{"Delta mode?"}:::decision
+    DELTA -->|--full| OUTPUT
+    DELTA -->|--delta-from supplied| DELTA_PACK["Return only new or changed selected sources"]:::output
+    DELTA -->|session last_context_fingerprint present| AUTO_DELTA["Session auto-delta<br/>SHA-256 fingerprint diff<br/>re-inject only modified files"]:::output
+    DELTA -->|no prior pack| OUTPUT
+    DELTA_PACK --> OUTPUT
+    AUTO_DELTA --> OUTPUT
+    OUTPUT[("context-pack: manifest only<br/>context-load / skill-enter: content + manifest<br/>context-explain: selection findings")]:::output
+
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef group fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef core fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef source fill:#fef3c7,stroke:#f59e0b,color:#78350f
+    classDef feature fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+    classDef retrieved fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e
+    classDef output fill:#1e3a8a,stroke:#1e40af,color:#fff
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
+    classDef fail fill:#fef2f2,stroke:#ef4444,color:#7f1d1d
+
+    class START terminal
+    class RESOLVE,FEATURE,PREREQ,INTENT,DELTA decision
+    class ERROR,FEATURE_ERROR,PREREQ_ERROR fail

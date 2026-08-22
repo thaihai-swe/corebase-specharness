@@ -1,0 +1,47 @@
+flowchart LR
+    %% Code Intelligence Integration — external provider boundary and intent mapping
+    %% Implementation authority: tool-providers.md, tool-providers-registry.json, and providers/*.md
+
+    subgraph COREBASE_SPECHARNESS["CoreBase SpecHarness Project Configuration"]
+        CI_CFG["corebase-specharness/project/tool-providers.md<br/>YAML frontmatter configures:<br/>providers.code-intelligence.active"]:::kit
+        DOCTOR["python3 corebase-specharness/scripts/core/cli.py provider-check<br/>Validates active provider availability"]:::verify
+        CI_CFG --> DOCTOR
+    end
+
+    subgraph ACTIVE_PROV["Capability Routing"]
+        ACTIVE{providers.code-intelligence<br/>.active value?}:::decision
+        CI_CFG --> ACTIVE
+
+        ACTIVE -->|none| NONE["No active provider<br/>Deferred status in diagnostics<br/>Use standard local search"]:::fallback
+        ACTIVE -->|gitnexus| GN_FILE["corebase-specharness/project/providers/<br/>gitnexus.md"]:::config
+        ACTIVE -->|codebase-memory-mcp| CBM_FILE["corebase-specharness/project/providers/<br/>codebase-memory-mcp.md"]:::config
+    end
+
+    subgraph EXTERNAL["External Provider Boundary"]
+        GN["GitNexus CLI<br/>(gitnexus analyze)"]:::external
+        CBM["Codebase-Memory MCP server<br/>(codebase-memory-mcp index .)"]:::external
+    end
+
+    GN_FILE -.->|maps capabilities to local action| GN
+    CBM_FILE -.->|maps capabilities to local action| CBM
+
+    AGENTS["Agent Code-Intelligence Workflows<br/>Uses concept exploration, symbol context,<br/>upstream/downstream impact, and safe rename"]:::agent
+    ACTIVE -->|any provider| AGENTS
+
+    AGENTS -.->|Provider unavailable| MANUAL["Fallback:<br/>Use standard grep / git log<br/>note [CI tool unavailable]"]:::fallback
+
+    classDef kit fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef config fill:#eef2ff,stroke:#6366f1,color:#312e81
+    classDef verify fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e
+    classDef fallback fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
+    classDef agent fill:#fef3c7,stroke:#f59e0b,color:#78350f
+
+    class CI_CFG kit
+    class DOCTOR verify
+    class ACTIVE decision
+    class NONE,MANUAL fallback
+    class GN_FILE,CBM_FILE config
+    class GN,CBM external
+    class AGENTS agent

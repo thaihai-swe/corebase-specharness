@@ -1,0 +1,155 @@
+name: Auto Bump
+
+# Automatic release flow.
+# Inspects the merge commit on `main`, derives the bump level from the
+# commit prefix, updates kit/manifest.json version, pushes a tag, and
+# maintains a `release/<major>.<minor>.x` branch.
+#
+# Tag → marks the exact commit that shipped (immutable).
+# Branch → long-lived parking line for that minor series; cherry-pick hotfixes here.
+#
+# Skipped when:
+# - Commit message starts with `release:` (this workflow's own bot commit)
+# - Commit message contains `[skip release]`
+# - Commit message contains `[skip ci]` (already filtered by GitHub)
+# - Commit prefix is not a release-worthy type (chore, docs, refactor, etc.)
+#
+# To bypass auto-release entirely, use the manual flow documented
+# in documents/maintainer/RELEASING.md.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  auto-bump:
+    if: |
+      !startsWith(github.event.head_commit.message, 'release:') &&
+      !contains(github.event.head_commit.message, '[skip release]')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determine bump level from commit message
+        id: bump
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          level=skip
+
+          # Major: literal prefix `major:` or breaking-change marker
+          if echo "$msg" | grep -qE '^major(\(.+\))?:'; then
+            level=major
+          elif echo "$msg" | grep -qE '^(feat|fix|refactor|perf|chore)(\(.+\))?!:'; then
+            level=major
+          elif echo "$msg" | grep -q 'BREAKING CHANGE:'; then
+            level=major
+          # Minor: literal prefix `minor:` or `feature:` / `feat:` alias
+          elif echo "$msg" | grep -qE '^(minor|feature|feat)(\(.+\))?:'; then
+            level=minor
+          # Patch: literal prefix `patch:` or `fix:` / `perf:` / `revert:` alias
+          elif echo "$msg" | grep -qE '^(patch|fix|perf|revert)(\(.+\))?:'; then
+            level=patch
+          fi
+
+          echo "level=$level" >> "$GITHUB_OUTPUT"
+          echo "Commit type → bump level: $level"
+
+      - name: Exit if no release needed
+        if: steps.bump.outputs.level == 'skip'
+        run: |
+          echo "Commit prefix does not warrant a release. Exiting cleanly."
+          exit 0
+
+      - name: Read current version from manifest.json
+        if: steps.bump.outputs.level != 'skip'
+        id: current
+        run: |
+          version=$(python3 -c "import json; print(json.load(open('kit/manifest.json'))['version'])" | tr -d '[:space:]')
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Current version: $version"
+
+      - name: Compute next version
+        if: steps.bump.outputs.level != 'skip'
+        id: next
+        run: |
+          IFS=. read -r major minor patch <<<"${{ steps.current.outputs.version }}"
+          case "${{ steps.bump.outputs.level }}" in
+            major) next="$((major+1)).0.0" ;;
+            minor) next="${major}.$((minor+1)).0" ;;
+            patch) next="${major}.${minor}.$((patch+1))" ;;
+          esac
+          echo "version=$next" >> "$GITHUB_OUTPUT"
+          echo "Next version: $next"
+
+      - name: Verify tag does not already exist
+        if: steps.bump.outputs.level != 'skip'
+        run: |
+          if git rev-parse "v${{ steps.next.outputs.version }}" >/dev/null 2>&1; then
+            echo "ERROR: tag v${{ steps.next.outputs.version }} already exists" >&2
+            exit 1
+          fi
+
+      - name: Bump version in manifest.json, commit, tag, branch, push
+        if: steps.bump.outputs.level != 'skip'
+        run: |
+          next="${{ steps.next.outputs.version }}"
+          level="${{ steps.bump.outputs.level }}"
+          IFS=. read -r nmajor nminor npatch <<<"$next"
+          release_branch="release/${nmajor}.${nminor}.x"
+
+          python3 - "$next" <<'PY'
+          import json
+          import sys
+          from pathlib import Path
+
+          version = sys.argv[1]
+
+          manifest_path = Path("kit/manifest.json")
+          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+          manifest["version"] = version
+          manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+          PY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add kit/manifest.json
+          git commit -m "release: v$next [skip ci]"
+          git tag "v$next"
+
+          # Push the release commit and tag first so the tag points at a
+          # commit that exists on origin/main.
+          git push origin main
+          # Push only the new tag; the main branch is already up‑to‑date.
+          git push origin "v$next"
+
+          # Maintain release/<major>.<minor>.x branches.
+          # - Major or minor bump: create the branch from this commit.
+          # - Patch bump: fast-forward the existing branch to this commit.
+          # If the branch already exists for any reason, force the update —
+          # release.yml has already verified the kit is shippable.
+          if [[ "$level" == "major" || "$level" == "minor" ]]; then
+            if git ls-remote --exit-code --heads origin "$release_branch" >/dev/null 2>&1; then
+              echo "Release branch $release_branch already exists; updating to v$next."
+            else
+              echo "Creating release branch $release_branch at v$next."
+            fi
+            git push origin "HEAD:refs/heads/$release_branch"
+          else
+            # Patch: branch should already exist from the original minor bump.
+            if git ls-remote --exit-code --heads origin "$release_branch" >/dev/null 2>&1; then
+              echo "Patch bump: fast-forwarding $release_branch to v$next."
+              git push origin "HEAD:refs/heads/$release_branch"
+            else
+              echo "Patch bump but $release_branch does not exist (manual creation expected). Skipping branch update."
+            fi
+          fi
+
+          echo "Released v$next on $release_branch — release.yml will publish the GitHub release."

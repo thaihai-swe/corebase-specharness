@@ -1,0 +1,96 @@
+flowchart TD
+    %% Self-Improving Knowledge Loop — implementation authority:
+    %% MEMORY.md §6, context-memory/SKILL.md, session handlers, and harness-maintain
+
+    subgraph ACQUIRE["Evidence Acquisition"]
+        IMPLEMENT["spec-implement<br/>append non-trivial `[CANDIDATE]` lessons"]:::capture
+        SESSION_END["cli.py session-end --feature &lt;slug&gt;<br/>--candidate / --extract-file"]:::capture
+        VERIFY["harness-verify Pass + verified: true<br/>write ## Post-Ship Sync heading"]:::capture
+        GATE_RUNS["cli.py verify<br/>corebase-specharness/generated/gate-runs.json"]:::capture
+    end
+
+    IMPLEMENT --> EXTRACTS
+    SESSION_END --> EXTRACTS
+    VERIFY --> SYNC
+    GATE_RUNS --> MAINTAIN
+
+    EXTRACTS["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>## Pending Candidates · EXT-* evidence<br/>## Post-Ship Sync record"]:::extracted
+
+    subgraph SYNC_PATH["Post-Ship Sweep"]
+        SYNC["/context-memory post-ship-sync<br/>read MASTER_INDEX.md and feature evidence"]:::sync
+        SCOPE{Change scope?}:::decision
+        NARROW["Extremely narrow<br/>check learned-heuristics.md only<br/>or record no heuristic learned"]:::sync
+        FULL["Moderate / core<br/>classify each indexed file<br/>Updated · Untouched · Skipped"]:::sync
+        THRESH["Run memory-audit<br/>check configured warn / hard line thresholds"]:::sync
+        PROPOSAL["Threshold crossed<br/>write promotions.md proposal<br/>never auto-split or auto-promote"]:::proposal
+        RECORD["Append dated Post-Ship Sync record<br/>to feature session-extracts.md"]:::sync
+
+        SYNC --> SCOPE
+        SCOPE -->|narrow| NARROW --> RECORD
+        SCOPE -->|moderate / core| FULL --> THRESH
+        THRESH -->|threshold crossed| PROPOSAL --> RECORD
+        THRESH -->|within limits| RECORD
+    end
+
+    subgraph TRIAGE_PATH["Candidate Triage"]
+        TRIAGE["Read every pending candidate<br/>category · confidence · evidence"]:::triage
+        DEDUP["Compare with existing policies,<br/>heuristics, facts, patterns, and boundaries"]:::triage
+        DECIDE{Evidence-backed action}:::decision
+        PROMOTE_H["Promote or merge heuristic<br/>learned-heuristics.md · LH-*"]:::promote
+        PROMOTE_P["Promote project fact / boundary<br/>project-knowledge-base.md<br/>architecture.md or domain pack"]:::promote
+        PROMOTE_C["Propose normative CC-* amendment<br/>core-policies.md<br/>team agreement required"]:::approval
+        ROUTE_H["Harness gap → /harness-maintain<br/>Spec gap → /spec-requirements"]:::route
+        DEFER["Defer<br/>retain candidate with reason"]:::defer
+        DISCARD["Discard feature-local, contradicted,<br/>or duplicate noise with reason"]:::discard
+        MARK["Move processed entries to ## Triaged<br/>record status, notes, linked evidence<br/>stamp triaged date"]:::sync
+
+        EXTRACTS --> TRIAGE --> DEDUP --> DECIDE
+        DECIDE -->|durable heuristic| PROMOTE_H --> MARK
+        DECIDE -->|fact / pattern / boundary| PROMOTE_P --> MARK
+        DECIDE -->|normative rule| PROMOTE_C --> MARK
+        DECIDE -->|harness or spec gap| ROUTE_H --> MARK
+        DECIDE -->|under-evidenced| DEFER --> MARK
+        DECIDE -->|local / contradicted / covered| DISCARD --> MARK
+    end
+
+    RECORD --> TRIAGE
+
+    subgraph MAINT_PATH["Harness-Informed Improvement"]
+        MAINTAIN["/harness-maintain improve<br/>inspect reproducible gate failure evidence"]:::maintain
+        DRAFT["Draft `[DRAFT]` learned heuristic<br/>no silent promotion"]:::proposal
+        APPROVAL{User reviews draft}:::decision
+        MAINTAIN --> DRAFT --> APPROVAL
+        APPROVAL -->|approved and durable| PROMOTE_H
+        APPROVAL -->|not approved| DEFER
+    end
+
+    subgraph HEALTH["Memory Health &amp; Decay"]
+        AUDIT["cli.py memory-audit<br/>line counts · token estimates<br/>warning / hard-cap findings"]:::health
+        GATE["cli.py memory-gate<br/>mode = advisory / warn / block"]:::health
+        COMPACT["Compaction mode<br/>snapshot · reduce prose 30–50%<br/>preserve headings and stable IDs"]:::health
+        ARCHIVE["Decay archival<br/>tombstone LH-* in source<br/>append body to deprecated-heuristics.md"]:::health
+        VERIFY_IDS["Re-audit and compare IDs before / after"]:::health
+
+        MARK --> AUDIT --> GATE
+        GATE -->|threshold action required| COMPACT --> VERIFY_IDS
+        GATE -->|fading / superseded heuristic| ARCHIVE --> VERIFY_IDS
+        GATE -->|within thresholds| FINAL
+    end
+
+    VERIFY_IDS --> FINAL
+    FINAL(["Future named-skill context uses<br/>reviewed, bounded, durable memory"]):::terminal
+
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef capture fill:#f59e0b,stroke:#b45309,color:#fff
+    classDef extracted fill:#8b5cf6,stroke:#6d28d9,color:#fff
+    classDef sync fill:#10b981,stroke:#047857,color:#fff
+    classDef triage fill:#fff7ed,stroke:#d97706,color:#78350f
+    classDef promote fill:#3b82f6,stroke:#1d4ed8,color:#fff
+    classDef approval fill:#fdf4ff,stroke:#c026d3,color:#701a75
+    classDef route fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e
+    classDef defer fill:#f3f4f6,stroke:#9ca3af,color:#374151
+    classDef discard fill:#fef2f2,stroke:#ef4444,color:#7f1d1d
+    classDef proposal fill:#fffbeb,stroke:#d97706,color:#78350f
+    classDef maintain fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
+    classDef health fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f

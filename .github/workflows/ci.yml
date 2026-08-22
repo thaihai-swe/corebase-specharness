@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_call:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Compile embedded runtime
+        run: python3 -m compileall -q kit/corebase-specharness/scripts/core
+      - name: Run source-repo contract tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Validate embedded payload
+        run: |
+          python3 kit/corebase-specharness/scripts/validate-static-audit.py --root kit
+          python3 kit/corebase-specharness/scripts/core/cli.py doctor --root kit --json
+          python3 scripts/validate-product-page.py --root .
+      - name: Clean embedded install smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="$(mktemp -d)"
+          bash kit/corebase-specharness/scripts/install.sh "$target" --dry-run
+          bash kit/corebase-specharness/scripts/install.sh "$target"
+          python3 "$target/corebase-specharness/scripts/core/cli.py" doctor --root "$target" --json
+          python3 "$target/corebase-specharness/scripts/core/cli.py" context-load --root "$target" --skill starter-init --intent bootstrap --json
+          python3 "$target/corebase-specharness/scripts/core/cli.py" provider-list --root "$target" --json
+          python3 "$target/corebase-specharness/scripts/core/cli.py" provider-check --root "$target" --json
+          python3 "$target/corebase-specharness/scripts/core/cli.py" provider-run --root "$target" --category code-intelligence --json
+          python3 "$target/corebase-specharness/scripts/validate-static-audit.py" --root "$target"
+          ! python3 "$target/corebase-specharness/scripts/core/cli.py" context-index --root "$target" --json
+          ! python3 "$target/corebase-specharness/scripts/core/cli.py" task-next --root "$target" --json
+          rm -rf "$target"
+      - name: Release-archive install smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          asset="$(mktemp /tmp/corebase-specharness-kit-XXXXXX.tar.gz)"
+          extract="$(mktemp -d)"
+          target="$(mktemp -d)"
+          tar -czf "$asset" --exclude='__pycache__' --exclude='*.pyc' --exclude='.DS_Store' -C kit .
+          tar -xzf "$asset" -C "$extract"
+          bash "$extract/corebase-specharness/scripts/install.sh" "$target"
+          python3 "$target/corebase-specharness/scripts/core/cli.py" doctor --root "$target" --json
+          rm -rf "$extract" "$target" "$asset"

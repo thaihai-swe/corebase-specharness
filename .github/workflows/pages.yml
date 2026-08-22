@@ -1,0 +1,41 @@
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Copy docs to site directory
+        run: |
+          mkdir -p _site
+          mkdir -p _site/adopters _site/maintainers
+          cp -R kit/corebase-specharness/* _site/adopters/
+          cp kit/README.md _site/adopters/README.md
+          cp product-page/index.html _site/index.html
+          cp product-page/common.css _site/common.css
+          cp product-page/common.js _site/common.js
+          cp -R documents/diagrams _site/documents/diagrams
+          cp documents/INDEX.md _site/maintainers/README.md
+          cp documents/maintainer/SKILLS.md _site/maintainers/skills.md
+          cp -R documents/maintainer _site/maintainers/maintainer
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4

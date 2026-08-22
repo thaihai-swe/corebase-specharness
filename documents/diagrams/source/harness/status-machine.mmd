@@ -1,0 +1,81 @@
+stateDiagram-v2
+    %% Feature lifecycle — implementation authority:
+    %% corebase-specharness/project/state-machine.yaml and WORKFLOW.md §9
+
+    [*] --> Researching: /spec-research
+    [*] --> Specifying: /spec-requirements without research
+
+    Researching --> ResearchComplete: analysis.md complete
+    ResearchComplete --> Specifying: /spec-requirements
+
+    Specifying --> NeedsClarification: decision or information missing
+    NeedsClarification --> Specifying: clarification resolved
+    Specifying --> SpecApproved: requirements verification passes
+
+    SpecApproved --> Planning: /spec-plan
+    Planning --> TaskPlanning: plan.md ready and spec-tasks
+    TaskPlanning --> PlanApproved: task graph and traceability ready
+
+    PlanApproved --> Implementing: /spec-implement
+    Implementing --> Blocked: external dependency or named blocker
+    Blocked --> Implementing: blocker resolved
+    Blocked --> Specifying: rethink requirements
+    Blocked --> Planning: rethink technical design
+    Blocked --> Verifying: re-verify after unblock
+    Blocked --> Abandoned: explicit human decision
+
+    Implementing --> Replanning: design or task graph gap
+    Replanning --> Planning: revise technical plan
+    Replanning --> TaskPlanning: rebuild task graph
+    Replanning --> Blocked: dependency discovery
+
+    Implementing --> Planning: design gap
+    Implementing --> Specifying: spec gap
+    Implementing --> Verifying: all tasks done with evidence and harness-verify
+
+    Verifying --> ChangesRequested: verification finding
+    ChangesRequested --> Implementing: reopen tasks and fix
+    ChangesRequested --> Planning: design gap
+    ChangesRequested --> Replanning: replan tasks
+    ChangesRequested --> Abandoned: explicit human decision
+
+    Verifying --> Planning: structural or design gap
+    Verifying --> Implementing: implementation defect
+    Verifying --> Blocked: verification blocker
+    Verifying --> Done: verified is true plus verification-runs.json and Post-Ship Sync
+
+    Researching --> Blocked: research blocker
+    ResearchComplete --> Blocked: handoff blocker
+    Specifying --> Blocked: requirement blocker
+    SpecApproved --> Blocked: plan handoff blocker
+    Planning --> Blocked: design blocker
+    TaskPlanning --> Blocked: breakdown blocker
+    PlanApproved --> Blocked: implement handoff blocker
+
+    Researching --> Abandoned: explicit human decision
+    ResearchComplete --> Abandoned: explicit human decision
+    Specifying --> Abandoned: explicit human decision
+    NeedsClarification --> Abandoned: explicit human decision
+    SpecApproved --> Abandoned: explicit human decision
+    Planning --> Abandoned: explicit human decision
+    TaskPlanning --> Abandoned: explicit human decision
+    PlanApproved --> Abandoned: explicit human decision
+    Replanning --> Abandoned: explicit human decision
+    Implementing --> Abandoned: explicit human decision
+    Verifying --> Abandoned: explicit human decision
+
+    Done --> [*]
+    Abandoned --> [*]
+
+    note right of Verifying
+        check_readiness, artifact-check --trace,
+        confirmed gates, and review provider.
+        Advisory mode exits 0 with verified=false
+        and does NOT authorize Done.
+    end note
+
+    note right of Done
+        harness-verify is the sole Done authority.
+        Requires verification-runs.json match AND
+        ## Post-Ship Sync in session-extracts.md.
+    end note

@@ -1,0 +1,45 @@
+# macOS
+.DS_Store
+.antigravitycli
+# Editors
+.idea/
+.vscode/
+ temp/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.*
+
+# Python
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+
+# Build and temp output
+dist/
+build/
+tmp/
+temp/
+
+# Generated documentation diagrams
+documents/diagrams/generated/
+**/.DS_Store
+
+# CoreBase SpecHarness Bytecode exclusions
+**/__pycache__/
+**/*.pyc
+
+# CoreBase SpecHarness — bytecode and temporary artifacts
+**/__pycache__/
+**/*.pyc
+**/*.pyo
+**/.DS_Store
+*.py[cod]
+*$py.class
+kit/**/__pycache__/
+kit/**/*.pyc

@@ -1,0 +1,55 @@
+sequenceDiagram
+    autonumber
+    actor U as Developer / Repository Owner
+    participant A as Coding Agent
+    participant Skills as Peer Skills
+    participant CLI as CoreBase SpecHarness CLI
+    participant Routes as Context Routes
+    participant Session as Session State
+    participant Features as Feature Artifacts
+    participant Memory as Durable Memory
+
+    U->>A: Request feature or maintenance work
+    A->>Skills: Select and read the named SKILL.md
+    A->>CLI: skill-enter(skill, feature, intent)
+    CLI->>Routes: Resolve named route and compile bounded context
+    CLI->>Features: Create status.md if needed and write enter token
+    CLI->>Session: Create or resume session.md
+    CLI-->>A: Selected and omitted context details
+    A->>Session: Read objective, progress, and handoff updates
+
+    loop Per ready T-NNN task
+        A->>CLI: task-check(feature)
+        A->>CLI: task-start(feature, task: T-NNN)
+        CLI->>Features: Mark T-NNN In Progress in tasks.md
+        A->>A: Modify project source and run planned proof
+        A->>CLI: task-done(feature, task: T-NNN, evidence)
+        CLI->>Features: Mark T-NNN Done, record proof, sync tasks.json
+        A->>CLI: session-checkpoint with progress or handoff
+        CLI->>Session: Append resumable update
+    end
+
+    A->>Skills: Run /harness-verify
+    A->>CLI: skill-enter(skill: harness-verify, feature)
+    Skills->>CLI: verify(feature, skill: harness-verify)
+    CLI-->>Skills: Mechanical findings and advisory/blocking result
+    Skills->>Features: Write review.md and apply evidence judgment
+
+    alt Verification passes and details.verified is true
+        Skills->>Features: Write ## Post-Ship Sync in session-extracts.md
+        Skills->>CLI: skill-exit(skill: harness-verify, handoff: context-memory)
+        CLI->>Features: Set status.md phase to Done
+        Skills->>Memory: Run /context-memory
+        Memory->>Features: Triage session-extracts.md and promote supported lessons
+        A->>CLI: session-end with next-action handoff
+        CLI->>Session: Append final handoff and retain session.md
+        A-->>U: Done verdict and evidence summary
+    else Verification fails, requests changes, or advisory verified: false
+        Skills->>CLI: skill-exit(skill: harness-verify, phase: ChangesRequested, handoff: spec-implement)
+        CLI->>Features: Update status.md and reopen tasks or plan
+        A->>CLI: session-checkpoint with blocker and next action
+        CLI->>Session: Preserve resumable handoff
+        A-->>U: Findings and correction path
+    end
+
+    Note over A,Memory: Installed paths are project-local. kit/ is used only while installing or maintaining the source package.

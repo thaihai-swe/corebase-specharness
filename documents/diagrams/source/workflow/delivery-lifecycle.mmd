@@ -1,0 +1,81 @@
+flowchart TD
+    %% Canonical 6-Phase Delivery Lifecycle — implementation authority:
+    %% WORKFLOW.md §4, skills/*/SKILL.md, references/context-routes.yaml
+
+    subgraph REPO_SETUP["Setup (when untailored)"]
+        INSTALL["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>overwrite + copyIfMissing + doctor"]:::setup
+        INIT["/starter-init<br/>init mechanics, evidence gathering,<br/>adopter-owned seed customization"]:::setup
+        INSTALL --> INIT
+    end
+
+    subgraph FEATURE_INIT["Direct Skill Entry"]
+        ENTRY["Choose any peer skill directly<br/>starter-init is not required per feature"]:::core
+        ENTER["skill-enter --skill &lt;name&gt; --feature &lt;slug&gt;<br/>create status.md · write enter token<br/>open or resume session.md · load pack"]:::session
+        ENTRY --> ENTER
+    end
+
+    subgraph PHASE1["Phase 1: Discovery and Research"]
+        RESEARCH_DECIDE{Unknown behavior<br/>or brownfield evidence needed?}:::decision
+        RESEARCH["/spec-research<br/>analysis.md: Researching → ResearchComplete"]:::core
+        ENTER --> RESEARCH_DECIDE
+        RESEARCH_DECIDE -->|Yes| RESEARCH
+    end
+
+    subgraph PHASE2["Phase 2: Specification"]
+        REQUIREMENTS["/spec-requirements<br/>spec.md: Specifying → SpecApproved<br/>3-wave grilling and AC-* contracts"]:::core
+        RESEARCH --> REQUIREMENTS
+        RESEARCH_DECIDE -->|No| REQUIREMENTS
+        ADR["/spec-adr<br/>material decision → project ADR + adr-log"]:::optional
+        REQUIREMENTS -.->|when a material decision is needed| ADR
+    end
+
+    subgraph PHASE3_4["Phase 3 and 4: Planning and Tasks"]
+        PLAN["/spec-plan<br/>plan.md: Planning<br/>deep modules and public seams"]:::core
+        TASKS["/spec-tasks<br/>tasks.md: TaskPlanning → PlanApproved<br/>T-NNN graph and 100% AC coverage"]:::core
+        TEST_SCENARIO["/spec-testing-scenario<br/>optional AC-linked manual test guide"]:::optional
+        REQUIREMENTS --> PLAN --> TASKS
+        PLAN -.-> TEST_SCENARIO
+        TASKS -.-> TEST_SCENARIO
+    end
+
+    subgraph PHASE5["Phase 5: Implementation"]
+        IMPL["/spec-implement<br/>task-check → task-start → TDD edit/prove → task-done<br/>one canonical T-NNN at a time"]:::core
+        TASKS --> IMPL
+    end
+
+    subgraph PHASE6["Phase 6: Verification, Closeout, and Memory"]
+        VERIFY["/harness-verify<br/>check_readiness · artifact-check --trace<br/>confirmed gates · two-axis review.md"]:::gate
+        VERDICT{details.verified and review pass?}:::decision
+        SYNC["Write ## Post-Ship Sync in session-extracts.md<br/>then skill-exit to Done"]:::gate
+        MEMORY["/context-memory after Done<br/>triage candidates into durable memory"]:::gate
+        DONE["status.md → Done<br/>only after verification-runs.json + Post-Ship Sync"]:::gate
+        IMPL --> VERIFY --> VERDICT
+        VERDICT -->|Fail / ChangesRequested| IMPL
+        VERDICT -->|Spec or plan gap| PLAN
+        VERDICT -->|Pass and verified: true| SYNC --> DONE --> MEMORY
+    end
+
+    subgraph CLOSEOUT["Session Handoff"]
+        END["session-end --feature &lt;slug&gt;<br/>required final handoff; optional candidates<br/>session.md remains resumable"]:::session
+        SHIPPED([Done feature with durable evidence]):::terminal
+        MEMORY --> END --> SHIPPED
+    end
+
+    MAINTAIN["/harness-maintain<br/>explicit assessment and user-approved maintenance"]:::optional
+    MAINTAIN -.->|may write harness-assessment.md| VERIFY
+
+    classDef terminal fill:#0d0d0d,stroke:#0d0d0d,color:#fff
+    classDef setup fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
+    classDef core fill:#fff,stroke:#d0d7de,color:#0d0d0d
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#0d0d0d
+
+    class SHIPPED terminal
+    class INSTALL,INIT setup
+    class ENTER,END session
+    class ENTRY,RESEARCH,REQUIREMENTS,PLAN,TASKS,IMPL core
+    class VERIFY,SYNC,MEMORY,DONE gate
+    class ADR,TEST_SCENARIO,MAINTAIN optional
+    class RESEARCH_DECIDE,VERDICT decision

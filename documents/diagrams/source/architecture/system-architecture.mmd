@@ -1,0 +1,101 @@
+flowchart TB
+    %% =========================================================================
+    %% COREBASE SPECHARNESS KIT — SYSTEM ARCHITECTURE
+    %% Implementation authority: ARCHITECTURE.md, context-routes.yaml,
+    %% state-machine.yaml, cli.py, harness/readiness.py, and install.sh
+    %% =========================================================================
+
+    subgraph L1["Layer 1 — Direct Peer Skills and Routing"]
+        AGENTS["AGENTS.md<br/>portable operating contract"]:::layer1
+        SKILLS["skills/&lt;name&gt;/SKILL.md<br/>11 peer-level agent procedures"]:::layer1
+        SHARED["skills/_shared/<br/>artifact · status · context · halt · handoff · verification rules"]:::layer1
+        ROUTES["references/context-routes.yaml<br/>only named-skill routing authority"]:::layer1
+        EXTERNAL["EXTERNAL_SKILLS.md<br/>optional workflows outside CoreBase SpecHarness"]:::external
+
+        AGENTS --> SKILLS
+        SHARED --> SKILLS
+        ROUTES --> SKILLS
+        SKILLS -. optional specialist handoff .-> EXTERNAL
+    end
+
+    subgraph L2["Layer 2 — Context Compiler and Budget Engine"]
+        CONTEXT["context_engine.py<br/>named-route context compiler"]:::layer2
+        BOOTSTRAP["Always-on Must bootstrap<br/>caveman.md · core-policies.md"]:::layer2
+        DELTA["Session auto-delta<br/>session.md last_context_fingerprint<br/>SHA-256 fingerprints · --full bypass"]:::layer2
+        RETRIEVE["Bounded local retrieval<br/>Must retained · Should may drop<br/>secret redaction · task excerpt"]:::layer2
+
+        CONTEXT --> BOOTSTRAP
+        CONTEXT --> DELTA
+        CONTEXT --> RETRIEVE
+    end
+
+    subgraph L3["Layer 3 — State Machine and Task Graph"]
+        MACHINE["corebase-specharness/project/state-machine.yaml<br/>kit-owned lifecycle"]:::layer3
+        TASKS["task_graph.py<br/>T-NNN parse · cycle detect · sidecar"]:::layer3
+        STATE["context_state.py<br/>locked atomic writes · session persist"]:::layer3
+        HALT["[:HALT brake<br/>blocks task mutations until resolved"]:::layer3
+
+        MACHINE --> TASKS
+        STATE --> TASKS
+        HALT --> TASKS
+    end
+
+    subgraph L4["Layer 4 — Verification Harness and Diagnostics"]
+        READY["harness/readiness.py<br/>single evaluator: phase-check · skill-exit · verify"]:::layer4
+        HGATES["harness/gates.py<br/>argv-safe local execution · timeout"]:::layer4
+        HCONFIG["harness/config.py<br/>advisory / blocking · gates · budgets"]:::layer4
+        HDOCTOR["harness/doctor.py<br/>package-health orchestration"]:::layer4
+        VERIFY["verify<br/>readiness + structure + trace + gates + review"]:::layer4
+        PROVIDERS["provider-list / check / run<br/>optional · never auto-enabled"]:::external
+
+        HCONFIG --> READY
+        HCONFIG --> HGATES
+        READY --> VERIFY
+        HGATES --> VERIFY
+        PROVIDERS --> VERIFY
+        HCONFIG --> HDOCTOR
+    end
+
+    subgraph L5["Layer 5 — File Stores and Persistence"]
+        FEATURES["artifacts/features/&lt;slug&gt;/<br/>status · analysis · spec · plan · tasks<br/>review · session-extracts · testing scenarios"]:::seed
+        SESSIONS[".corezero/sessions/&lt;slug&gt;/session.md<br/>ephemeral resumable state"]:::generated
+        MEMORY["corebase-specharness/memories/ · corebase-specharness/project/<br/>durable repo and domain knowledge"]:::seed
+        GENERATED["corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json<br/>verification-runs.json · last 50"]:::generated
+        MANIFEST["manifest.json<br/>overwrite · copyIfMissing"]:::owned
+        INSTALL["corebase-specharness/scripts/install.sh<br/>backup · overwrite · seed · chmod · doctor"]:::owned
+        CLI["corebase-specharness/scripts/core/cli.py<br/>flat command registry · normalized envelope"]:::owned
+
+        INSTALL --> MANIFEST
+        MANIFEST --> FEATURES
+        MANIFEST --> MEMORY
+        INSTALL --> GENERATED
+        CLI --> SESSIONS
+    end
+
+    SKILLS -->|skill-enter / skill-exit| CLI
+    CLI --> CONTEXT
+    CLI --> TASKS
+    CLI --> READY
+    ROUTES --> CONTEXT
+    VERIFY --> GENERATED
+    TASKS --> FEATURES
+    STATE --> SESSIONS
+    HDOCTOR --> MANIFEST
+
+    classDef layer1 fill:#f0f9ff,stroke:#0ea5e9,stroke-width:2px,color:#0c4a6e
+    classDef layer2 fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#14532d
+    classDef layer3 fill:#fefce8,stroke:#eab308,stroke-width:2px,color:#713f12
+    classDef layer4 fill:#ecfdf5,stroke:#16a34a,stroke-width:2px,color:#166534
+    classDef owned fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef seed fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+    classDef generated fill:#f3f4f6,stroke:#9ca3af,stroke-dasharray:4 3,color:#374151
+    classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e,stroke-dasharray:4 3
+
+    class AGENTS,SKILLS,SHARED,ROUTES layer1
+    class CONTEXT,BOOTSTRAP,DELTA,RETRIEVE layer2
+    class MACHINE,TASKS,STATE,HALT layer3
+    class READY,HGATES,HCONFIG,HDOCTOR,VERIFY layer4
+    class MANIFEST,INSTALL,CLI owned
+    class FEATURES,MEMORY seed
+    class SESSIONS,GENERATED generated
+    class EXTERNAL,PROVIDERS external
