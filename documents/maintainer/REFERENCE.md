@@ -281,6 +281,8 @@ code `1`. Consumers must inspect `status`, `findings`, and command-specific
 | `verify` | 3,500 | `harness-verify`, `harness-maintain`, `spec-testing-scenario` |
 | `compact` | 2,500 | `context-memory` |
 
+Profiles `bootstrap`, `verify`, and `compact` seed `retrieval_files: 0` and skip automatic local retrieval. Other profiles inherit `max_retrieval_files: 4`.
+
 Shipped global and channel limits:
 
 | Setting | Value |
@@ -290,9 +292,9 @@ Shipped global and channel limits:
 | `max_bootstrap_tokens` | 800 |
 | `max_project_tokens` | 1,200 |
 | `max_feature_tokens` | 1,600 |
-| `max_retrieved_tokens` | 1,600 |
-| `max_source_excerpt_tokens` | 600 |
-| `max_retrieval_files` | 6 |
+| `max_retrieved_tokens` | 1,000 |
+| `max_source_excerpt_tokens` | 400 |
+| `max_retrieval_files` | 4 |
 | `max_tool_output_tokens` | 800 |
 | `payload_budget` | 2,500 |
 

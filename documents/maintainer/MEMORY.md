@@ -128,9 +128,9 @@ Shipped global and channel limits:
 | `max_bootstrap_tokens` | 800 |
 | `max_project_tokens` | 1,200 |
 | `max_feature_tokens` | 1,600 |
-| `max_retrieved_tokens` | 1,600 |
-| `max_source_excerpt_tokens` | 600 |
-| `max_retrieval_files` | 6 |
+| `max_retrieved_tokens` | 1,000 |
+| `max_source_excerpt_tokens` | 400 |
+| `max_retrieval_files` | 4 |
 | `max_tool_output_tokens` | 800 |
 | `payload_budget` | 2,500 |
 
@@ -221,11 +221,12 @@ dumping files into the context window.
   - `context.retrieval.exclude`: Directories excluded from retrieval
     (default: `.git`, `.corezero`, `node_modules`, `dist`, `build`, `coverage`, `corebase-specharness/generated`).
   - `context.max_retrieval_files`: Maximum number of files admitted to
-    candidate scoring (seed default: 6).
+    candidate scoring (seed default: 4). Profiles may override with
+    `retrieval_files` (`bootstrap`, `verify`, and `compact` seed `0`).
   - `context.max_source_excerpt_tokens`: Max tokens extracted per matching
-    file (seed default: 600).
+    file (seed default: 400).
   - `context.max_retrieved_tokens`: Total token ceiling across all retrieved
-    excerpts (seed default: 1,600).
+    excerpts (seed default: 1,000).
 - **Secret Redaction**: Every retrieved snippet passes through
   `redact_secrets()`, which scrubs API keys, AWS tokens, GitHub tokens, and
   private keys before context assembly.

@@ -163,7 +163,7 @@ def _channel_limits(root):
         "project": project_limit,
         "feature": feature_limit,
         "task": feature_limit,
-        "retrieved": int(context.get("max_retrieved_tokens", 1600)),
+        "retrieved": int(context.get("max_retrieved_tokens", 1000)),
         "durable_memory": project_limit,
         "explicit": project_limit,
     }
@@ -352,7 +352,7 @@ def _pinnable_paths(root, settings):
     return pinned
 
 
-def _retrieval_settings(root):
+def _retrieval_settings(root, profile=""):
     context = _context_settings(root)
     retrieval = context.get("retrieval") or {}
     roots = retrieval.get("roots") or ["."]
@@ -366,15 +366,20 @@ def _retrieval_settings(root):
             for line in gitignore.read_text(encoding="utf-8", errors="replace").splitlines()
             if line.strip() and not line.lstrip().startswith("#") and not line.lstrip().startswith("!")
         ]
+    profile_config = (context.get("profiles") or {}).get(profile) or {}
+    if "retrieval_files" in profile_config:
+        max_files = int(profile_config.get("retrieval_files") or 0)
+    else:
+        max_files = int(context.get("max_retrieval_files", 4))
     return {
         "roots": [str(value) for value in roots],
         "excluded": excluded,
-        "max_files": int(context.get("max_retrieval_files", 8)),
+        "max_files": max_files,
         "max_excerpt_tokens": min(
-            int(context.get("max_source_excerpt_tokens", 900)),
-            int(context.get("max_tool_output_tokens", context.get("max_source_excerpt_tokens", 900))),
+            int(context.get("max_source_excerpt_tokens", 400)),
+            int(context.get("max_tool_output_tokens", context.get("max_source_excerpt_tokens", 400))),
         ),
-        "max_total_tokens": int(context.get("max_retrieved_tokens", 2400)),
+        "max_total_tokens": int(context.get("max_retrieved_tokens", 1000)),
         "gitignore_patterns": patterns,
         "suffix_allowlist": {str(value).lower() for value in (retrieval.get("suffix_allowlist") or [])},
         "suffix_priority": retrieval.get("suffix_priority") or {},
@@ -470,6 +475,8 @@ def _excerpt_for_matches(text, scorer, max_tokens):
 
 
 def _retrieve_local_evidence(root, intent, feature, task, entries, settings):
+    if int(settings.get("max_files") or 0) <= 0 or int(settings.get("max_total_tokens") or 0) <= 0:
+        return []
     root = Path(root).resolve()
     query = " ".join(part for part in (intent, feature, task) if part)
     scorer = Scorer(query)
@@ -583,13 +590,15 @@ def build_context_pack(
         int(payload_budget if payload_budget is not None else configured_payload),
         configured_payload,
     )
-    retrieval = _retrieval_settings(root)
+    retrieval = _retrieval_settings(root, profile_name)
     channel_limits = _channel_limits(root)
 
     entries = {}
     policy_sections = ["Purpose", "Normative Rules"]
-    if skill_name in {"spec-implement", "harness-verify", "spec-adr"}:
+    if skill_name in {"spec-implement", "harness-verify"}:
         policy_sections = ["Purpose", "Normative Rules", "Security Policy"]
+    elif skill_name == "context-memory":
+        policy_sections = ["Purpose", "Normative Rules", "Memory Promotion Thresholds", "Security Policy"]
     always = [
         ("corebase-specharness/rules/caveman.md", "Must", None, "communication rule"),
         ("corebase-specharness/memories/repo/core-policies.md", "Must", policy_sections, "runtime policy"),

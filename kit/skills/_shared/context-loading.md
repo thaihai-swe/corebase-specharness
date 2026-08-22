@@ -32,7 +32,8 @@ python3 corebase-specharness/scripts/core/cli.py context-load --skill <name> [--
 - On implement coding turns, pass `--task T-NNN` to `context-load` after `task-start`. The compiler then omits full `tasks.md` and injects only the active task plus its direct dependencies.
 - Keep `--intent` to a few keywords. Do not paste the user request essay into `--intent`.
 - Use repeatable `--add-source <repo-relative-path>` for a known file. Do not ask retrieval to dump the tree.
-- Omit `--full` unless the pack is known stale. Session auto-delta compares SHA-256 fingerprints in `session.md` `last_context_fingerprint` and keeps unchanged sources out of later loads.
+- Omit `--full` unless the pack is known stale. Session auto-delta compares SHA-256 fingerprints in `session.md` `last_context_fingerprint` and keeps unchanged sources out of later loads. After `/spec-tasks`, omit `--full` on `/spec-implement` and `/harness-verify` so unchanged `spec.md` / `plan.md` / `tasks.md` are not re-injected.
+- Automatic local retrieval is off for profiles `bootstrap`, `verify`, and `compact` (`retrieval_files: 0`). Other profiles use the global caps (`max_retrieval_files: 4`, `max_source_excerpt_tokens: 400`, `max_retrieved_tokens: 1000`).
 - Inspect spend with `context-explain --json` (`estimated_tokens`, `budget_categories`, omit reasons, `delta` / `unchanged_selected` when a baseline exists).
 - When `memory-audit` warns, run `/context-memory` before the next delivery skill. Compact prose 30–50% without deleting `##` headings or stable IDs (`LH-*`, `CC-*`, `ADR-*`, `REQ-*`, `AC-*`).
 

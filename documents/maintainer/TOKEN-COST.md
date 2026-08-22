@@ -31,24 +31,24 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 
 | Skill | Injected Context Files & Sliced Sections | Pack Tokens | `SKILL.md` Procedure |
 | :--- | :--- | :---: | :---: |
-| **`/starter-init`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (410)<br>• `harness-config.yaml` (462)<br>• `tech-stack.md` [Languages & Runtimes, Frameworks, Dev Tools] (97)<br>• `project-constraints.md` [Performance, Tech, Operational] (182) | **1,307** | **1,650** |
-| **`/spec-research`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (410)<br>• `status.md` (19)<br>• `architecture.md` [System Snapshot, Top-Level Components, Runtime Boundaries] (75) | **660** | **1,500** |
-| **`/spec-requirements`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (410)<br>• `status.md` (19)<br>• `analysis.md` [Findings] (12)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193)<br>• `product-sense.md` [Vision, Problem Statement, Domain Rules, Metrics] (107) | **897** | **1,711** |
-| **`/spec-plan`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (410)<br>• `status.md` (19)<br>• `spec.md` [Acceptance Criteria] (28)<br>• `architecture.md` [Snapshot, Components, Boundaries, Safe Change] (89)<br>• `ponytail.md` [Decision Matrix: Abstractions] (219) | **921** | **1,282** |
-| **`/spec-tasks`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (410)<br>• `status.md` (19)<br>• `spec.md` [Acceptance Criteria] (28)<br>• `plan.md` (14)<br>• `code-design.md` [Read before you write] (102)<br>• `architecture.md` [Snapshot, Components] (59) | **788** | **1,538** |
-| **`/spec-implement`**<br>*(Task-scoped)* | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (605)<br>• `status.md` (19)<br>• `spec.md` [Acceptance Criteria] (28)<br>• `plan.md` (14)<br>• `tasks.md` *(active `T-NNN` excerpt + direct deps)* (91)<br>• `security.md` [Core Rules, Shell Safety, Artifact Boundaries, Verification] (319)<br>• `code-design.md` [Read before write, Deep Modules, Error Handling, Verify path] (396) | **1,628** | **1,782** |
-| **`/harness-verify`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (605)<br>• `status.md` (19)<br>• `spec.md` (28)<br>• `plan.md` (14)<br>• `tasks.md` (65)<br>• `harness-config.yaml` (462)<br>• `security.md` [Verification] (109) | **1,458** | **1,776** |
-| **`/context-memory`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Promotion Thresholds, Security] (683)<br>• `learned-heuristics.md` [Heuristics] (227) | **1,066** | **1,486** |
-| **`/harness-maintain`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (410)<br>• `harness-config.yaml` (462) | **1,028** | **1,292** |
-| **`/spec-adr`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (605)<br>• `architecture.md` [Snapshot, Boundaries, Safe Change] (59) | **820** | **1,193** |
-| **`/spec-testing-scenario`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (410)<br>• `status.md` (19)<br>• `spec.md` (28)<br>• `plan.md` (14)<br>• `tasks.md` (65)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193) | **885** | **1,044** |
+| **`/starter-init`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `harness-config.yaml` (485)<br>• `tech-stack.md` [Languages & Runtimes, Frameworks, Dev Tools] (97)<br>• `project-constraints.md` [Performance, Tech, Operational] (182) | **1,333** | **1,650** |
+| **`/spec-research`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `status.md` (19)<br>• `architecture.md` [System Snapshot, Top-Level Components, Runtime Boundaries] (75) | **663** | **1,500** |
+| **`/spec-requirements`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `status.md` (19)<br>• `analysis.md` [Findings] (12)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193)<br>• `product-sense.md` [Vision, Problem Statement, Domain Rules, Metrics] (107) | **900** | **1,711** |
+| **`/spec-plan`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `status.md` (19)<br>• `spec.md` [Acceptance Criteria] (28)<br>• `architecture.md` [Snapshot, Components, Boundaries, Safe Change] (89)<br>• `ponytail.md` [Decision Matrix: Abstractions] (219) | **924** | **1,282** |
+| **`/spec-tasks`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `status.md` (19)<br>• `spec.md` [Acceptance Criteria] (28)<br>• `plan.md` (14)<br>• `code-design.md` [Read before you write] (102)<br>• `architecture.md` [Snapshot, Components] (59) | **791** | **1,538** |
+| **`/spec-implement`**<br>*(Task-scoped)* | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (608)<br>• `status.md` (19)<br>• `spec.md` [Acceptance Criteria] (28)<br>• `plan.md` (14)<br>• `tasks.md` *(active `T-NNN` excerpt + direct deps)* (91)<br>• `security.md` [Core Rules, Shell Safety, Artifact Boundaries, Verification] (319)<br>• `code-design.md` [Read before you write, Failures must reach a decision-maker, Verify the path you claim to have fixed] (239) | **1,474** | **1,782** |
+| **`/harness-verify`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (608)<br>• `status.md` (19)<br>• `spec.md` (28)<br>• `plan.md` (14)<br>• `tasks.md` (65)<br>• `harness-config.yaml` (485)<br>• `security.md` [Verification] (109) | **1,484** | **1,776** |
+| **`/context-memory`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Promotion Thresholds, Security] (689)<br>• `learned-heuristics.md` [Heuristics] (227) | **1,072** | **1,486** |
+| **`/harness-maintain`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `harness-config.yaml` (485) | **1,054** | **1,292** |
+| **`/spec-adr`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `architecture.md` [Snapshot, Boundaries, Safe Change] (59) | **628** | **1,193** |
+| **`/spec-testing-scenario`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `status.md` (19)<br>• `spec.md` (28)<br>• `plan.md` (14)<br>• `tasks.md` (65)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193) | **888** | **1,044** |
 
 ---
 
 # Part 2: Token Cost Breakdown for Each Step of Each Skill
 
 ### 1. `/starter-init` (Bootstrap Repository)
-*Context Base: ~1,307 tokens | SKILL.md: 1,650 tokens*
+*Context Base: ~1,333 tokens | SKILL.md: 1,650 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -61,7 +61,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 2. `/spec-research` (Investigation & Brownfield Mapping)
-*Context Base: ~660 tokens | SKILL.md: 1,500 tokens*
+*Context Base: ~663 tokens | SKILL.md: 1,500 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -75,7 +75,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 3. `/spec-requirements` (What & Why Specification)
-*Context Base: ~897 tokens | SKILL.md: 1,711 tokens*
+*Context Base: ~900 tokens | SKILL.md: 1,711 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -90,7 +90,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 4. `/spec-plan` (Architecture & Technical Design)
-*Context Base: ~921 tokens | SKILL.md: 1,282 tokens*
+*Context Base: ~924 tokens | SKILL.md: 1,282 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -104,7 +104,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 5. `/spec-tasks` (Work Breakdown & Sequencing)
-*Context Base: ~788 tokens | SKILL.md: 1,538 tokens*
+*Context Base: ~791 tokens | SKILL.md: 1,538 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -118,7 +118,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 6. `/spec-implement` (TDD Implementation Loop)
-*Context Base: ~1,628 tokens (Without `--task`: ~1,868) | SKILL.md: 1,782 tokens*
+*Context Base: ~1,474 tokens (Without `--task`: ~1,362 on a tiny feature probe) | SKILL.md: 1,782 tokens*
 *Cost is per task iteration ($N \times \text{tasks}$):*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
@@ -133,7 +133,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 7. `/harness-verify` (Mechanical & Two-Axis Review Gate)
-*Context Base: ~1,458 tokens | SKILL.md: 1,776 tokens*
+*Context Base: ~1,484 tokens | SKILL.md: 1,776 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -147,7 +147,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 8. `/context-memory` (Durable Memory Promotion & Triage)
-*Context Base: ~1,066 tokens | SKILL.md: 1,486 tokens*
+*Context Base: ~1,072 tokens | SKILL.md: 1,486 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -159,7 +159,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 9. `/spec-adr` (Architectural Decision Record)
-*Context Base: ~820 tokens | SKILL.md: 1,193 tokens*
+*Context Base: ~628 tokens | SKILL.md: 1,193 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -171,7 +171,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 10. `/spec-testing-scenario` (Edge Case & Manual QA Matrix)
-*Context Base: ~885 tokens | SKILL.md: 1,044 tokens*
+*Context Base: ~888 tokens | SKILL.md: 1,044 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -182,7 +182,7 @@ When a skill is invoked, CoreBase SpecHarness compiles a bounded context pack (`
 ---
 
 ### 11. `/harness-maintain` (Harness & Gate Drift Maintenance)
-*Context Base: ~1,028 tokens | SKILL.md: 1,292 tokens*
+*Context Base: ~1,054 tokens | SKILL.md: 1,292 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |

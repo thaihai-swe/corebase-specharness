@@ -816,7 +816,7 @@ CoreBase SpecHarness cuts token consumption by up to 50% compared to traditional
 1. **Mandatory Bootstrap Slicing**: Universal bootstrap (`caveman.md` + `core-policies.md` [Purpose, Normative Rules]) consumes only **~410 tokens**. Security policies are injected only on implement, verify, and ADR skills.
 2. **Task-Scoped Implementation (`--task T-NNN`)**: Context compilation loads only the active task and direct dependencies, omitting massive whole-feature `tasks.md` graphs.
 3. **Session Auto-Delta Caching**: The engine calculates a SHA-256 fingerprint of compiled payloads. Subsequent `context-load` calls within the same session omit unchanged files automatically unless `--full` is explicitly passed.
-4. **Bounded Retrieval & Secret Redaction**: Keyword-triggered local code searches and domain packs are capped at `max_retrieval_files: 6` and `max_source_excerpt_tokens: 600`. All excerpts pass through automatic regex secret redaction.
+4. **Bounded Retrieval & Secret Redaction**: Keyword-triggered local code searches and domain packs are capped at `max_retrieval_files: 4` and `max_source_excerpt_tokens: 400`. Profiles `bootstrap`, `verify`, and `compact` set `retrieval_files: 0` and skip automatic local retrieval. All excerpts pass through automatic regex secret redaction.
 
 ---
 

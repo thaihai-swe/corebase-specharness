@@ -43,8 +43,13 @@ How to keep packs small:
   `session.md` `last_context_fingerprint`.
 - **Bounded retrieval**: keep `--intent` to a few keywords. Scope
   `context.retrieval.roots` and `exclude` in `harness-config.yaml`. Excerpts
-  are capped by `max_retrieval_files` and `max_source_excerpt_tokens` and
-  pass through secret redaction.
+  are capped by `max_retrieval_files` (seed 4) and `max_source_excerpt_tokens`
+  (seed 400) and pass through secret redaction. Profiles `bootstrap`,
+  `verify`, and `compact` set `retrieval_files: 0` so they skip automatic
+  local retrieval. After `/spec-tasks`, omit `--full` on `/spec-implement`
+  and `/harness-verify` so session auto-delta keeps unchanged `spec.md` /
+  `plan.md` / `tasks.md` out of later packs.
+
 - **Durable memory**: log `[CANDIDATE]` during implement. `/harness-verify`
   writes `## Post-Ship Sync`. `/context-memory` promotes only recurrent or
   hard-safety lessons, then compacts prose 30–50% while keeping `##` headings

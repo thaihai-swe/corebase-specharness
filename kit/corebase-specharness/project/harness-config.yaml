@@ -39,19 +39,19 @@ context:
   max_bootstrap_tokens: 800
   max_project_tokens: 1200
   max_feature_tokens: 1600
-  max_retrieved_tokens: 1600
-  max_source_excerpt_tokens: 600
-  max_retrieval_files: 6
+  max_retrieved_tokens: 1000
+  max_source_excerpt_tokens: 400
+  max_retrieval_files: 4
   max_tool_output_tokens: 800
   payload_budget: 2500
   retrieval:
     roots: [.]
     exclude: [".git", ".corezero", "node_modules", "dist", "build", "coverage", "corebase-specharness/generated"]
   profiles:
-    bootstrap: {payload: 2500}
+    bootstrap: {payload: 2500, retrieval_files: 0}
     research: {payload: 4000}
     requirements: {payload: 3500}
     planning: {payload: 3500}
     implement: {payload: 4000}
-    verify: {payload: 3500}
-    compact: {payload: 2500}
+    verify: {payload: 3500, retrieval_files: 0}
+    compact: {payload: 2500, retrieval_files: 0}

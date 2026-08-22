@@ -227,7 +227,7 @@ Sync` in `session-extracts.md` first. Missing heading: `[:HALT SYNC REQUIRED]`.
 | Prerequisites | none |
 | Required write | none |
 | Feature artifacts | `status.md`, `session-extracts.md`, session `session.md` |
-| Route sources | `core-policies.md` (`Must`, Memory Promotion Thresholds / Security Policy); `learned-heuristics.md` (`Must`, Heuristics) |
+| Route sources | `learned-heuristics.md` (`Must`, Heuristics). Bootstrap also injects `core-policies.md` (`Purpose`, `Normative Rules`, `Memory Promotion Thresholds`, `Security Policy`). |
 | Handoffs | `harness-verify` |
 | Skill-local refs | `extraction-triage.md` |
 
