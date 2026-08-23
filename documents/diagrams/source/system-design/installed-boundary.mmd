@@ -18,8 +18,8 @@ flowchart TB
     UNMANAGED["Paths not selected by overwrite<br/>adopter-created feature artifacts, sessions,<br/>generated runs, ADRs, memory, and project code"]:::preserve
     TARGET --> UNMANAGED
 
-    GENERATED["corebase-specharness/generated/<br/>installer creates .gitkeep<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>optional harness-assessment.md"]:::generated
-    SESSION[".corezero/sessions/&lt;slug&gt;/session.md<br/>created or resumed by skill-enter / session-start<br/>retained in place by session-end"]:::session
+    GENERATED[".corebase-specharness/generated/<br/>installer creates .gitkeep<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>optional harness-assessment.md"]:::generated
+    SESSION[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>created or resumed by skill-enter / session-start<br/>retained in place by session-end"]:::session
     TARGET --> GENERATED
     TARGET --> SESSION
 

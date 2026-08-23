@@ -18,13 +18,13 @@ flowchart TD
     end
 
     subgraph SESSION["Ephemeral Resumable State"]
-        SESS[".corezero/sessions/&lt;slug&gt;/session.md<br/>objective · progress updates · handoff updates<br/>retained in place by session-end"]:::session
+        SESS[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>objective · progress updates · handoff updates<br/>retained in place by session-end"]:::session
     end
 
     subgraph GENERATED["Disposable Runtime Output"]
-        KEEP["corebase-specharness/generated/.gitkeep<br/>created by installer"]:::generated
-        RUNS["corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>latest 50 non-dry-run result sets"]:::generated
-        ASSESS["corebase-specharness/generated/harness-assessment.md<br/>optional explicit harness-maintain output"]:::generated
+        KEEP[".corebase-specharness/generated/.gitkeep<br/>created by installer"]:::generated
+        RUNS[".corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>latest 50 non-dry-run result sets"]:::generated
+        ASSESS[".corebase-specharness/generated/harness-assessment.md<br/>optional explicit harness-maintain output"]:::generated
     end
 
     INSTALL["install.sh<br/>backup · overwrite · seed · chmod · doctor"]:::writer

@@ -79,8 +79,8 @@ service, engine directory, or background launcher.
 |  corebase-specharness/memories adopter durable memory                       |
 |  corebase-specharness/rules    shipped policy snippets                      |
 |  artifacts/features/<slug>/   durable feature evidence           |
-|  .corezero/sessions/<slug>/   ephemeral session                  |
-|  corebase-specharness/generated/         runtime audit JSON                 |
+|  .corebase-specharness/sessions/<slug>/   ephemeral session      |
+|  .corebase-specharness/generated/         runtime audit JSON     |
 |  <project source>             only spec-implement writes here    |
 +------------------------------------------------------------------+
 ```
@@ -119,9 +119,9 @@ upward. If the hint is a file, it starts from that file's parent.
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  [Layer 5 — File Stores & Persistence]                                      │
 │  • Durable Feature Evidence: artifacts/features/<slug>/                     │
-│  • Resumable Ephemeral Sessions: .corezero/sessions/<slug>/session.md      │
+│  • Resumable Ephemeral Sessions: .corebase-specharness/sessions/<slug>/session.md      │
 │  • Durable Repository Memory: corebase-specharness/memories/ & corebase-specharness/project/      │
-│  • Disposable Runtime Logs: corebase-specharness/generated/*.json (Last 50 runs)       │
+│  • Disposable Runtime Logs: .corebase-specharness/generated/*.json (Last 50 runs) │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -145,7 +145,6 @@ upward. If the hint is a file, it starts from that file's parent.
     context-routes.yaml      routing authority
     tool-providers-registry.json
   artifacts/features/<slug>/
-  .corezero/sessions/<slug>/session.md
   corebase-specharness/
     CONTEXT_AND_MEMORY.md
     MASTER_INDEX.md          adopter-owned after first seed
@@ -172,7 +171,9 @@ upward. If the hint is a file, it starts from that file's parent.
       domain/<name>/         glossary + patterns
       archive/
     rules/                   caveman, security, ponytail, ...
-    generated/               gate-runs.json, provider-runs.json, verification-runs.json
+.corebase-specharness/
+  sessions/<slug>/           session.md
+  generated/                 gate-runs.json, provider-runs.json, verification-runs.json
 ```
 
 Installed scripts are `core/`, `install.sh`, and the two validators. Artifact
@@ -194,8 +195,8 @@ repo-root `tests/` if present, `.github/`, `product-page/`, `scripts/`.
 | Adopter configuration | Architecture, constraints, budgets, gates, providers, `lifecycle_overrides` | `corebase-specharness/project/` |
 | Durable memory | Repository and domain knowledge | `corebase-specharness/memories/` |
 | Delivery artifacts | Specifications, plans, tasks, reviews, evidence | `artifacts/features/<slug>/` |
-| Ephemeral session state | Resumable per-feature handoff | `.corezero/sessions/<slug>/session.md` |
-| Generated runtime state | Disposable outputs such as gate-run history | `corebase-specharness/generated/` |
+| Ephemeral session state | Resumable per-feature handoff | `.corebase-specharness/sessions/<slug>/session.md` |
+| Generated runtime state | Disposable outputs such as gate-run history | `.corebase-specharness/generated/` |
 
 ---
 
@@ -274,7 +275,7 @@ Compilation Sequence:
 
 #### Compiler optimizations
 - **Session Auto-Delta**: Uses `last_context_fingerprint` and
-  `last_context_slices` in `.corezero/sessions/<slug>/session.md` to compute
+  `last_context_slices` in `.corebase-specharness/sessions/<slug>/session.md` to compute
   SHA-256 fingerprint diffs across skills in the same session. Re-injects
   only new or modified files, and only new or changed H2 sections of files a
   prior skill already loaded. `--full` bypasses the cache. Hashes live on
@@ -347,7 +348,7 @@ details.verified = (readiness_ok AND artifacts_ok AND gates_passed AND review_ok
   mature repositories. Any gate or traceability failure returns `status: failed`
   and exits 1.
 - **Mechanically Protected `Done`**: Transition to `Done` requires a matching
-  successful run in `corebase-specharness/generated/verification-runs.json` and a
+  successful run in `.corebase-specharness/generated/verification-runs.json` and a
   `## Post-Ship Sync` header in `session-extracts.md`, or an explicit
   `--verification-override --override-reason "..."`.
 
@@ -362,12 +363,12 @@ install.sh <target>
   validate manifest (shape, safety, sources exist)
   copy overwrite  → backup then replace
   copy copyIfMissing → skip existing
-  mkdir generated; chmod validators
+  mkdir .corebase-specharness/generated; chmod validators
   cli.py doctor --root <target>
 ```
 
 `init` is a later in-repo seeder, not the installer. It creates missing
-memory/project files and appends `corebase-specharness/generated/*` to `.gitignore`.
+memory/project files and appends `.corebase-specharness/generated/*` to `.gitignore`.
 See [INSTALL.md](INSTALL.md).
 
 ### 4.2 Skill enter and exit
@@ -497,7 +498,7 @@ Slug containment: `canonical_feature_dir` resolves under
 
 ### 5.2 Session store
 
-`.corezero/sessions/<slug>/session.md` is Markdown with JSON frontmatter, not
+`.corebase-specharness/sessions/<slug>/session.md` is Markdown with JSON frontmatter, not
 YAML:
 
 ```text
@@ -589,10 +590,10 @@ Every shipped skill has exactly one route. Writes are strings or
 
 ### 5.5 Generated store
 
-`corebase-specharness/generated/` is runtime-only. The kit must not ship files other than
+`.corebase-specharness/generated/` is runtime-only. The kit must not ship files other than
 `.gitkeep`. `verify` and `provider-run` append capped JSON arrays (last 50
 records) to `gate-runs.json`, `provider-runs.json`, and `verification-runs.json`.
-`init` appends `corebase-specharness/generated/*` to `.gitignore`.
+`init` appends `.corebase-specharness/generated/*` to `.gitignore`.
 
 ---
 
@@ -785,7 +786,7 @@ Fast-Track Flow:
   `harness-config.yaml`, memory seeds. Initialized once.
 
 Adopter-created data is preserved because it is not matched by an overwrite
-entry. This includes `artifacts/features/`, `.corezero/` sessions, and
+entry. This includes `artifacts/features/`, `.corebase-specharness/` sessions, and
 generated runtime state.
 
 ### 10.3 Architectural invariants
@@ -797,8 +798,8 @@ generated runtime state.
 - `--skill` is preferred. `--phase` remains compatibility on `phase-check`,
   `artifact-check`, and `verify`.
 - Adopter gates and provider selection remain explicit configuration.
-- `status.md` is durable feature state, `.corezero/sessions/` is ephemeral
-  continuity, and `corebase-specharness/generated/` is disposable runtime state.
+- `status.md` is durable feature state, `.corebase-specharness/sessions/` is ephemeral
+  continuity, and `.corebase-specharness/generated/` is disposable runtime state.
 - Upgrade ownership is determined only by `overwrite` and `copyIfMissing`.
 
 ### 10.4 Related documents

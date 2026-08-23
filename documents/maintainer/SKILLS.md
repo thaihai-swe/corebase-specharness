@@ -60,7 +60,7 @@ skill's frontmatter. `status.md` is never a required write.
 | `/spec-implement` | Implement; `implement`; feature required | `Implementing` → `Implementing` | none (optional project source, `tasks.md`, `session-extracts.md`) | `spec.md`, `plan.md`, `tasks.md` | `implement`, `code`, `build`, `deliver` | `/harness-verify`, `/spec-plan`, `/spec-requirements` |
 | `/harness-verify` | Verify; `verify`; feature required | `Verifying` → `Done` | `review.md` | `spec.md`, `plan.md`, `tasks.md` | `verify`, `gate`, `test`, `validation` | `/context-memory`, `/spec-implement`, `/spec-plan` |
 | `/context-memory` | Verify; `compact`; feature optional | none | none (writes memory dirs; optional `session-extracts.md`) | none | `memory`, `heuristic`, `learned`, `update memory`, `compact`, `compress`, `memory full`, `token budget` | `/harness-verify` |
-| `/harness-maintain` | Verify; `verify`; feature optional | none | none (optional `corebase-specharness/generated/harness-assessment.md`) | none | `maintain harness`, `harness health`, `diagnose harness`, `improve harness` | none |
+| `/harness-maintain` | Verify; `verify`; feature optional | none | none (optional `.corebase-specharness/generated/harness-assessment.md`) | none | `maintain harness`, `harness health`, `diagnose harness`, `improve harness` | none |
 | `/spec-adr` | Plan; `planning`; feature optional | none | none (writes `corebase-specharness/project/adr`; optional `adr-log.md`) | none | `adr`, `decision`, `architecture decision` | none |
 | `/spec-testing-scenario` | Verify; `verify`; feature required | none | `testing-scenarios.md` | `spec.md` | `testing scenario`, `test scenarios`, `test guide`, `manual test`, `testing-scenarios` | none |
 
@@ -250,7 +250,7 @@ stable IDs during compaction. The runtime does not auto-promote. CLI:
 | Skill-local refs | `diagnosis-map.md` |
 
 Modes: `assess`, `create`, `improve`, `eval`, `doctor`, `diagnose`. Optional
-write: `corebase-specharness/generated/harness-assessment.md`. Policy or config changes
+write: `.corebase-specharness/generated/harness-assessment.md`. Policy or config changes
 require user review. Diagnose maps shallow wrappers and vibe-debugging to
 deletion-test and tight-loop fixes.
 
@@ -374,7 +374,7 @@ focused expansion.
 
 ## Session and artifact contracts
 
-Feature sessions live at `.corezero/sessions/<slug>/session.md`. Auto-delta
+Feature sessions live at `.corebase-specharness/sessions/<slug>/session.md`. Auto-delta
 skips files already hashed there. That is safe only in the same uncompacted
 chat. After compact or on the first skill of a new chat for the same
 feature, the agent passes `--full`. `session-end` does not clear hashes.

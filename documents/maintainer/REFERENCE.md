@@ -118,7 +118,7 @@ configured, `--add-source` is restricted to those globs.
 
 | Command | Required or notable options | Purpose |
 | --- | --- | --- |
-| `session-start` | `--feature`, `--skill`; optional `--intent`, `--budget`, `--objective` | Create or resume `.corezero/sessions/<slug>/session.md` |
+| `session-start` | `--feature`, `--skill`; optional `--intent`, `--budget`, `--objective` | Create or resume `.corebase-specharness/sessions/<slug>/session.md` |
 | `session-checkpoint` | `--feature` plus progress or handoff input; optional `--dry-run` | Append progress and handoff information |
 | `session-end` | `--feature` plus handoff input; optional candidates and `--dry-run` | Persist the final handoff and optionally append candidate lessons |
 
@@ -131,7 +131,7 @@ session does not archive, move, or delete `session.md`, and does not clear
 `last_context_fingerprint` / `last_context_slices`. A new chat on the same
 feature still needs `--full` on the first skill.
 
-Session path: `.corezero/sessions/<slug>/session.md`. Frontmatter is JSON,
+Session path: `.corebase-specharness/sessions/<slug>/session.md`. Frontmatter is JSON,
 not YAML. See [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ### Tasks
@@ -347,7 +347,7 @@ Durable feature artifacts live under `artifacts/features/<slug>/`.
 | `review.md` | `harness-verify` | Verification review |
 | `testing-scenarios.md` | `spec-testing-scenario` | Optional scenario artifact |
 
-Session state is ephemeral at `.corezero/sessions/<slug>/session.md`. There is
+Session state is ephemeral at `.corebase-specharness/sessions/<slug>/session.md`. There is
 no shipped `corebase-specharness/schemas/` directory.
 
 `PHASE_FILES` used when `--phase` is given without `--skill`:
@@ -404,14 +404,14 @@ separate from the detailed `status.md` tokens.
 
 | Path | Producer | Purpose |
 | --- | --- | --- |
-| `.corezero/sessions/<slug>/session.md` | `session-*` and `skill-enter` | Active resumable session and handoff state |
+| `.corebase-specharness/sessions/<slug>/session.md` | `session-*` and `skill-enter` | Active resumable session and handoff state |
 | `artifacts/features/<slug>/tasks.json` | `task-*` | Generated task graph sidecar and read-only fallback |
-| `corebase-specharness/generated/gate-runs.json` | non-dry-run `verify` | Last 50 recorded feature gate-result sets |
-| `corebase-specharness/generated/provider-runs.json` | non-dry-run `verify` | Last 50 recorded review-provider runs |
-| `corebase-specharness/generated/verification-runs.json` | non-dry-run `verify` | Last 50 closeout evidence records; `Done` requires a matching `harness-verify` success |
-| `corebase-specharness/generated/closeout-overrides.json` | `status-set` / `skill-exit` override | Last 50 explicit audited Done exceptions |
-| `corebase-specharness/generated/.gitkeep` | installer | Preserve the ignored generated directory |
-| `corebase-specharness/generated/harness-assessment.md` | `/harness-maintain` | Optional explicit maintenance assessment |
+| `.corebase-specharness/generated/gate-runs.json` | non-dry-run `verify` | Last 50 recorded feature gate-result sets |
+| `.corebase-specharness/generated/provider-runs.json` | non-dry-run `verify` | Last 50 recorded review-provider runs |
+| `.corebase-specharness/generated/verification-runs.json` | non-dry-run `verify` | Last 50 closeout evidence records; `Done` requires a matching `harness-verify` success |
+| `.corebase-specharness/generated/closeout-overrides.json` | `status-set` / `skill-exit` override | Last 50 explicit audited Done exceptions |
+| `.corebase-specharness/generated/.gitkeep` | installer | Preserve the ignored generated directory |
+| `.corebase-specharness/generated/harness-assessment.md` | `/harness-maintain` | Optional explicit maintenance assessment |
 
 Generated runtime state must not ship in the kit except `.gitkeep`.
 
@@ -527,7 +527,7 @@ unless an adopter adds that check via `lifecycle_overrides`.
 `capability_recommender.py`, `catalog_generator.py`, `_lib/context_index.py`,
 `_lib/budget.py`, `_lib/telemetry_roi.py`, `_lib/telemetry_store.py`,
 `handlers/configuration.py`, `handlers/handoff.py`, `handlers/upgrades.py`,
-`core/readiness.py`, `.corezero/engine`, and `.corezero/scripts`.
+`core/readiness.py`, `.corebase-specharness/engine`, and `.corebase-specharness/scripts`.
 
 ## Maintainer validation
 

@@ -46,7 +46,7 @@ context:
   payload_budget: 2500
   retrieval:
     roots: [.]
-    exclude: [".git", ".corezero", "node_modules", "dist", "build", "coverage", "corebase-specharness/generated"]
+    exclude: [".git", ".corebase-specharness", "node_modules", "dist", "build", "coverage"]
   profiles:
     bootstrap: {payload: 2500, retrieval_files: 0}
     research: {payload: 4000}

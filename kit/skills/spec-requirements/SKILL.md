@@ -46,7 +46,7 @@ Defines functional requirements (`REQ-*`), testable acceptance criteria (`AC-*`)
   - `artifacts/features/<slug>/status.md` via `skill-enter` (`Specifying`) and `skill-exit` (`SpecApproved`)
   - `artifacts/features/<slug>/proposal.md` (Moderate and Complex profiles)
   - Optional `artifacts/features/<slug>/requirements-review.md` (if readiness review flags issues)
-- **Session State**: Updates `.corezero/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`).
+- **Session State**: Updates `.corebase-specharness/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`).
 
 ## Step-by-Step Execution Workflow
 

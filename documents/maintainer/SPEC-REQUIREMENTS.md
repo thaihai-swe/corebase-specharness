@@ -66,7 +66,7 @@ with `status: deferred` and `details.verified: false`.
 | C-04 | Installed paths are project-local. There is no `COREBASE_SPECHARNESS_ENGINE_DIR`, `bin/corebase-specharness`, or external engine root. |
 | C-05 | Feature slugs must match `^[a-z0-9][a-z0-9-]{0,62}$`. |
 | C-06 | Paths that escape a managed root, use `..`, or are absolute outside the repo must be rejected. |
-| C-07 | Generated runtime state under `corebase-specharness/generated/` must not ship in the kit payload. |
+| C-07 | Generated runtime state under `.corebase-specharness/generated/` must not ship in the kit payload. |
 
 ---
 
@@ -80,7 +80,7 @@ with `status: deferred` and `details.verified: false`.
 | I-04 | Manifest `copyIfMissing` files seed adopter-owned content and must not replace existing files or symlinks. |
 | I-05 | Manifest groups must not overlap. Absolute paths and `..` segments are unsafe. |
 | I-06 | Installer copy skips `.gitkeep`, `__pycache__`, `*.pyc`, `*.pyo`, and basenames starting with `test_`. |
-| I-07 | A non-dry-run install creates `corebase-specharness/generated/.gitkeep`, restores executable bits on `install.sh` and the two validators, and runs `doctor`. |
+| I-07 | A non-dry-run install creates `.corebase-specharness/generated/.gitkeep`, restores executable bits on `install.sh` and the two validators, and runs `doctor`. |
 | I-08 | The installer must not install dependencies, infer gates, write Git hooks, or create vendor-specific instruction files. |
 | I-09 | `--dry-run` reports planned copies without mutating the target. |
 | I-10 | `init` may create missing directories and seed files in an uninitialized tree. It must not overwrite existing adopter files. |
@@ -263,7 +263,7 @@ Coarse `artifact-check --phase` file sets (`PHASE_FILES` fallback):
 
 | ID | Requirement |
 | --- | --- |
-| N-01 | Sessions live at `.corezero/sessions/<slug>/session.md`. |
+| N-01 | Sessions live at `.corebase-specharness/sessions/<slug>/session.md`. |
 | N-02 | Session files have JSON front matter plus Markdown body with `Objective`, `Progress`, and `Handoff`. |
 | N-03 | `session-start` / `skill-enter` create or resume. A closed session is reopened rather than overwritten. |
 | N-04 | `session-checkpoint` appends progress/handoff and records decisions in metadata. It requires an existing session. |
@@ -286,7 +286,7 @@ Coarse `artifact-check --phase` file sets (`PHASE_FILES` fallback):
 | G-07 | `details.verified` is true only when not dry-run and phase, artifacts, traceability, blocking gates, and required providers all pass. |
 | G-08 | Advisory `verify` exits 0 with `status: deferred` when unverified. Blocking `verify` fails. |
 | G-09 | Dry-run evaluate static checks but must not execute gates or claim a verdict. |
-| G-10 | Gate, provider, and closeout evidence runs append bounded JSON records to `corebase-specharness/generated/gate-runs.json`, `provider-runs.json`, and `verification-runs.json` (last 50). |
+| G-10 | Gate, provider, and closeout evidence runs append bounded JSON records to `.corebase-specharness/generated/gate-runs.json`, `provider-runs.json`, and `verification-runs.json` (last 50). |
 | G-11 | Providers are optional. Categories are `review` and `code-intelligence`. Modes are `optional` and `required`. |
 | G-12 | Active provider `none` is valid. Unknown active IDs fail the provider contract. |
 | G-13 | `verify` runs the review provider action `run`. Unconfigured optional providers are deferred, not failures. |

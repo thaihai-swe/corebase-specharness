@@ -374,7 +374,7 @@
             <div class="section-card">
                 <h3>The Core Execution Loop</h3>
                 <p>Features progress predictably through a bounded 4-step loop from idea to shipping:</p>
-                
+
                 <div class="step-flow">
                     <div class="step-card">
                         <span class="step-badge">1. Enter Skill</span>
@@ -452,7 +452,7 @@
                         <span class="layer-num">L5</span>
                         <div class="layer-info">
                             <h4>Layer 5: File Stores &amp; Persistence</h4>
-                            <p>Durable feature evidence (<code>artifacts/features/</code>), ephemeral resumable sessions (<code>.corezero/sessions/</code>), durable repository memory (<code>corebase-specharness/memories/</code>), and disposable audit run history (<code>corebase-specharness/generated/</code>).</p>
+                            <p>Durable feature evidence (<code>artifacts/features/</code>), ephemeral resumable sessions (<code>.corebase-specharness/sessions/</code>), durable repository memory (<code>corebase-specharness/memories/</code>), and disposable audit run history (<code>.corebase-specharness/generated/</code>).</p>
                         </div>
                     </div>
                 </div>
@@ -543,8 +543,8 @@
 
             <div class="section-card">
                 <h3>Session Auto-Delta Optimization</h3>
-                <p>CoreBase SpecHarness solves multi-turn token exhaustion by storing SHA-256 fingerprints in <code>.corezero/sessions/&lt;slug&gt;/session.md</code>. Subsequent skill commands compute fingerprint diffs and re-inject <strong>only modified files</strong>, saving 60&ndash;80% of tokens during task execution. Use <code>--full</code> to bypass caching and force a full reload.</p>
-                
+                <p>CoreBase SpecHarness solves multi-turn token exhaustion by storing SHA-256 fingerprints in <code>.corebase-specharness/sessions/&lt;slug&gt;/session.md</code>. Subsequent skill commands compute fingerprint diffs and re-inject <strong>only modified files</strong>, saving 60&ndash;80% of tokens during task execution. Use <code>--full</code> to bypass caching and force a full reload.</p>
+
                 <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/context-stack.mmd" role="img" aria-label="Context Stack Diagram">
                     <div class="diagram-loading">Loading live context stack...</div>
                 </div>
@@ -773,7 +773,7 @@
             <div class="section-card">
                 <h3>The 4-Part Verification Matrix</h3>
                 <p>The <code>verify</code> command combines mechanical preconditions, artifact schemas, requirement traceability, and repository-native gates into a single verdict:</p>
-                
+
                 <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/verify-gate.mmd" role="img" aria-label="Verify Gate Diagram">
                     <div class="diagram-loading">Loading live verify gate...</div>
                 </div>
@@ -833,7 +833,7 @@
                             <tr>
                                 <td><strong>2. Scaffold Local Dirs</strong></td>
                                 <td><code>python3 corebase-specharness/scripts/core/cli.py init --json</code></td>
-                                <td>Creates missing directories (<code>corebase-specharness/memories/repo</code>, <code>corebase-specharness/memories/domain</code>, <code>corebase-specharness/project</code>, <code>corebase-specharness/generated</code>, <code>artifacts/features</code>) and missing seed stubs. Never overwrites existing files.</td>
+                                <td>Creates missing directories (<code>corebase-specharness/memories/repo</code>, <code>corebase-specharness/memories/domain</code>, <code>corebase-specharness/project</code>, <code>.corebase-specharness/generated</code>, <code>artifacts/features</code>) and missing seed stubs. Never overwrites existing files.</td>
                             </tr>
                             <tr>
                                 <td><strong>3. Tailor the Repository</strong></td>
@@ -934,7 +934,7 @@ gates:
                                 <td rowspan="3"><strong>Session Continuity</strong></td>
                                 <td><code>session-start</code></td>
                                 <td><code>--feature &lt;F&gt;</code>, <code>--skill &lt;S&gt;</code>, opt. <code>--intent</code>, <code>--objective</code></td>
-                                <td>Creates or resumes <code>.corezero/sessions/&lt;slug&gt;/session.md</code> with JSON frontmatter.</td>
+                                <td>Creates or resumes <code>.corebase-specharness/sessions/&lt;slug&gt;/session.md</code> with JSON frontmatter.</td>
                             </tr>
                             <tr>
                                 <td><code>session-checkpoint</code></td>

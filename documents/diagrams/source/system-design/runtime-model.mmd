@@ -6,7 +6,7 @@ sequenceDiagram
     participant CLI as corebase-specharness CLI
     participant Routes as "context-routes.yaml"
     participant Features as "artifacts/features/<slug>/"
-    participant Session as ".corezero/sessions/<slug>/session.md"
+    participant Session as ".corebase-specharness/sessions/<slug>/session.md"
     participant Gates as Confirmed Gates
     participant Provider as Optional Review Provider
     participant Memory as Durable Memory
@@ -44,7 +44,7 @@ sequenceDiagram
     Gates-->>CLI: Pass or fail results
     CLI->>Provider: Run selected review action or defer when optional/none
     Provider-->>CLI: Review status and findings
-    CLI->>CLI: Record runs in corebase-specharness/generated/<br/>gate-runs.json, provider-runs.json, verification-runs.json
+    CLI->>CLI: Record runs in .corebase-specharness/generated/<br/>gate-runs.json, provider-runs.json, verification-runs.json
     CLI-->>Skills: verified true/false + mechanical findings
     Skills->>Features: Write review.md after alignment,<br/>design, security, and evidence judgment
 

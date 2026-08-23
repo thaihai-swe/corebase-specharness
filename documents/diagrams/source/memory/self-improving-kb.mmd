@@ -6,7 +6,7 @@ flowchart TD
         IMPLEMENT["spec-implement<br/>append non-trivial `[CANDIDATE]` lessons"]:::capture
         SESSION_END["cli.py session-end --feature &lt;slug&gt;<br/>--candidate / --extract-file"]:::capture
         VERIFY["harness-verify Pass + verified: true<br/>write ## Post-Ship Sync heading"]:::capture
-        GATE_RUNS["cli.py verify<br/>corebase-specharness/generated/gate-runs.json"]:::capture
+        GATE_RUNS["cli.py verify<br/>.corebase-specharness/generated/gate-runs.json"]:::capture
     end
 
     IMPLEMENT --> EXTRACTS

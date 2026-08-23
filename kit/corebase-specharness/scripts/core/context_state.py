@@ -29,7 +29,7 @@ def atomic_write(path, content):
 def default_session_dir(root, feature):
     if not feature:
         return None
-    return Path(root).resolve() / ".corezero" / "sessions" / validate_feature_slug(feature)
+    return Path(root).resolve() / ".corebase-specharness" / "sessions" / validate_feature_slug(feature)
 
 
 def default_session_path(root, feature):

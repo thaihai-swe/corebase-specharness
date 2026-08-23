@@ -9,7 +9,7 @@ state.
 Same-chat sequential skills on one feature omit `--full`. The first skill
 for a feature is a full pack. Later skills skip files and H2 sections
 already injected in **this conversation**. Auto-delta reads hashes from
-`.corezero/sessions/<slug>/session.md`. It cannot see that the chat was
+`.corebase-specharness/sessions/<slug>/session.md`. It cannot see that the chat was
 compacted or that this is a new conversation.
 
 ```text

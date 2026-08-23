@@ -241,7 +241,7 @@ new-chat auto-delta rules.
 
 A feature is a slug and a directory. All durable delivery evidence for that
 slug lives there. Sessions are the only ephemeral sibling
-(`.corezero/sessions/<slug>/`).
+(`.corebase-specharness/sessions/<slug>/`).
 
 ### 6.2 Spec → tasks → proof
 

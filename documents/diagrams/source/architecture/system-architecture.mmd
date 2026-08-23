@@ -58,9 +58,9 @@ flowchart TB
 
     subgraph L5["Layer 5 — File Stores and Persistence"]
         FEATURES["artifacts/features/&lt;slug&gt;/<br/>status · analysis · spec · plan · tasks<br/>review · session-extracts · testing scenarios"]:::seed
-        SESSIONS[".corezero/sessions/&lt;slug&gt;/session.md<br/>ephemeral resumable state"]:::generated
+        SESSIONS[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>ephemeral resumable state"]:::generated
         MEMORY["corebase-specharness/memories/ · corebase-specharness/project/<br/>durable repo and domain knowledge"]:::seed
-        GENERATED["corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json<br/>verification-runs.json · last 50"]:::generated
+        GENERATED[".corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json<br/>verification-runs.json · last 50"]:::generated
         MANIFEST["manifest.json<br/>overwrite · copyIfMissing"]:::owned
         INSTALL["corebase-specharness/scripts/install.sh<br/>backup · overwrite · seed · chmod · doctor"]:::owned
         CLI["corebase-specharness/scripts/core/cli.py<br/>flat command registry · normalized envelope"]:::owned

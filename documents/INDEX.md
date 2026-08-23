@@ -58,7 +58,7 @@ Generated files and diagrams are derived output, never source authority.
 - Quote manifest arrays as they are implemented: string patterns in `overwrite` and `copyIfMissing`.
 - Treat kit-owned `corebase-specharness/project/state-machine.yaml` as lifecycle authority; adopter changes belong in `harness-config.yaml` under `lifecycle_overrides`.
 - Treat `tasks.md` as canonical task state and feature-local `tasks.json` as its generated sidecar and read-only fallback.
-- Treat `corebase-specharness/generated/` as runtime/generated state and verify individual filenames against implementation before listing them.
+- Treat `.corebase-specharness/generated/` as runtime/generated state and verify individual filenames against implementation before listing them.
 - Use `python3 corebase-specharness/scripts/core/cli.py` in adopter examples. Source-maintainer checks may invoke scripts beneath `kit/` directly.
 - Prefer `--skill`. Document `--phase` only as compatibility on `phase-check`, `artifact-check`, and `verify`.
 - Keep public, PRD, SAD, kit, and page changes separate unless the requested scope includes them.

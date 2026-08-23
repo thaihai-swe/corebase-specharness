@@ -9,7 +9,7 @@ flowchart TD
     VERIFY --> PHASE["1. check_readiness for Verify<br/>prerequisites present · valid state transition<br/>all tasks complete with evidence"]:::mechanical
     PHASE --> ARTIFACT["2. artifact-check --trace<br/>required headings · AC-to-task linkage<br/>no orphan or unmapped ACs"]:::mechanical
     ARTIFACT --> GATES["3. Execute adopter-confirmed gates<br/>argv-safe by default · timeout<br/>on_fail = block / warn / continue"]:::mechanical
-    GATES --> HISTORY["Record runs in corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>retain the latest 50 feature runs"]:::generated
+    GATES --> HISTORY["Record runs in .corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>retain the latest 50 feature runs"]:::generated
     HISTORY --> PROVIDER["4. Run selected review provider<br/>none or optional unavailable = deferred<br/>required unavailable or command failure = failed"]:::provider
 
     PROVIDER --> RESULT{details.verified?}:::decision

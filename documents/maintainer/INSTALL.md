@@ -64,7 +64,7 @@ These are different operations. Do not treat them as aliases.
 - `corebase-specharness/memories/repo`
 - `corebase-specharness/memories/domain`
 - `corebase-specharness/project`
-- `corebase-specharness/generated`
+- `.corebase-specharness/generated`
 - `artifacts/features`
 
 It writes a stub only when the destination does not exist:
@@ -79,7 +79,7 @@ Seed stubs: `core-policies.md`, `learned-heuristics.md`,
 `project-knowledge-base.md`, `adr-log.md`, `architecture.md`,
 `product-sense.md`, `project-constraints.md`, `glossary.md`.
 
-`init` also appends `corebase-specharness/generated/*` to `.gitignore` when that line is
+`init` also appends `.corebase-specharness/generated/*` to `.gitignore` when that line is
 missing. It does **not** add `.corezero-backup-*/`. Backup directories are
 unmanaged leftovers. Adopters ignore or delete them.
 
@@ -166,7 +166,7 @@ stay because the installer never selects them.
 The manifest validator also enforces required keys (`name`, `version`,
 `requires_python`, `files`), a semantic version, only the two ownership
 groups, no exact ownership overlap, existing non-glob source files, and no
-generated runtime files shipped under `corebase-specharness/generated/` except
+generated runtime files shipped under `.corebase-specharness/generated/` except
 `.gitkeep`.
 
 ## Installer sequence
@@ -190,7 +190,7 @@ generated runtime files shipped under `corebase-specharness/generated/` except
 8. Expands `files.copyIfMissing`, preserving any destination that already
    exists.
 9. For a live install:
-   - creates `corebase-specharness/generated/.gitkeep`;
+   - creates `.corebase-specharness/generated/.gitkeep`;
    - marks `install.sh` and `validate-static-audit.py` executable;
    - runs the installed `cli.py doctor --root <target> --json`;
    - fails the install command if doctor fails.
@@ -211,7 +211,7 @@ Doctor is `python3 corebase-specharness/scripts/core/cli.py doctor`.
 - new seed copies
 
 Dry-run does not create the target, create a backup directory, copy or chmod
-files, create `corebase-specharness/generated/.gitkeep`, or run doctor.
+files, create `.corebase-specharness/generated/.gitkeep`, or run doctor.
 
 ## Backups
 

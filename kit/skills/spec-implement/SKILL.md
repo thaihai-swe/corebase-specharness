@@ -12,7 +12,7 @@ triggers: ['implement', 'code', 'build', 'deliver']
 | | |
 |---|---|
 | **Reads** | `corebase-specharness/rules/security.md`, `corebase-specharness/rules/code-design.md`, `spec.md`, `plan.md`, `tasks.md` |
-| **Writes** | Optional: project source, `tasks.md`, `status.md`, `session-extracts.md`. Session: `.corezero/sessions/<slug>/session.md` |
+| **Writes** | Optional: project source, `tasks.md`, `status.md`, `session-extracts.md`. Session: `.corebase-specharness/sessions/<slug>/session.md` |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-implement --feature <slug>`, `python3 corebase-specharness/scripts/core/cli.py task-start --feature <slug> --task <T-NNN>`, `python3 corebase-specharness/scripts/core/cli.py context-load --skill spec-implement --feature <slug> --task <T-NNN>`, `python3 corebase-specharness/scripts/core/cli.py skill-exit --skill spec-implement --feature <slug> --handoff harness-verify` |
 | **Entry** | Directly invokable peer skill; handoff may suggest `/harness-verify` |
 
@@ -45,7 +45,7 @@ Enforces task locking (`python3 corebase-specharness/scripts/core/cli.py task-st
   - `artifacts/features/<slug>/status.md` via `skill-enter` / `skill-exit` (`Implementing`)
   - `artifacts/features/<slug>/tasks.md` (updated status, exit proofs, completion timestamps)
   - `artifacts/features/<slug>/session-extracts.md` (recording `[CANDIDATE]` lessons)
-- **Session State**: Updates `.corezero/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`).
+- **Session State**: Updates `.corebase-specharness/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`).
 
 ## Step-by-Step Execution Workflow
 

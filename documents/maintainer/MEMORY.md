@@ -13,7 +13,7 @@
 | --- | --- | --- | --- |
 | Instruction | `corebase-specharness/rules/caveman.md`, `corebase-specharness/memories/repo/core-policies.md` | Every context load | Mandatory communication and policy bootstrap |
 | Domain | `corebase-specharness/memories/domain/<name>/` (`glossary.md`, `patterns.md`, `anti-patterns.md`, `boundaries.md`, optional `spec.md`) | Intent match on `glossary.md` `triggers`, or an explicit route source | Adopter-owned domain language and invariants |
-| Session and extracts | `.corezero/sessions/<slug>/session.md`, `artifacts/features/<slug>/session-extracts.md` | Session commands and route-declared feature artifacts | Working state and candidate observations |
+| Session and extracts | `.corebase-specharness/sessions/<slug>/session.md`, `artifacts/features/<slug>/session-extracts.md` | Session commands and route-declared feature artifacts | Working state and candidate observations |
 | Durable repo memory | `learned-heuristics.md`, `project-knowledge-base.md`, `core-policies.md`, `adr-log.md` | Explicit skill route declarations | Compacted, evidence-backed repository knowledge |
 
 The promotion flow is:
@@ -89,7 +89,7 @@ also match one of those globs.
 
 `--delta-from <previous-pack.json>` keeps only selected sources whose
 content fingerprint changed. When `--delta-from` and `--full` are omitted
-and a session exists at `.corezero/sessions/<slug>/session.md` with
+and a session exists at `.corebase-specharness/sessions/<slug>/session.md` with
 `last_context_fingerprint` metadata, later loads use that cache
 automatically. The cache is the union of every pack loaded in the session,
 not only the last skill, and compares H2 slices when a file was loaded by
@@ -205,7 +205,7 @@ fingerprints for every selected source in the context pack.
   `record_context_pack()` merges `last_context_fingerprint` (a map of
   `{file_path: sha256_hash}`) and `last_context_slices` (a map of
   `{file_path: {section_or_empty: sha256_hash}}`) into the front matter of
-  `.corezero/sessions/<slug>/session.md`, and updates `token_usage_estimate`.
+  `.corebase-specharness/sessions/<slug>/session.md`, and updates `token_usage_estimate`.
   The baseline is the union of every pack loaded in this session, so a source
   injected by `/spec-requirements` remains known to `/spec-plan`.
 - **Delta Comparison**: Subsequent `context-load` or `skill-enter` calls check
@@ -246,7 +246,7 @@ event.
 | Store | Path / lifetime | What it holds | Who updates it |
 | --- | --- | --- | --- |
 | Chat (this conversation) | The model’s token window | File bodies actually shown to the agent | Compact, new chat, or normal turn eviction |
-| Feature session (disk) | `.corezero/sessions/<slug>/session.md` | SHA-256 hashes of injected files and H2 sections (`last_context_fingerprint`, `last_context_slices`) | Every successful `context-load` / `skill-enter` via `record_context_pack()` |
+| Feature session (disk) | `.corebase-specharness/sessions/<slug>/session.md` | SHA-256 hashes of injected files and H2 sections (`last_context_fingerprint`, `last_context_slices`) | Every successful `context-load` / `skill-enter` via `record_context_pack()` |
 
 The next skill only asks the disk file: “have I already injected this
 exact text for this feature?” It never asks the chat: “do you still have
@@ -322,7 +322,7 @@ same-chat sequential skills omit `--full` again.
 
 ### Case 3 — new feature
 
-A new slug creates `.corezero/sessions/<new-slug>/session.md` with empty
+A new slug creates `.corebase-specharness/sessions/<new-slug>/session.md` with empty
 hashes. The first skill is a full pack with no extra phrase.
 Compact/new-chat rules from the previous feature do not apply.
 
@@ -375,7 +375,7 @@ dumping files into the context window.
   - `context.retrieval.roots`: Repositories can constrain search to active
     source trees (e.g. `[src, lib]`) instead of scanning root `"."`.
   - `context.retrieval.exclude`: Directories excluded from retrieval
-    (default: `.git`, `.corezero`, `node_modules`, `dist`, `build`, `coverage`, `corebase-specharness/generated`).
+    (default: `.git`, `.corebase-specharness`, `node_modules`, `dist`, `build`, `coverage`).
   - `context.max_retrieval_files`: Maximum number of files admitted to
     candidate scoring (seed default: 4). Profiles may override with
     `retrieval_files` (`bootstrap`, `verify`, and `compact` seed `0`).
@@ -449,13 +449,13 @@ detected secrets.
 Built-in exclusions (`DEFAULT_RETRIEVAL_EXCLUDES`):
 
 ```text
-.git  .corezero  .venv  node_modules  vendor  dist  build
+.git  .corebase-specharness  .venv  node_modules  vendor  dist  build
 coverage  __pycache__  corebase-specharness  skills  references  artifacts
 ```
 
 `retrieval.exclude` from `harness-config.yaml` is unioned onto that set. The
-seeded exclude list is `.git`, `.corezero`, `node_modules`, `dist`, `build`,
-`coverage`, `corebase-specharness/generated`.
+seeded exclude list is `.git`, `.corebase-specharness`, `node_modules`, `dist`, `build`,
+`coverage`.
 
 Additional filters:
 

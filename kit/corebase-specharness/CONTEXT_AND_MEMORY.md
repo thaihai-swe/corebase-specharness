@@ -11,7 +11,7 @@ Intent-matched domain packs (`glossary.md` `triggers`) join the pack as
 When a user submits a prompt or invokes a skill (e.g. `/spec-plan`):
 
 1. **Route Selection & Entry (`skill-enter`)**:
-   Resolves the skill route from `references/context-routes.yaml`, verifies required preconditions, updates `status.md`, and initializes or resumes `.corezero/sessions/<slug>/session.md`.
+   Resolves the skill route from `references/context-routes.yaml`, verifies required preconditions, updates `status.md`, and initializes or resumes `.corebase-specharness/sessions/<slug>/session.md`.
 
 2. **Context Compilation (`context_engine.py`)**:
    Gathers mandatory bootstrap policies (`caveman.md`, `core-policies.md`), route-declared files, active feature artifacts, task-specific excerpts, matching domain packs, and bounded local search excerpts.
@@ -80,7 +80,7 @@ python3 corebase-specharness/scripts/core/cli.py context-load --skill spec-plan 
 python3 corebase-specharness/scripts/core/cli.py context-explain --skill spec-plan --feature <slug> --intent "design change" --json
 ```
 
-Sessions live under `.corezero/sessions/<slug>/`. Durable memory remains adopter-owned Markdown under `corebase-specharness/memories/` and `corebase-specharness/project/`. `/context-memory` triages `[CANDIDATE]` lessons; `memory-audit` and `memory-gate` are read-only diagnostics.
+Sessions live under `.corebase-specharness/sessions/<slug>/`. Durable memory remains adopter-owned Markdown under `corebase-specharness/memories/` and `corebase-specharness/project/`. `/context-memory` triages `[CANDIDATE]` lessons; `memory-audit` and `memory-gate` are read-only diagnostics.
 
 Each context pack includes source paths, selection reasons, provenance, trust
 labels, token estimates, and omitted-source reasons. Use

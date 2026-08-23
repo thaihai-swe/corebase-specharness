@@ -45,7 +45,7 @@ Each task is a **tracer bullet**: a narrow but complete path that is demoable or
 - **Writes**:
   - `artifacts/features/<slug>/tasks.md` (`T-NNN`, `Covers: AC-*`, `Depends on: T-NNN`)
   - `artifacts/features/<slug>/status.md` via `skill-enter` (`TaskPlanning`) and `skill-exit` (`PlanApproved`)
-- **Session State**: Updates `.corezero/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`).
+- **Session State**: Updates `.corebase-specharness/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`).
 
 ## Step-by-Step Execution Workflow
 

@@ -16,7 +16,7 @@ flowchart TD
 
     BASE["Always-required bootstrap<br/>corebase-specharness/rules/caveman.md<br/>corebase-specharness/memories/repo/core-policies.md sections"]:::core --> ASSEMBLE
     DECLARED["Route-declared Must / Should sources<br/>and requested H2 sections"]:::source --> ASSEMBLE
-    ARTIFACTS["Route-declared feature artifacts<br/>artifacts/features/&lt;slug&gt;/...<br/>.corezero/sessions/&lt;slug&gt;/session.md"]:::feature --> ASSEMBLE
+    ARTIFACTS["Route-declared feature artifacts<br/>artifacts/features/&lt;slug&gt;/...<br/>.corebase-specharness/sessions/&lt;slug&gt;/session.md"]:::feature --> ASSEMBLE
     TASK["--task &lt;T-NNN&gt;<br/>bounded tasks.md excerpt"]:::feature -.-> ASSEMBLE
     EXPLICIT["repeatable --add-source<br/>validated repository-relative file"]:::feature -.-> ASSEMBLE
 

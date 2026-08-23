@@ -68,7 +68,7 @@ Session auto-delta solves these challenges by accumulating multi-skill baselines
 ## 3. Core mechanisms
 
 ### 3.1 Accumulated union baseline
-Instead of overwriting previous pack manifests, `record_context_pack()` merges SHA-256 fingerprints into the frontmatter of `.corezero/sessions/<slug>/session.md`:
+Instead of overwriting previous pack manifests, `record_context_pack()` merges SHA-256 fingerprints into the frontmatter of `.corebase-specharness/sessions/<slug>/session.md`:
 
 ```yaml
 ---
@@ -123,7 +123,7 @@ The system operates across two independent storage environments:
 | Storage class | Location / Lifetime | Content | Invalidation trigger |
 |---|---|---|---|
 | **Chat Memory** | Model Context Window (ephemeral) | Actual rendered text bodies | Conversation compact, context truncation, new chat |
-| **Session Cache** | `.corezero/sessions/<slug>/session.md` (disk) | SHA-256 hash maps (`fingerprints`, `slices`) | Persists across compacts, closes (`session-end`), and reopens |
+| **Session Cache** | `.corebase-specharness/sessions/<slug>/session.md` (disk) | SHA-256 hash maps (`fingerprints`, `slices`) | Persists across compacts, closes (`session-end`), and reopens |
 
 ### The `--full` reload rule
 Because the Python CLI cannot inspect the host model's window, it relies on explicit protocol discipline:

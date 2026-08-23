@@ -29,13 +29,14 @@ your-repo/
 │   ├── context-routes.yaml            skill routing authority
 │   └── tool-providers-registry.json   optional provider registry
 ├── artifacts/features/<slug>/         durable feature evidence
-├── .corezero/sessions/<slug>/         ephemeral session state
+├── .corebase-specharness/
+│   ├── sessions/<slug>/               ephemeral session state
+│   └── generated/                     runtime logs (gate-runs, verification-runs)
 └── corebase-specharness/
     ├── scripts/core/cli.py            embedded Python runtime & harness
     ├── project/                       adopter project config & architecture
     ├── memories/                      durable project memory (repo & domain)
-    ├── rules/                         shipped policy snippets (code-design, security, ponytail, caveman)
-    └── generated/                     runtime logs (gate-runs, verification-runs)
+    └── rules/                         shipped policy snippets (code-design, security, ponytail, caveman)
 ```
 
 You do not call Python modules directly from application code. The operating pattern is:
@@ -52,7 +53,7 @@ task dependency graphs, and test evidence exist.
 ### How requests execute and token costs are budgeted
 
 1. **User Request & Entry**:
-   When a user provides an intent or requests a skill, the agent calls `skill-enter --skill <name> --feature <slug> --intent "<intent>"`. This resolves route prerequisites, sets feature status in `status.md`, and creates/resumes `.corezero/sessions/<slug>/session.md`.
+   When a user provides an intent or requests a skill, the agent calls `skill-enter --skill <name> --feature <slug> --intent "<intent>"`. This resolves route prerequisites, sets feature status in `status.md`, and creates/resumes `.corebase-specharness/sessions/<slug>/session.md`.
 2. **Context Compilation & Token Estimation**:
    `context_engine.py` compiles the bounded context pack. Token estimates are calculated using `cl100k_base` BPE (via `tiktoken` when present) or `chars_per_token_estimate` (`len(text) / 4.0` in pure stdlib Python). When `--full` is omitted, the pack is auto-delta'd against the union of fingerprints already stored in this feature's `session.md`. Later skills in the **same uncompacted chat** inject only new or changed files and H2 sections; skipped sources do not consume budget. After a conversation compact, or on the first skill of a new chat for the same feature, the agent must pass `--full` because hashes survive on disk while file bodies often do not. Isolated vs sequential pack costs are in [TOKEN-COST.md](TOKEN-COST.md). Full compact / new-chat rules: [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 3. **Budget Enforcement**:
@@ -72,7 +73,7 @@ task dependency graphs, and test evidence exist.
 ### Compact and new chat
 
 The user only types skills. Auto-delta skips files already hashed in
-`.corezero/sessions/<slug>/session.md`. That is correct only while this
+`.corebase-specharness/sessions/<slug>/session.md`. That is correct only while this
 conversation still holds those files.
 
 | User action | What to type |
@@ -287,7 +288,7 @@ ightarrow$ `Done` | All tasks Done with proof, two-axis review passed, confirmed
 2. **Explicit Deviation & Re-Entry**: If planning reveals missing requirements or implementation reveals a design gap, re-enter the earlier skill explicitly (e.g., setting `status.md` to `Specifying` or `Replanning` with a documented reason). Silent phase-skipping is prohibited.
 3. **Single Active Task Discipline**: During implementation, agents must work on exactly **one** `In Progress` task at a time (`task-start` $
 ightarrow$ `task-done`).
-4. **Mechanically Protected Closeout**: Only `/harness-verify` is authorized to transition a feature to `Done`. It requires a matching record in `corebase-specharness/generated/verification-runs.json` and a `## Post-Ship Sync` section in `session-extracts.md`.
+4. **Mechanically Protected Closeout**: Only `/harness-verify` is authorized to transition a feature to `Done`. It requires a matching record in `.corebase-specharness/generated/verification-runs.json` and a `## Post-Ship Sync` section in `session-extracts.md`.
 
 ### 4.3 Side skills
 
@@ -321,7 +322,7 @@ python3 corebase-specharness/scripts/core/cli.py skill-enter   --skill spec-plan
 `skill-enter` performs four operations:
 1. Loads the route definition from `references/context-routes.yaml`.
 2. Ensures `status.md` exists (defaulting delivery profile to `Moderate`) and writes the enter state.
-3. Opens or resumes `.corezero/sessions/<slug>/session.md`.
+3. Opens or resumes `.corebase-specharness/sessions/<slug>/session.md`.
 4. Compiles and loads the bounded context pack for that skill.
 
 Do not hand-edit `- Phase:` in `status.md`.
@@ -643,7 +644,7 @@ corebase-specharness/project/architecture.md
 corebase-specharness/project/*.md
 corebase-specharness/memories/**
 artifacts/features/**
-.corezero/sessions/**
+.corebase-specharness/sessions/**
 ```
 
 ---

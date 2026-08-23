@@ -10,10 +10,10 @@ flowchart TD
     end
 
     subgraph AUTO["Auto Tier — Failure &amp; Health State"]
-        GRUNS["corebase-specharness/generated/gate-runs.json<br/>Gate runner execution history"]:::auto
-        PRUNS["corebase-specharness/generated/provider-runs.json<br/>Provider execution history"]:::auto
-        VRUNS["corebase-specharness/generated/verification-runs.json<br/>Verified closeout run history"]:::auto
-        ASSESS["corebase-specharness/generated/harness-assessment.md<br/>Optional harness health assessment"]:::auto
+        GRUNS[".corebase-specharness/generated/gate-runs.json<br/>Gate runner execution history"]:::auto
+        PRUNS[".corebase-specharness/generated/provider-runs.json<br/>Provider execution history"]:::auto
+        VRUNS[".corebase-specharness/generated/verification-runs.json<br/>Verified closeout run history"]:::auto
+        ASSESS[".corebase-specharness/generated/harness-assessment.md<br/>Optional harness health assessment"]:::auto
     end
 
     subgraph EXTR["Extracted Tier — Feature Candidates"]
@@ -30,7 +30,7 @@ flowchart TD
     end
 
     subgraph SESSION["Session State"]
-        SESS_MD[".corezero/sessions/&lt;slug&gt;/session.md<br/>Objective · progress updates · handoff updates"]:::session
+        SESS_MD[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>Objective · progress updates · handoff updates"]:::session
     end
 
     subgraph ROUTER["Routing &amp; Diagnostic Engine"]

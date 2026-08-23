@@ -23,7 +23,7 @@ from core.context_state import default_session_dir
 
 DEFAULT_TIER_BOOST = {"Must": 40, "Should": 20, "Skip": 0}
 DEFAULT_RETRIEVAL_EXCLUDES = {
-    ".git", ".corezero", ".venv", "node_modules", "vendor", "dist", "build",
+    ".git", ".corebase-specharness", ".venv", "node_modules", "vendor", "dist", "build",
     "coverage", "__pycache__", "corebase-specharness", "skills", "references", "artifacts",
 }
 SENSITIVE_FILENAMES = {".env", ".env.local", ".env.production", "id_rsa", "id_ed25519"}
@@ -350,7 +350,7 @@ def _task_context_payload(path, task_id):
         lines.append(f"  - Covers: {', '.join(active['acceptance_criteria'])}")
     if active.get("evidence"):
         lines.append(f"  - Proof: {'; '.join(active['evidence'])}")
-    
+
     if active.get("depends"):
         lines.extend(["", "## Direct Dependencies"])
         for dep_id in active["depends"]:
@@ -643,7 +643,7 @@ def _retrieve_local_evidence(root, intent, feature, task, entries, settings):
 
 def _channel_for_path(path, root):
     relative = str(Path(path).resolve().relative_to(Path(root).resolve()))
-    if relative.startswith("artifacts/") or relative.startswith(".corezero/"):
+    if relative.startswith("artifacts/") or relative.startswith(".corebase-specharness/"):
         return "feature"
     if relative.startswith("corebase-specharness/memories/"):
         return "durable_memory"

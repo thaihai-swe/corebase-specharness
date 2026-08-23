@@ -26,8 +26,8 @@ phase / skill readiness
       verify
         │
         ▼
-corebase-specharness/generated/gate-runs.json
-corebase-specharness/generated/provider-runs.json
+.corebase-specharness/generated/gate-runs.json
+.corebase-specharness/generated/provider-runs.json
 ```
 
 The embedded runtime does not infer or install project verification commands.
@@ -207,8 +207,8 @@ not execute the gates, and it skips shell-enabled commands. `verify` is the
 command that executes confirmed gates.
 
 A non-dry-run `verify` appends one feature result to
-`corebase-specharness/generated/gate-runs.json` and one provider result to
-`corebase-specharness/generated/provider-runs.json`. Each file is a JSON array capped to
+`.corebase-specharness/generated/gate-runs.json` and one provider result to
+`.corebase-specharness/generated/provider-runs.json`. Each file is a JSON array capped to
 the most recent 50 runs.
 
 ## Verification pipeline
@@ -264,7 +264,7 @@ absent is `blocking`.
 `skill-exit --skill harness-verify`: readiness requires `review.md` and a
 `## Post-Ship Sync` heading, while the central lifecycle writer also requires
 a matching, non-dry-run, successful current-config record in
-`corebase-specharness/generated/verification-runs.json`. The record is feature-scoped and
+`.corebase-specharness/generated/verification-runs.json`. The record is feature-scoped and
 is written by `verify --skill harness-verify` (bounded to 50 runs).
 
 `status-set` cannot normally set `Done`; it requires an explicit
@@ -392,8 +392,8 @@ corebase-specharness/scripts/core/handlers/configuration.py
 corebase-specharness/scripts/core/handlers/handoff.py
 corebase-specharness/scripts/core/handlers/upgrades.py
 corebase-specharness/scripts/core/readiness.py
-.corezero/engine
-.corezero/scripts
+.corebase-specharness/engine
+.corebase-specharness/scripts
 ```
 
 ### Memory diagnostics
@@ -422,7 +422,7 @@ These commands are explicit diagnostics. `session-end` does not run them.
 
 `/harness-maintain` interprets deterministic diagnostics and proposes bounded,
 user-approved maintenance. The skill, not the `doctor` CLI handler, owns
-`corebase-specharness/generated/harness-assessment.md` and any proposed repair. Policy,
+`.corebase-specharness/generated/harness-assessment.md` and any proposed repair. Policy,
 heuristic, or configuration changes require user review.
 
 ## Extensibility
