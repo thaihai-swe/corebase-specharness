@@ -223,7 +223,7 @@ cd /path/to/project</code></pre>
                             runtime.</span>
                     </div>
                     <div class="stat-pill">
-                        <span class="stat-val">49–80%</span>
+                        <span class="stat-val">54–97%</span>
                         <span class="stat-lbl">Session token savings</span>
                         <span class="stat-desc">SHA-256 fingerprints re-inject only changed sources unless
                             <code>--full</code>.</span>
@@ -554,7 +554,7 @@ cd /path/to/project</code></pre>
                 <div class="hero-meta">
                     <span class="hero-badge">11 Direct Peer Skills</span>
                     <span class="hero-badge">Stdlib Python CLI (No Daemon)</span>
-                    <span class="hero-badge">Session Auto-Delta (49–80% Token Savings)</span>
+                    <span class="hero-badge">Session Auto-Delta (54–97% Token Savings)</span>
                     <span class="hero-badge">Mechanically Protected Done</span>
                 </div>
             </div>
@@ -755,7 +755,7 @@ cd /path/to/project</code></pre>
                                 <tr>
                                     <td><strong>Context Window</strong></td>
                                     <td>Bulk dumps of hundreds of files (token waste &amp; hallucination)</td>
-                                    <td>Budget-capped compiler with session auto-delta (49–80% token savings)</td>
+                                    <td>Budget-capped compiler with session auto-delta (54–97% token savings)</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Requirements</strong></td>
@@ -1104,51 +1104,49 @@ cd /path/to/project</code></pre>
                             <tbody>
                                 <tr>
                                     <td><code>/spec-research</code> (first)</td>
-                                    <td>653</td>
-                                    <td>653 (baseline)</td>
+                                    <td>606</td>
+                                    <td>606 (baseline)</td>
                                 </tr>
                                 <tr>
                                     <td><code>/spec-requirements</code></td>
-                                    <td>888</td>
+                                    <td>841</td>
                                     <td>310</td>
                                 </tr>
                                 <tr>
                                     <td><code>/spec-plan</code></td>
-                                    <td>900</td>
-                                    <td>769</td>
+                                    <td>1,152</td>
+                                    <td>568</td>
                                 </tr>
                                 <tr>
                                     <td><code>/spec-tasks</code></td>
-                                    <td>759</td>
-                                    <td>108</td>
+                                    <td>714</td>
+                                    <td>101</td>
                                 </tr>
                                 <tr>
                                     <td><code>/spec-implement</code> (<code>T-001</code>)</td>
-                                    <td>1,746</td>
-                                    <td>696</td>
+                                    <td>1,489</td>
+                                    <td>604</td>
                                 </tr>
                                 <tr>
                                     <td><code>/spec-implement</code> (<code>T-002</code>)</td>
-                                    <td>1,746</td>
-                                    <td>78</td>
+                                    <td>1,489</td>
+                                    <td>45</td>
                                 </tr>
                                 <tr>
                                     <td><code>/harness-verify</code></td>
-                                    <td>1,444</td>
-                                    <td>542</td>
+                                    <td>1,300</td>
+                                    <td>511</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Delivery path</strong> (research → implement T-001)</td>
-                                    <td><strong>4,946</strong></td>
-                                    <td><strong>2,536 (~49% less)</strong></td>
+                                    <td><strong>4,802</strong></td>
+                                    <td><strong>2,189 (~54% less)</strong></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <p>Documented range across turns is 49–80%. Isolated <code>/spec-plan</code> and
-                        <code>/spec-adr</code> drop <code>code-design.md</code> because bootstrap already fills
-                        <code>max_bootstrap_tokens</code>. Sequential plan can include it because skipped bootstrap does
-                        not consume that channel.
+                    <p>Documented savings across sequential turns range from 54% to 97%. After initial bootstrap injection,
+                        subsequent turns re-inject only the new or changed file slices and task excerpts.
                     </p>
                 </div>
 
