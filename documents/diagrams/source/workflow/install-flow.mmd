@@ -1,50 +1,52 @@
 flowchart TD
     %% Install Flow — implementation authority:
     %% install.sh, manifest.json, INSTALL.md, and ARCHITECTURE.md
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
-    START([Adopter]) --> ENTRY{Invocation}
-    ENTRY -->|Local source checkout| LOCAL["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>[options]"]:::entry
-    ENTRY -->|Release archive| ARCHIVE["tar -xzf corebase-specharness-kit-v*.tar.gz<br/>bash corebase-specharness/scripts/install.sh &lt;target&gt;"]:::entry
-    ENTRY -->|Preview| DRY["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>--dry-run"]:::entry
+    START([Adopter]):::terminal --> ENTRY{Invocation}:::decision
+    ENTRY -->|Local source checkout| LOCAL["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>[options]"]:::core
+    ENTRY -->|Release archive| ARCHIVE["tar -xzf corebase-specharness-kit-v*.tar.gz<br/>bash corebase-specharness/scripts/install.sh &lt;target&gt;"]:::core
+    ENTRY -->|Preview| DRY["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>--dry-run"]:::optional
 
-    LOCAL --> SOURCE["Resolve kit source directory<br/>and manifest.json"]:::action
+    LOCAL --> SOURCE["Resolve kit source directory<br/>and manifest.json"]:::core
     ARCHIVE --> SOURCE
     DRY --> SOURCE
 
-    SOURCE --> REQ["Validate Python &gt;= 3.10"]:::action
-    REQ --> TARGET["Resolve target directory"]:::action
+    SOURCE --> REQ["Validate Python &gt;= 3.10"]:::gate
+    REQ --> TARGET["Resolve target directory"]:::core
 
     TARGET --> OWNERSHIP{Manifest ownership class}:::decision
-    OWNERSHIP -->|files.overwrite| OW["Back up existing target file<br/>to .corezero-backup-&lt;timestamp&gt;/<br/>then replace from kit"]:::overwrite
+    OWNERSHIP -->|files.overwrite| OW["Back up existing target file<br/>to .corezero-backup-&lt;random&gt;/<br/>then replace from kit"]:::decision
     OWNERSHIP -->|files.copyIfMissing| CIM{Target file exists?}:::decision
-    CIM -->|No| SEED["Copy installer seed file"]:::seed
-    CIM -->|Yes| SKIP["Keep adopter-controlled file"]:::seed
+    CIM -->|No| SEED["Copy installer seed file"]:::memory
+    CIM -->|Yes| SKIP["Keep adopter-controlled file"]:::memory
 
-    OW --> CLOSE
-    SEED --> CLOSE
-    SKIP --> CLOSE
+    OW --> AGENT_MIRROR
+    SEED --> AGENT_MIRROR
+    SKIP --> AGENT_MIRROR
 
-    CLOSE["Non-dry-run closeout:<br/>chmod shipped scripts executable<br/>run installed doctor"]:::action
-    CLOSE --> DOCTOR["Run installed CLI<br/>python3 corebase-specharness/scripts/core/cli.py doctor"]:::verify
+    AGENT_MIRROR["Mirror skills/ to .agent/skills/<br/>for standard agent discovery"]:::external
+    AGENT_MIRROR --> CLOSE
+
+    CLOSE["Non-dry-run closeout:<br/>chmod shipped scripts executable<br/>run installed doctor"]:::gate
+    CLOSE --> DOCTOR["Run installed CLI<br/>python3 corebase-specharness/scripts/core/cli.py doctor"]:::gate
     DOCTOR --> READY([Ready for peer skills or /starter-init]):::terminal
 
-    DRY --> DRY_REPORT["Report backup, copy, and seed actions<br/>without modifying target or running doctor"]:::dry
+    DRY --> DRY_REPORT["Report backup, copy, and seed actions<br/>without modifying target or running doctor"]:::optional
     DRY_REPORT --> PREVIEW([Review dry-run output]):::terminal
 
-    classDef terminal fill:#0d0d0d,stroke:#0d0d0d,color:#fff
-    classDef entry fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
-    classDef action fill:#fff,stroke:#d0d7de,color:#0d0d0d
-    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#0d0d0d
-    classDef overwrite fill:#fef3c7,stroke:#f59e0b,color:#78350f
-    classDef seed fill:#eef2ff,stroke:#6366f1,color:#312e81
-    classDef verify fill:#ecfdf5,stroke:#16a34a,color:#166534
-    classDef dry fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
 
     class START,READY,PREVIEW terminal
-    class LOCAL,ARCHIVE,DRY entry
-    class SOURCE,REQ,TARGET,CLOSE action
-    class OWNERSHIP,CIM decision
-    class OW overwrite
-    class SEED,SKIP seed
-    class DOCTOR verify
-    class DRY_REPORT dry
+    class LOCAL,ARCHIVE,SOURCE,TARGET core
+    class REQ,CLOSE,DOCTOR gate
+    class ENTRY,OWNERSHIP,CIM,OW decision
+    class DRY,DRY_REPORT optional
+    class AGENT_MIRROR external
+    class SEED,SKIP memory

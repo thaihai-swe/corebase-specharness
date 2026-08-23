@@ -1,31 +1,32 @@
 flowchart TD
     %% CoreBase SpecHarness Gate Chain — each layer guards the layer below
     %% Implementation authority: WORKFLOW.md §4, AGENTS.md, context-routes.yaml, harness-config.yaml
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
     ANNO_TOP["READ TOP-DOWN — WHY this line of code exists"]:::anno
 
     %% ── Layer 1: Constitution ──
-    POL["<b>Constitution &amp; Policy</b><br/>corebase-specharness/memories/repo/core-policies.md · corebase-specharness/rules/<br/><em>principles · code design · security rules · project constraints</em>"]:::pol
+    POL["<b>Constitution &amp; Policy</b><br/>corebase-specharness/memories/repo/core-policies.md · corebase-specharness/rules/<br/><em>principles · code design · security rules · project constraints</em>"]:::gate
     ARW1:::arrow
 
     %% ── Phase 1: Discovery & Research ──
-    DISC["<b>Phase 1 — Discovery &amp; Research</b><br/>artifacts/features/&lt;slug&gt;/analysis.md<br/><em>root cause · brownfield mapping · ADI probes · hypotheses</em>"]:::disc
+    DISC["<b>Phase 1 — Discovery &amp; Research</b><br/>artifacts/features/&lt;slug&gt;/analysis.md<br/><em>root cause · brownfield mapping · ADI probes · hypotheses</em>"]:::core
     ARW2:::arrow
 
     %% ── Phase 2: Specification ──
-    SPEC["<b>Phase 2 — Specification</b><br/>artifacts/features/&lt;slug&gt;/ (status.md · spec.md · optional proposal.md)<br/><em>problem statement · acceptance criteria (AC-*) · invariants</em>"]:::spec
+    SPEC["<b>Phase 2 — Specification</b><br/>artifacts/features/&lt;slug&gt;/ (status.md · spec.md · optional proposal.md)<br/><em>problem statement · acceptance criteria (AC-*) · invariants</em>"]:::core
     ARW3:::arrow
 
     %% ── Phase 3 & 4: Planning & Tasks ──
-    PLAN["<b>Phases 3 &amp; 4 — Planning &amp; Tasks</b><br/>artifacts/features/&lt;slug&gt;/ (plan.md · tasks.md · tasks.json)<br/><em>technical design · public seams · T-NNN graph · AC mapping</em>"]:::plan
+    PLAN["<b>Phases 3 &amp; 4 — Planning &amp; Tasks</b><br/>artifacts/features/&lt;slug&gt;/ (plan.md · tasks.md · tasks.json)<br/><em>technical design · public seams · T-NNN graph · AC mapping</em>"]:::core
     ARW4:::arrow
 
     %% ── Phase 5: Implementation ──
-    IMPL["<b>Phase 5 — Execution</b><br/>Project source files · tasks.md T-NNN validation proof<br/><em>code changes · locked T-NNN scope · task evidence · extracts</em>"]:::impl
+    IMPL["<b>Phase 5 — Execution</b><br/>Project source files · tasks.md T-NNN validation proof<br/><em>code changes · locked T-NNN scope · task evidence · extracts</em>"]:::core
     ARW5:::arrow
 
     %% ── Phase 6: Verification & Closeout ──
-    VER["<b>Phase 6 — Verification &amp; Closeout</b><br/>harness-config.yaml · cli.py verify · review.md · Post-Ship Sync<br/><em>mechanical checks · gates · review verdict · session-extracts sync · Done</em>"]:::ver
+    VER["<b>Phase 6 — Verification &amp; Closeout</b><br/>harness-config.yaml · cli.py verify · review.md · Post-Ship Sync<br/><em>mechanical checks · gates · review verdict · session-extracts sync · Done</em>"]:::gate
 
     %% Arrows down (gating)
     POL --> ARW1 --> DISC
@@ -43,12 +44,12 @@ flowchart TD
 
     ANNO_BOT["READ BOTTOM-UP — HOW FAR a single change propagates"]:::anno
 
-    %% ── Styles ──
-    classDef pol fill:#dc2626,stroke:#b91c1c,color:#fff
-    classDef disc fill:#ea580c,stroke:#c2410c,color:#fff
-    classDef spec fill:#f59e0b,stroke:#d97706,color:#fff
-    classDef plan fill:#0284c7,stroke:#0369a1,color:#fff
-    classDef impl fill:#6366f1,stroke:#4f46e5,color:#fff
-    classDef ver fill:#10b981,stroke:#059669,color:#fff
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
     classDef arrow fill:none,stroke:none
     classDef anno fill:none,stroke:none,color:#64748b
+
+    class POL,VER gate
+    class DISC,SPEC,PLAN,IMPL core

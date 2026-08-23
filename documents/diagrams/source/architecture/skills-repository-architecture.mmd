@@ -1,39 +1,40 @@
 flowchart TB
     %% Direct skill topology — implementation authority:
     %% WORKFLOW.md §4, skills/*/SKILL.md, and references/context-routes.yaml
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
-    subgraph PHASE1["Phase 1 — Discovery"]
-        START["/starter-init<br/>untailored repo only · no enter/exit token"]:::optional
-        RESEARCH["/spec-research<br/>analysis.md<br/>Researching → ResearchComplete"]:::skill
+    subgraph PHASE1["Phase 1 — Discovery / Bootstrap"]
+        START["/starter-init<br/>untailored repo only · feature optional<br/>no enter/exit token"]:::optional
+        RESEARCH["/spec-research<br/>analysis.md<br/>Researching → ResearchComplete"]:::core
     end
 
     subgraph PHASE2["Phase 2 — Specification"]
-        REQUIREMENTS["/spec-requirements<br/>spec.md · optional proposal.md<br/>Specifying → SpecApproved"]:::skill
+        REQUIREMENTS["/spec-requirements<br/>spec.md · optional proposal.md<br/>Specifying → SpecApproved"]:::core
     end
 
     subgraph PHASE3["Phase 3 — Architecture and Planning"]
-        PLAN["/spec-plan<br/>plan.md<br/>Planning → Planning"]:::skill
-        ADR["/spec-adr<br/>project/adr · adr-log.md"]:::optional
+        PLAN["/spec-plan<br/>plan.md<br/>Planning → Planning"]:::core
+        ADR["/spec-adr<br/>project/adr · adr-log.md<br/>feature optional"]:::optional
     end
 
     subgraph PHASE4["Phase 4 — Work Breakdown"]
-        TASKS["/spec-tasks<br/>tasks.md · tasks.json sidecar<br/>TaskPlanning → PlanApproved"]:::skill
+        TASKS["/spec-tasks<br/>tasks.md · tasks.json sidecar<br/>TaskPlanning → PlanApproved"]:::core
     end
 
     subgraph PHASE5["Phase 5 — Execution"]
-        IMPL["/spec-implement<br/>project source · T-NNN proof<br/>Implementing → Implementing"]:::skill
-        TESTING["/spec-testing-scenario<br/>optional testing-scenarios.md"]:::optional
+        IMPL["/spec-implement<br/>project source · T-NNN proof<br/>Implementing → Implementing"]:::core
+        TESTING["/spec-testing-scenario<br/>testing-scenarios.md<br/>feature required · no enter/exit"]:::optional
     end
 
     subgraph PHASE6["Phase 6 — Closeout"]
         VERIFY["/harness-verify<br/>review.md · sole Done writer<br/>Verifying → Done"]:::gate
-        MEMORY["/context-memory<br/>post-ship triage · durable promotion"]:::memory
-        HARNESS["/harness-maintain<br/>assessment · bounded improvements"]:::optional
+        MEMORY["/context-memory<br/>post-ship triage · durable promotion<br/>feature optional"]:::memory
+        HARNESS["/harness-maintain<br/>assessment · bounded improvements<br/>feature optional"]:::optional
     end
 
-    ROUTES["references/context-routes.yaml<br/>phase · profile · feature · prerequisites<br/>writes · sources · suggested handoffs"]:::router
-    SESSION[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>opened by skill-enter · checkpoint · end"]:::runtime
-    CLI["corebase-specharness/scripts/core/cli.py<br/>skill-enter · skill-exit · verify · task-*"]:::runtime
+    ROUTES["references/context-routes.yaml<br/>phase · profile · feature · prerequisites<br/>writes · sources · suggested handoffs"]:::decision
+    SESSION[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>opened by skill-enter · checkpoint · end"]:::agent
+    CLI["corebase-specharness/scripts/core/cli.py<br/>skill-enter · skill-exit · verify · task-*"]:::agent
     EXTERNAL["EXTERNAL_SKILLS.md<br/>optional engineering workflows<br/>not CoreBase SpecHarness routes"]:::external
 
     START -->|untailored brownfield| RESEARCH
@@ -45,14 +46,14 @@ flowchart TB
     IMPL --> VERIFY
     VERIFY -->|inline verification + Post-Ship Sync| MEMORY
 
-    RESEARCH -. material decision .-> ADR
-    REQUIREMENTS -. material decision .-> ADR
-    PLAN -. material decision .-> ADR
-    TASKS -. optional manual QA guide .-> TESTING
-    IMPL -. optional manual QA guide .-> TESTING
-    VERIFY -. harness health issue .-> HARNESS
-    HARNESS -. reusable lesson .-> MEMORY
-    PLAN -. documentation or diagram in scope .-> EXTERNAL
+    RESEARCH -.->|material decision| ADR
+    REQUIREMENTS -.->|material decision| ADR
+    PLAN -.->|material decision| ADR
+    TASKS -.->|optional manual QA guide| TESTING
+    IMPL -.->|optional manual QA guide| TESTING
+    VERIFY -.->|harness health issue| HARNESS
+    HARNESS -.->|reusable lesson| MEMORY
+    PLAN -.->|documentation or diagram in scope| EXTERNAL
 
     ROUTES -.-> START
     ROUTES -.-> RESEARCH
@@ -66,21 +67,22 @@ flowchart TB
     ROUTES -.-> ADR
     ROUTES -.-> TESTING
     CLI --> SESSION
-    SESSION -. continuity and handoff .-> PHASE2
-    SESSION -. continuity and handoff .-> PHASE5
+    SESSION -.->|continuity and handoff| PHASE2
+    SESSION -.->|continuity and handoff| PHASE5
 
-    classDef skill fill:#fff,stroke:#2563eb,color:#1e3a8a,stroke-width:1.4px
-    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534,stroke-width:1.5px
-    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95,stroke-width:1.5px
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
     classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
-    classDef router fill:#fef3c7,stroke:#f59e0b,color:#78350f
-    classDef runtime fill:#475569,stroke:#334155,color:#fff
     classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e,stroke-dasharray:4 3
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+    classDef agent fill:#475569,stroke:#334155,color:#fff
 
-    class RESEARCH,REQUIREMENTS,PLAN,TASKS,IMPL skill
+    class RESEARCH,REQUIREMENTS,PLAN,TASKS,IMPL core
     class VERIFY gate
-    class MEMORY memory
+    class ROUTES decision
     class START,ADR,TESTING,HARNESS optional
-    class ROUTES router
-    class SESSION,CLI runtime
     class EXTERNAL external
+    class MEMORY memory
+    class SESSION,CLI agent

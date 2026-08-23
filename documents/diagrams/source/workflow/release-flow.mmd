@@ -1,51 +1,50 @@
 flowchart LR
     %% Release Flow — implementation authority: RELEASING.md, auto-bump.yml, release.yml, ci.yml, and pages.yml
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
     COMMIT([git push or merge to main]):::terminal
 
-    COMMIT --> CI[".github/workflows/ci.yml<br/>PRs and pushes to main"]:::action
-    CI --> CHECKS["python3 -m compileall<br/>validate-static-audit.py<br/>cli.py doctor + clean-install smoke test"]:::action
+    COMMIT --> CI[".github/workflows/ci.yml<br/>PRs and pushes to main"]:::core
+    CI --> CHECKS["python3 -m compileall<br/>unittest contract suite<br/>validate-static-audit.py<br/>doctor + clean install smoke"]:::gate
     CHECKS --> PASSED{CI passed?}:::decision
     PASSED -->|No| FIX([Fix and recommit]):::terminal
 
-    PASSED -->|Yes| CLEAN["Validated main branch"]:::terminal
+    PASSED -->|Yes| CLEAN["Validated main branch"]:::gate
 
-    COMMIT --> AUTO[".github/workflows/auto-bump.yml<br/>Independently inspects merge commit message"]:::action
-    COMMIT --> PAGES[".github/workflows/pages.yml<br/>Deploys documentation site"]:::pages
+    COMMIT --> AUTO[".github/workflows/auto-bump.yml<br/>Independently inspects merge commit message"]:::core
+    COMMIT --> PAGES[".github/workflows/pages.yml<br/>Deploys product hub and docs"]:::host
     PAGES --> SITE([Published to Pages]):::terminal
 
     AUTO --> MSG_CHK{Commit message prefix?}:::decision
-    MSG_CHK -->|major: / BREAKING CHANGE:| MAJOR["Major bump<br/>v&lt;major+1&gt;.0.0"]:::bump
-    MSG_CHK -->|minor: / feat: / feature:| MINOR["Minor bump<br/>v&lt;major&gt;.&lt;minor+1&gt;.0"]:::bump
-    MSG_CHK -->|patch: / fix: / perf: / revert:| PATCH["Patch bump<br/>v&lt;major&gt;.&lt;minor&gt;.&lt;patch+1&gt;"]:::bump
-    MSG_CHK -->|chore: / docs: / refactor: / release:| SKIP["No release<br/>no tag pushed"]:::skip
+    MSG_CHK -->|major: / BREAKING CHANGE:| MAJOR["Major bump<br/>v&lt;major+1&gt;.0.0"]:::decision
+    MSG_CHK -->|minor: / feat: / feature:| MINOR["Minor bump<br/>v&lt;major&gt;.&lt;minor+1&gt;.0"]:::decision
+    MSG_CHK -->|patch: / fix: / perf: / revert:| PATCH["Patch bump<br/>v&lt;major&gt;.&lt;minor&gt;.&lt;patch+1&gt;"]:::decision
+    MSG_CHK -->|chore: / docs: / refactor: / release:| SKIP["No release<br/>no tag pushed"]:::optional
 
-    MAJOR --> TAG["Commit manifest.json update<br/>git tag vX.Y.Z &amp; push origin"]:::release
+    MAJOR --> TAG["Commit manifest.json update<br/>git tag vX.Y.Z &amp; push origin"]:::gate
     MINOR --> TAG
     PATCH --> TAG
 
-    TAG --> RELEASE_WF[".github/workflows/release.yml<br/>Triggers on v* tags<br/>Re-runs ci.yml workflow"]:::release
+    TAG --> RELEASE_WF[".github/workflows/release.yml<br/>Triggers on v* tags<br/>Re-runs ci.yml workflow"]:::core
 
-    RELEASE_WF --> PKG["Package tar.gz kit archive<br/>verify cli.py &amp; manifest.json"]:::release
+    RELEASE_WF --> PKG["Package tar.gz kit archive<br/>verify cli.py &amp; manifest.json"]:::core
     PKG --> GH_RELEASE([GitHub Release created<br/>with asset and release notes]):::terminal
 
-    MANUAL(["Maintainer manual tag<br/>git tag vX.Y.Z && git push origin vX.Y.Z<br/>use release: or [skip release] on commit"]):::manual
+    MANUAL(["Maintainer manual tag<br/>git tag vX.Y.Z &amp;&amp; git push origin vX.Y.Z<br/>use release: or [skip release] on commit"]):::memory
     MANUAL --> RELEASE_WF
 
     classDef terminal fill:#111827,stroke:#111827,color:#fff
-    classDef action fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
-    classDef bump fill:#fef3c7,stroke:#f59e0b,color:#78350f
-    classDef pages fill:#3b82f6,stroke:#1d4ed8,color:#fff
-    classDef release fill:#ecfdf5,stroke:#16a34a,color:#166534
-    classDef manual fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
-    classDef skip fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+    classDef host fill:#1e3a8a,stroke:#1e40af,color:#fff
 
-    class COMMIT,FIX,CLEAN,SITE,GH_RELEASE terminal
-    class CI,CHECKS,AUTO action
-    class PASSED,MSG_CHK decision
-    class MAJOR,MINOR,PATCH bump
-    class PAGES pages
-    class TAG,RELEASE_WF,PKG release
-    class MANUAL manual
-    class SKIP skip
+    class COMMIT,FIX,SITE,GH_RELEASE terminal
+    class CI,AUTO,RELEASE_WF,PKG core
+    class CHECKS,CLEAN,TAG gate
+    class PASSED,MSG_CHK,MAJOR,MINOR,PATCH decision
+    class PAGES host
+    class MANUAL memory
+    class SKIP optional

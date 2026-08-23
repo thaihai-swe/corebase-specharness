@@ -1,28 +1,29 @@
 flowchart TD
     %% Harness Maintenance — implementation authority:
     %% harness-maintain/SKILL.md, cli.py, harness/doctor.py, and handlers/lifecycle.py
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
     START(["Invoke /harness-maintain<br/>repository-level skill · feature optional"]):::terminal
-    START --> CONTEXT["Load named route context<br/>harness-config.yaml · core policies"]:::step
+    START --> CONTEXT["Load named route context<br/>harness-config.yaml · core policies"]:::core
     CONTEXT --> MODE{Select bounded mode}:::decision
 
-    MODE -->|assess| ASSESS["Assess<br/>run doctor --root &lt;repo&gt; --json<br/>check manifest drift · config health<br/>orphan feature directories"]:::assess
-    ASSESS --> REPORT["Terminal Report<br/>manifest drift and health"]:::output
+    MODE -->|assess| ASSESS["Assess<br/>run doctor --root &lt;repo&gt; --json<br/>check manifest drift · config health<br/>orphan feature directories"]:::core
+    ASSESS --> REPORT["Terminal Report<br/>manifest drift and health"]:::optional
 
-    MODE -->|create| CREATE["Create<br/>use assessment evidence to identify<br/>missing standard directories or seeds"]:::create
-    CREATE --> INIT["Propose or run approved scaffolding<br/>cli.py init / focused file creation<br/>without overwriting adopter-owned content"]:::create
+    MODE -->|create| CREATE["Create<br/>use assessment evidence to identify<br/>missing standard directories or seeds"]:::gate
+    CREATE --> INIT["Propose or run approved scaffolding<br/>cli.py init / focused file creation<br/>without overwriting adopter-owned content"]:::gate
 
-    MODE -->|improve| IMPROVE["Improve<br/>inspect gate failure evidence<br/>and test outcomes"]:::improve
-    IMPROVE --> DRAFT["Draft evidence-backed [DRAFT] heuristics<br/>in learned-heuristics.md<br/>never silently promote policy"]:::improve
+    MODE -->|improve| IMPROVE["Improve<br/>inspect verify / gate-check findings<br/>and test outcomes"]:::decision
+    IMPROVE --> DRAFT["Draft evidence-backed [DRAFT] heuristics<br/>in learned-heuristics.md<br/>never silently promote policy"]:::decision
 
-    MODE -->|eval| EVAL["Eval<br/>doctor package contracts · inspect CC-* rules<br/>validate confirmed gate configuration<br/>optionally verify a selected feature"]:::assess
-    EVAL --> EVAL_OUT["Record findings and comparative evidence<br/>without inventing gate results"]:::output
+    MODE -->|eval| EVAL["Eval<br/>doctor package contracts · inspect CC-* rules<br/>validate confirmed gate configuration<br/>optionally verify a selected feature"]:::core
+    EVAL --> EVAL_OUT["Record findings and comparative evidence<br/>without inventing gate results"]:::optional
 
-    MODE -->|doctor| DOCTOR["Doctor<br/>run deterministic package-health checks"]:::doctor
-    DOCTOR --> CHECKS["manifest · ownership · surfaces · routes<br/>skills · commands · providers · upgrade_contracts<br/>static audit · configuration · project_setup"]:::doctor
+    MODE -->|doctor| DOCTOR["Doctor<br/>run deterministic package-health checks"]:::core
+    DOCTOR --> CHECKS["10 fail-capable checks + project_setup advisory:<br/>manifest · ownership · surfaces · context_routes<br/>commands · providers · upgrade_contracts<br/>static_audit · configuration · project_setup"]:::core
 
-    MODE -->|diagnose| DIAGNOSE["Diagnose<br/>map reported symptom to context,<br/>constraint, feedback, architecture, or scope"]:::diagnose
-    DIAGNOSE --> FIX["Propose the smallest targeted fix<br/>and a reproduction-based verification step"]:::diagnose
+    MODE -->|diagnose| DIAGNOSE["Diagnose<br/>map reported symptom via diagnosis-map.md<br/>to context, constraint, feedback, architecture, or scope"]:::memory
+    DIAGNOSE --> FIX["Propose the smallest targeted fix<br/>and a reproduction-based verification step"]:::memory
 
     REPORT --> REVIEW
     INIT --> REVIEW
@@ -32,19 +33,24 @@ flowchart TD
     FIX --> REVIEW
 
     REVIEW{User approval needed<br/>for configuration, policy,<br/>or runtime changes?}:::decision
-    REVIEW -->|Yes| APPROVE["Present evidence, proposed diff,<br/>risk, and verification plan"]:::approval
-    APPROVE -->|approved| APPLY["Apply focused maintenance change<br/>then rerun doctor and relevant checks"]:::step
+    REVIEW -->|Yes| APPROVE["Present evidence, proposed diff,<br/>risk, and verification plan"]:::fail
+    APPROVE -->|approved| APPLY["Apply focused maintenance change<br/>then rerun doctor and relevant checks"]:::core
     APPROVE -->|not approved| END
     REVIEW -->|No| END
     APPLY --> END(["Report repaired items,<br/>verification, and remaining gaps"]):::terminal
 
     classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
-    classDef step fill:#fff,stroke:#64748b,color:#111827
-    classDef assess fill:#eef2ff,stroke:#6366f1,color:#3730a3
-    classDef improve fill:#fffbeb,stroke:#d97706,color:#78350f
-    classDef create fill:#ecfdf5,stroke:#16a34a,color:#166534
-    classDef doctor fill:#dbeafe,stroke:#2563eb,color:#1e3a8a
-    classDef diagnose fill:#fce7f3,stroke:#db2777,color:#831843
-    classDef output fill:#f3f4f6,stroke:#9ca3af,color:#374151
-    classDef approval fill:#fef2f2,stroke:#ef4444,color:#7f1d1d
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+    classDef fail fill:#fef2f2,stroke:#ef4444,color:#7f1d1d
+
+    class START,END terminal
+    class CONTEXT,ASSESS,EVAL,DOCTOR,CHECKS,APPLY core
+    class CREATE,INIT gate
+    class MODE,IMPROVE,DRAFT,REVIEW decision
+    class REPORT,EVAL_OUT optional
+    class DIAGNOSE,FIX memory
+    class APPROVE fail

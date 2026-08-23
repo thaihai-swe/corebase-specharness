@@ -1,15 +1,16 @@
 flowchart LR
     %% Artifact Data Flow — implementation authority:
     %% WORKFLOW.md, skills, task_graph.py, artifact_schema.py, and context_engine.py
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
-    STATUS["status.md<br/>durable lifecycle and delivery profile"]:::state
-    AN["analysis.md<br/>spec-research findings, risks, open questions"]:::artifact
-    SP["spec.md<br/>requirements, ACs, invariants, non-goals"]:::artifact
-    PL["plan.md<br/>technical design, boundaries, proof surfaces"]:::artifact
-    TK["tasks.md<br/>T-NNN graph, AC links, status, proof<br/>tasks.json generated sidecar"]:::artifact
-    CODE[("Project source + tests<br/>implementation changes")]:::code
-    PROOF["Fresh validation evidence<br/>task-done --evidence or existing proof"]:::proof
-    REV["review.md<br/>mechanical results plus alignment,<br/>design, and security judgment"]:::review
+    STATUS["status.md<br/>durable lifecycle and delivery profile"]:::core
+    AN["analysis.md<br/>spec-research findings, risks, open questions"]:::core
+    SP["spec.md<br/>requirements, ACs, invariants, non-goals"]:::core
+    PL["plan.md<br/>technical design, boundaries, proof surfaces"]:::core
+    TK["tasks.md<br/>T-NNN graph, AC links, status, proof<br/>tasks.json generated sidecar"]:::core
+    CODE[("Project source + tests<br/>implementation changes")]:::gate
+    PROOF["Fresh validation evidence<br/>task-done --evidence or existing proof"]:::decision
+    REV["review.md<br/>mechanical results plus alignment,<br/>design, and security judgment"]:::gate
 
     AN -->|research evidence when needed| SP
     SP -->|requirements decomposition| PL
@@ -25,11 +26,11 @@ flowchart LR
     STATUS -.->|phase updates by skills| PL
     STATUS -.->|phase updates by skills| REV
 
-    SESSION[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>objective, progress, and handoff updates"]:::session
+    SESSION[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>objective, progress, and handoff updates"]:::optional
     PL -.->|checkpoint decisions and risks| SESSION
     SESSION -.->|read at next skill entry| CODE
 
-    EXTRACT["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>candidate lessons and ## Post-Ship Sync"]:::session
+    EXTRACT["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>candidate lessons and ## Post-Ship Sync"]:::memory
     CODE -->|non-trivial candidate| EXTRACT
     REV -->|passing closeout requires sync heading| EXTRACT
 
@@ -37,11 +38,11 @@ flowchart LR
     EXTRACT --> TRIAGE
     TRIAGE --> HEUR["corebase-specharness/memories/repo/<br/>learned-heuristics.md"]:::memory
     TRIAGE --> PKB["corebase-specharness/memories/repo/<br/>project-knowledge-base.md"]:::memory
-    TRIAGE --> DOMAIN["corebase-specharness/memories/domain/&lt;name&gt;/<br/>patterns and boundaries"]:::memory
-    TRIAGE --> POLICY["corebase-specharness/memories/repo/<br/>core-policies.md"]:::memory
+    TRIAGE --> DOMAIN["corebase-specharness/memories/domain/&lt;name&gt;/<br/>patterns and boundaries"]:::external
+    TRIAGE --> POLICY["corebase-specharness/memories/repo/<br/>core-policies.md"]:::gate
 
-    ROUTES["references/context-routes.yaml<br/>named-route source declarations"]:::router
-    LOAD["skill-enter / context-load / context-explain<br/>bounded route compilation at runtime"]:::router
+    ROUTES["references/context-routes.yaml<br/>named-route source declarations"]:::core
+    LOAD["skill-enter / context-load / context-explain<br/>bounded route compilation at runtime"]:::core
     ROUTES --> LOAD
     HEUR -.->|included only when declared| LOAD
     PKB -.->|included only when declared| LOAD
@@ -52,11 +53,17 @@ flowchart LR
     REV -.->|requirements gap| SP
     REV -.->|design or task gap| PL
 
-    classDef artifact fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
-    classDef code fill:#ecfdf5,stroke:#16a34a,color:#166534
-    classDef proof fill:#fef3c7,stroke:#f59e0b,color:#78350f
-    classDef review fill:#fff7ed,stroke:#ea580c,color:#9a3412
-    classDef state fill:#f3f4f6,stroke:#6b7280,color:#374151
-    classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
-    classDef memory fill:#ecfdf5,stroke:#16a34a,color:#166534
-    classDef router fill:#eef2ff,stroke:#6366f1,color:#312e81
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+
+    class STATUS,AN,SP,PL,TK,ROUTES,LOAD core
+    class CODE,REV,POLICY gate
+    class PROOF decision
+    class SESSION optional
+    class DOMAIN external
+    class EXTRACT,TRIAGE,HEUR,PKB memory

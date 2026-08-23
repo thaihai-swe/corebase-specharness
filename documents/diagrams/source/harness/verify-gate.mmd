@@ -1,24 +1,25 @@
 flowchart TD
     %% Verification Gate — implementation authority:
     %% handlers/lifecycle.py, harness/, providers.py, and harness-verify/SKILL.md
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
     START(["All T-NNN tasks claimed complete"]):::terminal
-    START --> SESSION["skill-enter --skill harness-verify --feature &lt;slug&gt;<br/>writes status.md to Verifying<br/>loads bounded verification context pack"]:::step
+    START --> SESSION["skill-enter --skill harness-verify --feature &lt;slug&gt;<br/>writes status.md to Verifying<br/>loads bounded verification context pack"]:::core
 
-    SESSION --> VERIFY["Run cli.py verify --feature &lt;slug&gt; --skill harness-verify<br/>or add --dry-run to inspect without executing gates"]:::step
-    VERIFY --> PHASE["1. check_readiness for Verify<br/>prerequisites present · valid state transition<br/>all tasks complete with evidence"]:::mechanical
-    PHASE --> ARTIFACT["2. artifact-check --trace<br/>required headings · AC-to-task linkage<br/>no orphan or unmapped ACs"]:::mechanical
-    ARTIFACT --> GATES["3. Execute adopter-confirmed gates<br/>argv-safe by default · timeout<br/>on_fail = block / warn / continue"]:::mechanical
-    GATES --> PROVIDER["4. Run selected review provider<br/>none or optional unavailable = deferred<br/>required unavailable or command failure = failed"]:::provider
+    SESSION --> VERIFY["Run cli.py verify --feature &lt;slug&gt; --skill harness-verify<br/>or add --dry-run to inspect without executing gates"]:::core
+    VERIFY --> PHASE["1. check_readiness for Verify<br/>prerequisites present · valid state transition<br/>all tasks complete with evidence"]:::gate
+    PHASE --> ARTIFACT["2. artifact-check --trace<br/>required headings · AC-to-task linkage<br/>no orphan or unmapped ACs"]:::gate
+    ARTIFACT --> GATES["3. Execute adopter-confirmed gates<br/>argv-safe by default · timeout<br/>on_fail = block / warn / continue"]:::gate
+    GATES --> PROVIDER["4. Run selected review provider<br/>none or optional unavailable = deferred<br/>required unavailable or command failure = failed"]:::external
 
     PROVIDER --> RESULT{details.verified?}:::decision
     RESULT -->|No| MODE{verification.mode}:::decision
-    MODE -->|advisory| DEFER["CLI status = deferred (exit 0)<br/>findings and warnings reported<br/>details.verified = false"]:::warn
+    MODE -->|advisory| DEFER["CLI status = deferred (exit 0)<br/>findings and warnings reported<br/>details.verified = false"]:::decision
     MODE -->|blocking| FAIL["CLI status = failed (exit 1)<br/>required failures returned as errors"]:::fail
     DEFER --> REOPEN
     FAIL --> REOPEN["Reopen affected tasks or return to<br/>/spec-implement · /spec-plan · /spec-requirements"]:::fail
 
-    RESULT -->|Yes| AUDIT["Skill-owned verification review<br/>fresh evidence · clean state · dropped behavior<br/>AC-to-proof · design conformance · security"]:::audit
+    RESULT -->|Yes| AUDIT["Skill-owned verification review<br/>fresh evidence · clean state · dropped behavior<br/>AC-to-proof · design conformance · security"]:::memory
     AUDIT --> PROD{High/Critical production risk?}:::decision
     PROD -->|Yes| READY["Apply production-readiness checklist<br/>operations · rollback · data · performance"]:::optional
     PROD -->|No| FALLOW
@@ -27,21 +28,27 @@ flowchart TD
     CLEANUP --> VERIFY
     FALLOW -->|No| REVIEW
 
-    REVIEW["Write artifacts/features/&lt;slug&gt;/review.md<br/>verdict (# and ## Decision) · findings<br/>gate outcomes · traceability · security"]:::audit
+    REVIEW["Write artifacts/features/&lt;slug&gt;/review.md<br/>verdict (# and ## Decision) · findings<br/>gate outcomes · traceability · security"]:::memory
     REVIEW --> VERDICT{Review verdict}:::decision
     VERDICT -->|Fail| REOPEN
-    VERDICT -->|Pass or Pass with Debt| SYNC["Write ## Post-Ship Sync in session-extracts.md<br/>(mandatory before skill-exit to Done)"]:::memory
-    SYNC --> CLOSE["skill-exit --skill harness-verify --handoff context-memory<br/>updates status.md to Done"]:::pass
+    VERDICT -->|Pass or Pass with Debt| SYNC["Write ## Post-Ship Sync in session-extracts.md<br/>mandatory before skill-exit to Done"]:::memory
+    SYNC --> CLOSE["skill-exit --skill harness-verify --handoff context-memory<br/>updates status.md to Done"]:::gate
     CLOSE --> DONE(["Done<br/>harness-verify is sole authority"]):::terminal
 
     classDef terminal fill:#111827,stroke:#111827,color:#fff
-    classDef step fill:#fff,stroke:#64748b,color:#111827
-    classDef mechanical fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
-    classDef provider fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e,stroke-dasharray:4 3
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
     classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
-    classDef warn fill:#fffbeb,stroke:#d97706,color:#78350f
-    classDef fail fill:#fef2f2,stroke:#ef4444,color:#7f1d1d
-    classDef audit fill:#faf5ff,stroke:#a855f7,color:#4c1d95
     classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
-    classDef memory fill:#fdf4ff,stroke:#c026d3,color:#701a75
-    classDef pass fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e,stroke-dasharray:4 3
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+    classDef fail fill:#fef2f2,stroke:#ef4444,color:#7f1d1d
+
+    class START,DONE terminal
+    class SESSION,VERIFY core
+    class PHASE,ARTIFACT,GATES,CLOSE gate
+    class RESULT,MODE,PROD,FALLOW,VERDICT,DEFER decision
+    class READY,CLEANUP optional
+    class PROVIDER external
+    class AUDIT,REVIEW,SYNC memory
+    class FAIL,REOPEN fail

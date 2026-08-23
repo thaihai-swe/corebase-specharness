@@ -1,30 +1,30 @@
 flowchart TD
     %% Persistence Classes — implementation authority: manifest.json, handlers, skills, and context_state.py
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
     subgraph KIT["Kit-Owned Installed Payload"]
-        KIT_FILES["manifest.json · README.md · AGENTS.md · EXTERNAL_SKILLS.md<br/>skills/ · references/ · corebase-specharness/scripts/<br/>corebase-specharness/rules/ · CONTEXT_AND_MEMORY.md · state-machine.yaml<br/>files.overwrite replaces these after backup"]:::kit
+        KIT_FILES["manifest.json · README.md · AGENTS.md · EXTERNAL_SKILLS.md<br/>skills/ &amp; .agent/skills/ · references/ · corebase-specharness/scripts/<br/>corebase-specharness/rules/ · CONTEXT_AND_MEMORY.md · state-machine.yaml<br/>files.overwrite replaces these after mktemp backup"]:::core
     end
 
     subgraph SEEDS["Adopter-Owned Seeds"]
-        INDEX["corebase-specharness/MASTER_INDEX.md"]:::seed
-        PROJECT["corebase-specharness/project/<br/>architecture · tech stack · product sense · constraints · glossary<br/>harness-config.yaml · tool-providers.md and guides"]:::seed
+        INDEX["corebase-specharness/MASTER_INDEX.md"]:::gate
+        PROJECT["corebase-specharness/project/<br/>architecture · tech stack · product sense · constraints · glossary<br/>harness-config.yaml · tool-providers.md and guides"]:::gate
         MEMORY["corebase-specharness/memories/<br/>repository memory · domain pack seeds · archive seed"]:::memory
-        FEATURE_README["artifacts/features/README.md"]:::seed
+        FEATURE_README["artifacts/features/README.md"]:::gate
     end
 
     subgraph FEATURE["Durable Feature Evidence"]
-        ART["artifacts/features/&lt;slug&gt;/<br/>status · analysis · proposal · requirements review · spec<br/>plan · tasks · review · testing scenarios · promotions"]:::feature
-        EXTRACTS["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>candidate lessons and post-ship sync record"]:::feature
+        ART["artifacts/features/&lt;slug&gt;/<br/>status · analysis · proposal · requirements review · spec<br/>plan · tasks · review · testing scenarios · promotions"]:::memory
+        EXTRACTS["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>candidate lessons and post-ship sync record"]:::memory
     end
 
     subgraph SESSION["Ephemeral Resumable State"]
-        SESS[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>objective · progress updates · handoff updates<br/>retained in place by session-end"]:::session
+        SESS[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>objective · progress updates · handoff updates<br/>retained in place by session-end"]:::optional
     end
 
-
-    INSTALL["install.sh<br/>backup · overwrite · seed · chmod · doctor"]:::writer
-    SKILLS["11 peer skills<br/>procedure, judgment, and artifact ownership"]:::writer
-    CLI["corebase-specharness CLI<br/>deterministic context, session, task,<br/>artifact, gate, diagnostic, and ADR mechanics"]:::writer
+    INSTALL["install.sh<br/>backup · overwrite · seed · .agent/skills · chmod · doctor"]:::agent
+    SKILLS["11 peer skills<br/>procedure, judgment, and artifact ownership"]:::agent
+    CLI["corebase-specharness CLI<br/>deterministic context, session, task,<br/>artifact, gate, diagnostic, and ADR mechanics"]:::agent
 
     INSTALL --> KIT_FILES
     INSTALL --> INDEX
@@ -45,16 +45,17 @@ flowchart TD
     INSTALL -.->|unmatched paths remain untouched| ART
     INSTALL -.->|unmatched paths remain untouched| SESS
 
-    classDef kit fill:#fef3c7,stroke:#d97706,color:#78350f
-    classDef seed fill:#eef2ff,stroke:#6366f1,color:#312e81
-    classDef memory fill:#ecfdf5,stroke:#16a34a,color:#166534
-    classDef feature fill:#fef3c7,stroke:#f59e0b,color:#78350f
-    classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
-    classDef writer fill:#fff,stroke:#0d0d0d,color:#0d0d0d
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+    classDef agent fill:#475569,stroke:#334155,color:#fff
 
-    class KIT_FILES kit
-    class INDEX,PROJECT,FEATURE_README seed
-    class MEMORY memory
-    class ART,EXTRACTS feature
-    class SESS session
-    class INSTALL,SKILLS,CLI writer
+    class KIT_FILES core
+    class INDEX,PROJECT,FEATURE_README gate
+    class MEMORY,ART,EXTRACTS memory
+    class SESS optional
+    class INSTALL,SKILLS,CLI agent

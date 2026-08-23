@@ -1,14 +1,15 @@
 flowchart LR
     %% Traceability Chain — implementation authority:
     %% artifact_schema.py, task_graph.py, HARNESS.md, and harness-verify/SKILL.md
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
-    REQ(["Requirement<br/>REQ-001 in spec.md<br/>## Requirements"]):::chain
-    AC(["Acceptance Criterion<br/>AC-001 in spec.md<br/>## Acceptance Criteria"]):::chain
-    TASK(["Task<br/>T-001 in tasks.md<br/>Covers: AC-*"]):::chain
-    CODE[["Code Changes<br/>Project source + tests"]]:::code
-    PROOF(["Validation Evidence / Proof<br/>task-done --evidence<br/>Validation evidence field in tasks.md"]):::chain
-    REV(["Verdict in review.md<br/>alignment, design conformance,<br/>and security audit tables"]):::review
-    SYNC(["## Post-Ship Sync<br/>session-extracts.md<br/>required before Done"]):::review
+    REQ(["Requirement<br/>REQ-001 in spec.md<br/>## Requirements"]):::core
+    AC(["Acceptance Criterion<br/>AC-001 in spec.md<br/>## Acceptance Criteria"]):::core
+    TASK(["Task<br/>T-001 in tasks.md<br/>Covers: AC-*"]):::core
+    CODE[["Code Changes<br/>Project source + tests"]]:::gate
+    PROOF(["Validation Evidence / Proof<br/>task-done --evidence<br/>Validation evidence field in tasks.md"]):::decision
+    REV(["Verdict in review.md<br/>alignment, design conformance,<br/>and security audit tables"]):::gate
+    SYNC(["## Post-Ship Sync<br/>session-extracts.md<br/>required before Done"]):::memory
 
     REQ -->|resolves| AC
     AC -->|implements| TASK
@@ -22,11 +23,17 @@ flowchart LR
     REV -.->|unmapped AC: in spec without task linkage| AC
     REV -.->|unverified task: Done without proof| PROOF
 
-    RULE["Traceability Rules:<br/>Skill procedure expresses requirements through ACs<br/>artifact-check --trace enforces AC ↔ T-NNN linkage<br/>Every Done T-NNN task requires validation evidence<br/>No orphan or unmapped ACs in harness-verify<br/>Done also requires review.md + ## Post-Ship Sync"]:::note
+    RULE["Traceability Rules:<br/>Skill procedure expresses requirements through ACs<br/>artifact-check --trace enforces AC ↔ T-NNN linkage<br/>Every Done T-NNN task requires validation evidence<br/>No orphan or unmapped ACs in harness-verify<br/>Done also requires review.md + ## Post-Ship Sync"]:::optional
 
-    classDef chain fill:#eef2ff,stroke:#6366f1,color:#312e81,stroke-width:1.5px
-    classDef code fill:#ecfdf5,stroke:#10b981,color:#064e3b,stroke-width:1.5px
-    classDef review fill:#fef2f2,stroke:#ef4444,color:#7f1d1d,stroke-width:1.5px
-    classDef note fill:#f9fafb,stroke:#e5e7eb,color:#374151
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
 
-    class REQ,AC,TASK,PROOF chain
+    class REQ,AC,TASK core
+    class CODE,REV gate
+    class PROOF decision
+    class RULE optional
+    class SYNC memory

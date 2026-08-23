@@ -1,38 +1,39 @@
 flowchart TD
     %% 3-Tier Memory Architecture — implementation authority:
-    %% MEMORY.md, CONTEXT_AND_MEMORY.md, core-policies.md, context_routes.yaml, and SKILL.md
+    %% MEMORY.md, CONTEXT_AND_MEMORY.md, core-policies.md, context-routes.yaml, and SKILL.md
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
     subgraph INSTR["Instruction Tier — Human-Curated, Durable"]
-        POL["corebase-specharness/memories/repo/core-policies.md<br/>Normative CC-* rules, security policy, thresholds"]:::instr
-        PKB["corebase-specharness/memories/repo/project-knowledge-base.md<br/>Durable patterns, watchouts, continuity facts"]:::instr
-        HEUR["corebase-specharness/memories/repo/learned-heuristics.md<br/>Evidence-backed LH-* heuristics"]:::instr
-        ADR_LOG["corebase-specharness/memories/repo/adr-log.md<br/>ADR discoverability ledger"]:::instr
+        POL["corebase-specharness/memories/repo/core-policies.md<br/>Normative CC-* rules, security policy, thresholds"]:::gate
+        PKB["corebase-specharness/memories/repo/project-knowledge-base.md<br/>Durable patterns, watchouts, continuity facts"]:::gate
+        HEUR["corebase-specharness/memories/repo/learned-heuristics.md<br/>Evidence-backed LH-* heuristics"]:::gate
+        ADR_LOG["corebase-specharness/memories/repo/adr-log.md<br/>ADR discoverability ledger"]:::gate
     end
 
     subgraph AUTO["Auto Tier — Failure &amp; Health State"]
-        VERIFY_LIVE["cli.py verify<br/>in-memory gate, provider, and closeout results"]:::auto
+        VERIFY_LIVE["cli.py verify<br/>in-memory gate, provider, and closeout results"]:::decision
     end
 
     subgraph EXTR["Extracted Tier — Feature Candidates"]
-        EXT["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>EXT-* candidate lessons (`[CANDIDATE]`) · ## Post-Ship Sync"]:::extr
-        PROMO["artifacts/features/&lt;slug&gt;/promotions.md<br/>Proposals for files crossing thresholds"]:::extr
+        EXT["artifacts/features/&lt;slug&gt;/session-extracts.md<br/>EXT-* candidate lessons (`[CANDIDATE]`) · ## Post-Ship Sync"]:::memory
+        PROMO["artifacts/features/&lt;slug&gt;/promotions.md<br/>Proposals for files crossing thresholds"]:::memory
     end
 
     subgraph DOMAIN["Domain Packs — Adopter-Owned"]
-        DPACK["corebase-specharness/memories/domain/&lt;name&gt;/<br/>glossary · patterns · anti-patterns · boundaries"]:::domain
+        DPACK["corebase-specharness/memories/domain/&lt;name&gt;/<br/>glossary · patterns · anti-patterns · boundaries"]:::external
     end
 
     subgraph ADR_STORE["ADR Records"]
-        ADR_FILE["corebase-specharness/project/adr/ADR-NNN-&lt;slug&gt;.md<br/>Decision records generated via adr-generate"]:::adr
+        ADR_FILE["corebase-specharness/project/adr/ADR-NNN-&lt;slug&gt;.md<br/>Decision records generated via adr-generate"]:::decision
     end
 
     subgraph SESSION["Session State"]
-        SESS_MD[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>Objective · progress updates · handoff updates"]:::session
+        SESS_MD[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>Objective · progress updates · handoff updates"]:::optional
     end
 
     subgraph ROUTER["Routing &amp; Diagnostic Engine"]
-        ROUTES["references/context-routes.yaml<br/>Only named-skill routing authority"]:::router
-        DIAG["cli.py memory-audit / memory-gate<br/>Read-only line &amp; token threshold checks"]:::router
+        ROUTES["references/context-routes.yaml<br/>Only named-skill routing authority"]:::core
+        DIAG["cli.py memory-audit / memory-gate<br/>Read-only line &amp; token threshold checks"]:::core
     end
 
     %% Routing flow
@@ -52,30 +53,29 @@ flowchart TD
     VERIFY_LIVE -.->|harness-maintain improve<br/>draft heuristics for review| HEUR
 
     %% Writers
-    VERIFY["harness-verify →<br/>## Post-Ship Sync record"]:::writer --> EXT
+    VERIFY["harness-verify →<br/>## Post-Ship Sync record"]:::agent --> EXT
     VERIFY -.->|if threshold crossed| PROMO
-    SESS_END["cli.py session-end --feature &lt;slug&gt;"]:::writer --> EXT
-    SESS_CLI["cli.py skill-enter / session-checkpoint"]:::writer --> SESS_MD
-    ADR_SKILL["spec-adr / cli.py adr-generate"]:::writer --> ADR_FILE
+    SESS_END["cli.py session-end --feature &lt;slug&gt;"]:::agent --> EXT
+    SESS_CLI["cli.py skill-enter / session-checkpoint"]:::agent --> SESS_MD
+    ADR_SKILL["spec-adr / cli.py adr-generate"]:::agent --> ADR_FILE
     ADR_SKILL --> ADR_LOG
-    IMPROVE["harness-maintain improve"]:::writer --> HEUR
-    DOCTOR["harness-maintain assess / cli.py doctor"]:::writer --> VERIFY_LIVE
-    GATE_RUN["cli.py verify"]:::writer --> VERIFY_LIVE
+    IMPROVE["harness-maintain improve"]:::agent --> HEUR
+    DOCTOR["harness-maintain assess / cli.py doctor"]:::agent --> VERIFY_LIVE
+    GATE_RUN["cli.py verify"]:::agent --> VERIFY_LIVE
 
-    classDef instr fill:#10b981,stroke:#047857,color:#fff
-    classDef auto fill:#f59e0b,stroke:#b45309,color:#fff
-    classDef extr fill:#8b5cf6,stroke:#6d28d9,color:#fff
-    classDef domain fill:#eef2ff,stroke:#c7d2fe,color:#3730a3
-    classDef adr fill:#fef3c7,stroke:#d97706,color:#78350f
-    classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
-    classDef router fill:#3b82f6,stroke:#1d4ed8,color:#fff
-    classDef writer fill:#fff,stroke:#0d0d0d,color:#0d0d0d
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
+    classDef agent fill:#475569,stroke:#334155,color:#fff
 
-    class POL,PKB,HEUR,ADR_LOG instr
-    class VERIFY_LIVE auto
-    class EXT,PROMO extr
-    class DPACK domain
-    class ADR_FILE adr
-    class SESS_MD session
-    class ROUTES,DIAG router
-    class VERIFY,SESS_END,SESS_CLI,ADR_SKILL,IMPROVE,DOCTOR,GATE_RUN writer
+    class POL,PKB,HEUR,ADR_LOG gate
+    class VERIFY_LIVE,ADR_FILE decision
+    class EXT,PROMO memory
+    class DPACK external
+    class SESS_MD optional
+    class ROUTES,DIAG core
+    class VERIFY,SESS_END,SESS_CLI,ADR_SKILL,IMPROVE,DOCTOR,GATE_RUN agent

@@ -383,7 +383,9 @@ const PAGE_MODE_KEY = 'corebase_page_mode';
 const DOC_SECTION_IDS = new Set([
     'start-here', 'problem', 'how-it-works', 'architecture', 'memory-context',
     'skills', 'workflow', 'verify-gate', 'getting-started', 'templates-entrypoints',
-    'governance', 'faq', 'fast-start', 'main'
+    'governance', 'faq', 'fast-start', 'main', 'token-cost', 'auto-delta',
+    'skill-headings', 'task-loop', 'ownership', 'providers', 'walkthrough',
+    'subagent-fanout', 'runtime-model', 'code-intel'
 ]);
 
 function getHashId() {

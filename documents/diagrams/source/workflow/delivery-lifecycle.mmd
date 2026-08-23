@@ -1,16 +1,17 @@
 flowchart TD
     %% Canonical 6-Phase Delivery Lifecycle — implementation authority:
     %% WORKFLOW.md §4, skills/*/SKILL.md, references/context-routes.yaml
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
     subgraph REPO_SETUP["Setup (when untailored)"]
-        INSTALL["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>overwrite + copyIfMissing + doctor"]:::setup
-        INIT["/starter-init<br/>init mechanics, evidence gathering,<br/>adopter-owned seed customization"]:::setup
+        INSTALL["bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;<br/>overwrite + copyIfMissing + .agent/skills + doctor"]:::core
+        INIT["/starter-init<br/>init mechanics, evidence gathering,<br/>adopter-owned seed customization"]:::core
         INSTALL --> INIT
     end
 
     subgraph FEATURE_INIT["Direct Skill Entry"]
         ENTRY["Choose any peer skill directly<br/>starter-init is not required per feature"]:::core
-        ENTER["skill-enter --skill &lt;name&gt; --feature &lt;slug&gt;<br/>create status.md · write enter token<br/>open or resume session.md · load pack"]:::session
+        ENTER["skill-enter --skill &lt;name&gt; --feature &lt;slug&gt;<br/>create status.md · write enter token<br/>open or resume session.md · load pack"]:::memory
         ENTRY --> ENTER
     end
 
@@ -47,7 +48,7 @@ flowchart TD
         VERIFY["/harness-verify<br/>check_readiness · artifact-check --trace<br/>confirmed gates · two-axis review.md"]:::gate
         VERDICT{details.verified and review pass?}:::decision
         SYNC["Write ## Post-Ship Sync in session-extracts.md<br/>then skill-exit to Done"]:::gate
-        MEMORY["/context-memory after Done<br/>triage candidates into durable memory"]:::gate
+        MEMORY["/context-memory after Done<br/>triage candidates into durable memory"]:::memory
         DONE["status.md → Done<br/>only after inline verification + Post-Ship Sync"]:::gate
         IMPL --> VERIFY --> VERDICT
         VERDICT -->|Fail / ChangesRequested| IMPL
@@ -56,7 +57,7 @@ flowchart TD
     end
 
     subgraph CLOSEOUT["Session Handoff"]
-        END["session-end --feature &lt;slug&gt;<br/>required final handoff; optional candidates<br/>session.md remains resumable"]:::session
+        END["session-end --feature &lt;slug&gt;<br/>required final handoff; optional candidates<br/>session.md remains resumable"]:::memory
         SHIPPED([Done feature with durable evidence]):::terminal
         MEMORY --> END --> SHIPPED
     end
@@ -64,18 +65,16 @@ flowchart TD
     MAINTAIN["/harness-maintain<br/>explicit assessment and user-approved maintenance"]:::optional
     MAINTAIN -.->|proposes fixes to| VERIFY
 
-    classDef terminal fill:#0d0d0d,stroke:#0d0d0d,color:#fff
-    classDef setup fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
-    classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
-    classDef core fill:#fff,stroke:#d0d7de,color:#0d0d0d
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
     classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
     classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
-    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#0d0d0d
+    classDef memory fill:#faf5ff,stroke:#a855f7,color:#4c1d95
 
     class SHIPPED terminal
-    class INSTALL,INIT setup
-    class ENTER,END session
-    class ENTRY,RESEARCH,REQUIREMENTS,PLAN,TASKS,IMPL core
-    class VERIFY,SYNC,MEMORY,DONE gate
-    class ADR,TEST_SCENARIO,MAINTAIN optional
+    class INSTALL,INIT,ENTRY,RESEARCH,REQUIREMENTS,PLAN,TASKS,IMPL core
+    class VERIFY,SYNC,DONE gate
     class RESEARCH_DECIDE,VERDICT decision
+    class ADR,TEST_SCENARIO,MAINTAIN optional
+    class ENTER,MEMORY,END memory

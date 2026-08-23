@@ -45,7 +45,8 @@
                 'start-here', 'problem', 'how-it-works', 'architecture', 'memory-context',
                 'skills', 'workflow', 'verify-gate', 'getting-started', 'templates-entrypoints',
                 'governance', 'faq', 'fast-start', 'main',
-                'token-cost', 'auto-delta', 'skill-headings', 'task-loop', 'providers', 'ownership'
+                'token-cost', 'auto-delta', 'skill-headings', 'task-loop', 'providers', 'ownership',
+                'walkthrough', 'subagent-fanout', 'runtime-model', 'code-intel'
             ].indexOf(hash) !== -1) mode = 'docs';
             else if (modeStored === 'docs' || modeStored === 'product') mode = modeStored;
             document.documentElement.setAttribute('data-page-mode', mode);
@@ -521,14 +522,17 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                     <li><a href="#architecture">4. Architecture &amp; 5-Layer Topology</a></li>
                     <li><a href="#memory-context">5. Memory &amp; Context Compiler</a></li>
                     <li><a href="#token-cost">5a. Token Cost &amp; Auto-Delta</a></li>
+                    <li><a href="#subagent-fanout">5b. Subagent Fan-Out &amp; Boundary Control</a></li>
                     <li><a href="#skills">6. The 11 CoreBase SpecHarness Skills Catalog</a></li>
                     <li><a href="#workflow">7. The Canonical 6-Phase Lifecycle</a></li>
                     <li><a href="#task-loop">7a. Task Loop, Formats &amp; HALT</a></li>
+                    <li><a href="#walkthrough">7b. Step-by-Step Feature Walkthrough</a></li>
                     <li><a href="#verify-gate">8. The Verification Harness &amp; Closeout</a></li>
+                    <li><a href="#runtime-model">8a. Unified Readiness &amp; Runtime Model</a></li>
                     <li><a href="#getting-started">9. Getting Started (Install &amp; Onboarding)</a></li>
                     <li><a href="#ownership">9a. Ownership &amp; Backup</a></li>
                     <li><a href="#templates-entrypoints">10. Artifact Schemas &amp; CLI Matrix</a></li>
-                    <li><a href="#providers">10a. Tool Providers</a></li>
+                    <li><a href="#providers">10a. Tool Providers &amp; Code Intelligence</a></li>
                     <li><a href="#governance">11. Governance, Release &amp; Integrity</a></li>
                     <li><a href="#faq">12. FAQ &amp; Common Anti-Patterns</a></li>
                 </ul>
@@ -764,7 +768,7 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                             <span class="layer-num">L1</span>
                             <div class="layer-info">
                                 <h4>Layer 1: Direct Peer Skills &amp; Routing</h4>
-                                <p>11 peer-level skill procedures in <code>skills/</code>, shared behavioral rules in <code>skills/_shared/</code>, and the central routing authority <code>references/context-routes.yaml</code>. Optional specialist guides in <code>EXTERNAL_SKILLS.md</code>.</p>
+                                <p>11 peer-level skill procedures in <code>skills/</code>, an overwrite mirror at <code>.agent/skills/</code> for standard agent discovery, shared behavioral rules in <code>skills/_shared/</code>, and the central routing authority <code>references/context-routes.yaml</code>. The CLI still reads <code>skills/</code>. Optional specialist guides live in <code>EXTERNAL_SKILLS.md</code>.</p>
                             </div>
                         </div>
                         <div class="layer-item">
@@ -828,17 +832,17 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                 <h2>5. Memory &amp; Context Compiler</h2>
                 <div class="section-card">
                     <h3>The 8-Step Context Compilation Pipeline</h3>
-                    <p>Rather than dumping entire codebases into prompts, <code>context_engine.py</code> dynamically builds a bounded, verifiable context pack for each skill invocation using the single routing authority in <code>references/context-routes.yaml</code>:</p>
+                    <p>Rather than dumping entire codebases into prompts, <code>context_engine.py</code> dynamically builds a bounded, verifiable context pack for each skill invocation using the single routing authority in <code>references/context-routes.yaml</code>. Session auto-delta unions <code>last_context_fingerprint</code> and <code>last_context_slices</code> from <code>session.md</code> <strong>before</strong> budget math unless <code>--full</code> is passed:</p>
 
                     <div class="pipeline-flow">
                         <div class="pipe-step"><strong>1. Universal Bootstrap:</strong> Universal communication and core policies (<code>caveman.md</code>, <code>core-policies.md</code>) loaded as Must.</div>
                         <div class="pipe-step"><strong>2. Route Sources:</strong> Declarative files and H2 sections from <code>references/context-routes.yaml</code>.</div>
-                        <div class="pipe-step"><strong>3. Feature Evidence:</strong> <code>status.md</code>, <code>spec.md</code>, <code>plan.md</code> for the active feature.</div>
+                        <div class="pipe-step"><strong>3. Feature Evidence:</strong> <code>status.md</code>, <code>spec.md</code>, <code>plan.md</code>, and other route-declared feature files.</div>
                         <div class="pipe-step"><strong>4. Task Excerpt:</strong> Compact single-task payload when <code>--task T-NNN</code> is supplied (omits full <code>tasks.md</code>).</div>
                         <div class="pipe-step"><strong>5. Add-Sources:</strong> Validated repository-relative paths passed via repeatable <code>--add-source</code>.</div>
                         <div class="pipe-step"><strong>6. Domain Memory:</strong> Selected when keywords intersect <code>corebase-specharness/memories/domain/&lt;name&gt;/glossary.md</code> <code>triggers</code>.</div>
                         <div class="pipe-step"><strong>7. Local Retrieval:</strong> Bounded, path-scoped evidence search with automated secret pattern redaction.</div>
-                        <div class="pipe-step"><strong>8. Budget Math &amp; Pruning:</strong> Must sources guaranteed; Should sources dropped on overflow. Effective budget capped by <code>max_injected_tokens (6000) - reserve_tokens (1500) = 4500</code>.</div>
+                        <div class="pipe-step"><strong>8. Auto-Delta then Budget Math:</strong> Unchanged files and H2 slices are skipped first. Must sources stay; Should sources drop on overflow. Effective budget capped by <code>max_injected_tokens (6000) - reserve_tokens (1500) = 4500</code>.</div>
                     </div>
                 </div>
 
@@ -1029,6 +1033,43 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                     <div class="mermaid-render" data-mmd="documents/diagrams/source/memory/self-improving-kb.mmd" role="img" aria-label="Self-Improving KB Diagram">
                         <div class="diagram-loading">Loading live knowledge loop...</div>
                     </div>
+                </div>
+
+                <div class="section-card anchor-target" id="subagent-fanout">
+                    <h3>Subagent Fan-Out &amp; Boundary Control</h3>
+                    <p>Delegated subagents are an optional runtime capability, not CoreBase SpecHarness routes. Do not pass subagent names to <code>context-load</code>. The main agent keeps <code>session.md</code>, owns the final decision, and merges only summary reports. Raw tool sweeps stay isolated so they cannot flood the live window or the auto-delta baseline.</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/subagent-fanout.mmd" role="img" aria-label="Subagent Fan-Out Diagram">
+                        <div class="diagram-loading">Loading live subagent fan-out...</div>
+                    </div>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Spawn when</th>
+                                    <th>Typical owner</th>
+                                    <th>Boundary</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Brownfield archaeology</td>
+                                    <td><code>/starter-init</code> Phase A</td>
+                                    <td>Read-only search. Return a map, not a file dump.</td>
+                                </tr>
+                                <tr>
+                                    <td>Bounded subsystem exploration</td>
+                                    <td><code>/spec-research</code></td>
+                                    <td>Read-only. Findings land in <code>analysis.md</code> after review.</td>
+                                </tr>
+                                <tr>
+                                    <td>Isolated <code>T-NNN</code> implementation</td>
+                                    <td><code>/spec-implement</code></td>
+                                    <td>One task scope. Main agent reviews proof before <code>task-done</code>.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>If the runtime does not provide subagents, execute the same work inline. Either path must keep archaeology and research read-only until the main agent writes a declared artifact.</p>
                 </div>
             </section>
 
@@ -1370,6 +1411,64 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
                         </table>
                     </div>
                 </div>
+
+                <div class="section-card anchor-target" id="walkthrough">
+                    <h3>Step-by-Step Feature Walkthrough (End-to-End Example)</h3>
+                    <p>Real-world delivery flow for a concrete feature (e.g. <code>checkout-retry-queue</code>) from first prompt through mechanical closeout:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/end-to-end-execution.mmd" role="img" aria-label="End-to-End Execution Sequence">
+                        <div class="diagram-loading">Loading live execution walkthrough...</div>
+                    </div>
+                    <ol class="step-list">
+                        <li>
+                            <strong>1. Investigate (<code>/spec-research</code>):</strong>
+                            <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
+  --skill spec-research --feature checkout-retry-queue \
+  --intent "investigate why payment gateway timeout drops orders" --json</code></pre>
+                            <p>Isolate the failure seam, author <code>analysis.md</code> (Findings, High Risk Paths, Kaizen Countermeasures), and exit with <code>--handoff spec-requirements</code>.</p>
+                        </li>
+                        <li>
+                            <strong>2. Specify (<code>/spec-requirements</code>):</strong>
+                            <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
+  --skill spec-requirements --feature checkout-retry-queue \
+  --intent "define requirements for persistent retry queue" --json</code></pre>
+                            <p>Resolve requirements, author <code>spec.md</code> with <code>REQ-01</code> and verifiable <code>AC-01</code>, <code>AC-02</code>, run <code>phase-check</code>, and exit with <code>--handoff spec-plan</code>.</p>
+                        </li>
+                        <li>
+                            <strong>3. Design (<code>/spec-plan</code> + <code>/spec-adr</code>):</strong>
+                            <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
+  --skill spec-plan --feature checkout-retry-queue \
+  --intent "design background retry worker and idempotency store" --json
+python3 corebase-specharness/scripts/core/cli.py adr-generate \
+  --feature checkout-retry-queue --title "PostgreSQL SKIP LOCKED for Retry Queue" --json</code></pre>
+                            <p>Apply Clean Architecture / Deep Modules, write <code>plan.md</code> with DoR, and exit with <code>--handoff spec-tasks</code>.</p>
+                        </li>
+                        <li>
+                            <strong>4. Break Down (<code>/spec-tasks</code>):</strong>
+                            <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
+  --skill spec-tasks --feature checkout-retry-queue --json
+python3 corebase-specharness/scripts/core/cli.py task-check --feature checkout-retry-queue --json</code></pre>
+                            <p>Write sequenced <code>tasks.md</code> mapping every AC to <code>T-001</code>, <code>T-002</code>, then exit with <code>--handoff spec-implement</code>.</p>
+                        </li>
+                        <li>
+                            <strong>5. Implement &amp; Prove (<code>/spec-implement</code>):</strong>
+                            <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
+  --skill spec-implement --feature checkout-retry-queue --json
+# Per task: task-start -&gt; context-load --task T-NNN -&gt; red/green code -&gt; task-done with evidence
+python3 corebase-specharness/scripts/core/cli.py task-start --feature checkout-retry-queue --task T-001 --json
+python3 corebase-specharness/scripts/core/cli.py task-done --feature checkout-retry-queue --task T-001 \
+  --evidence "pytest tests/test_retry_queue_db.py passed (8/8)" --json</code></pre>
+                        </li>
+                        <li>
+                            <strong>6. Verify &amp; Close (<code>/harness-verify</code>):</strong>
+                            <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
+  --skill harness-verify --feature checkout-retry-queue --json
+python3 corebase-specharness/scripts/core/cli.py verify --feature checkout-retry-queue --skill harness-verify --json
+# Author review.md, verify session-extracts.md has "## Post-Ship Sync", exit to Done:
+python3 corebase-specharness/scripts/core/cli.py skill-exit \
+  --skill harness-verify --feature checkout-retry-queue --handoff context-memory --json</code></pre>
+                        </li>
+                    </ol>
+                </div>
             </section>
 
             <!--SECTION:8-->
@@ -1419,6 +1518,38 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
                         <div class="diagram-loading">Loading live sync diagram...</div>
                     </div>
                 </div>
+
+                <div class="section-card anchor-target" id="runtime-model">
+                    <h3>Unified Readiness Evaluator &amp; Runtime Model</h3>
+                    <p><code>readiness.py</code> (<code>check_readiness</code>) is the single evaluator behind <code>verify</code>, <code>phase-check</code>, and <code>skill-exit</code>. It evaluates route prerequisites, mechanical preconditions, confirmed gates, and state-machine transitions in a single pass.</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/system-design/runtime-model.mmd" role="img" aria-label="Runtime Model Sequence Diagram">
+                        <div class="diagram-loading">Loading live runtime model...</div>
+                    </div>
+                    <div class="comparison-table-wrapper">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Evaluation Scope</th>
+                                    <th>Artifact Source</th>
+                                    <th>Mechanical Extras</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>--skill &lt;name&gt;</code> (Preferred)</td>
+                                    <td>Route <code>prerequisites</code> only (avoids inheriting unowned phase requirements).</td>
+                                    <td>Done extras only (<code>review.md</code> + Post-Ship Sync in <code>session-extracts.md</code>).</td>
+                                </tr>
+                                <tr>
+                                    <td><code>--phase &lt;name&gt;</code> (Compatibility)</td>
+                                    <td><code>state-machine.yaml</code> phase preconditions.</td>
+                                    <td>Plan / Implement / Verify / Done extras (requirements readiness, all tasks done, evidence).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p>Passing both <code>--skill</code> and <code>--phase</code> fails loudly. Closeout skills (<code>/context-memory</code>, <code>/harness-maintain</code>) skip token transition checks after <code>Done</code> or <code>Abandoned</code> so post-ship work is never blocked as an illegal transition.</p>
+                </div>
             </section>
 
             <!--SECTION:9-->
@@ -1441,7 +1572,7 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
                                 <tr>
                                     <td><strong>1. Install / Upgrade</strong></td>
                                     <td><code>bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;</code></td>
-                                    <td>Copies overwrite-owned files, seeds missing <code>copyIfMissing</code> stubs, makes scripts executable, and runs doctor.</td>
+                                    <td>Copies overwrite-owned files, seeds missing <code>copyIfMissing</code> stubs, mirrors <code>skills/</code> to <code>.agent/skills/</code>, makes scripts executable, and runs doctor.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>2. Scaffold Local Dirs</strong></td>
@@ -1518,7 +1649,7 @@ gates:
                             <tbody>
                                 <tr>
                                     <td><strong><code>files.overwrite</code></strong> (kit-owned)</td>
-                                    <td><code>manifest.json</code>, <code>README.md</code>, <code>AGENTS.md</code>, <code>EXTERNAL_SKILLS.md</code>, <code>skills/**</code>, <code>references/context-routes.yaml</code>, <code>references/tool-providers-registry.json</code>, <code>corebase-specharness/scripts/core/**</code>, <code>corebase-specharness/scripts/install.sh</code>, <code>corebase-specharness/rules/**</code>, <code>corebase-specharness/project/state-machine.yaml</code>, <code>corebase-specharness/scripts/validate-static-audit.py</code></td>
+                                    <td><code>manifest.json</code>, <code>README.md</code>, <code>AGENTS.md</code>, <code>EXTERNAL_SKILLS.md</code>, <code>skills/**</code> plus the <code>.agent/skills/**</code> overwrite mirror, <code>references/context-routes.yaml</code>, <code>references/tool-providers-registry.json</code>, <code>corebase-specharness/scripts/core/**</code>, <code>corebase-specharness/scripts/install.sh</code>, <code>corebase-specharness/rules/**</code>, <code>corebase-specharness/project/state-machine.yaml</code>, <code>corebase-specharness/scripts/validate-static-audit.py</code></td>
                                     <td>Backed up, then replaced on upgrade.</td>
                                 </tr>
                                 <tr>
@@ -1653,7 +1784,7 @@ gates:
                                     <td rowspan="3"><strong>Package &amp; Gate Health</strong></td>
                                     <td><code>doctor</code></td>
                                     <td>opt. <code>--root &lt;dir&gt;</code>, <code>--json</code></td>
-                                    <td>Runs 11 named package-health checks (10 can fail the command; <code>project_setup</code> is advisory). Includes the <code>skills</code> metadata check.</td>
+                                    <td>Runs 10 named package-health checks (9 can fail the command; <code>project_setup</code> is advisory).</td>
                                 </tr>
                                 <tr>
                                     <td><code>gate-check</code></td>
@@ -1713,8 +1844,11 @@ gates:
                 </div>
 
                 <div class="section-card anchor-target" id="providers">
-                    <h3>Optional Tool Providers</h3>
+                    <h3>Optional Tool Providers &amp; Code Intelligence</h3>
                     <p>Providers are opt-in. New installs keep <code>active: none</code> and <code>mode: optional</code> in both categories. The installer does not install, authenticate, or enable provider binaries. Configure them in <code>corebase-specharness/project/tool-providers.md</code>.</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/code-intel-integration.mmd" role="img" aria-label="Code Intelligence Integration Diagram">
+                        <div class="diagram-loading">Loading live code intelligence diagram...</div>
+                    </div>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -1747,7 +1881,7 @@ gates:
                             </tbody>
                         </table>
                     </div>
-                    <p><code>provider-run</code> without <code>--action</code> defaults to <code>run</code> for <code>review</code> and <code>check</code> for <code>code-intelligence</code>. <code>check</code> reports availability and does not execute a binary. Shell gates in <code>harness-config.yaml</code> require both <code>allow_shell: true</code> and a non-empty <code>shell_rationale</code>.</p>
+                    <p id="code-intel"><code>provider-run</code> without <code>--action</code> defaults to <code>run</code> for <code>review</code> and <code>check</code> for <code>code-intelligence</code>. <code>check</code> reports availability and does not execute a binary. Shell gates in <code>harness-config.yaml</code> require both <code>allow_shell: true</code> and a non-empty <code>shell_rationale</code>. If a code-intelligence provider is unavailable or inactive, agents fall back to bounded local search (<code>grep</code> / <code>read</code>) and record <code>[CI tool unavailable]</code> without failing verification.</p>
                 </div>
             </section>
 
@@ -1763,14 +1897,13 @@ gates:
                 </div>
 
                 <div class="section-card">
-                    <h3>Package Health Surface (11 Doctor Checks)</h3>
-                    <p><code>doctor</code> runs 11 named package-health checks. The first 10 can fail the command; <code>project_setup</code> is advisory and warns without failing.</p>
+                    <h3>Package Health Surface (10 Doctor Checks)</h3>
+                    <p><code>doctor</code> runs 10 named package-health checks. The first 9 can fail the command; <code>project_setup</code> is advisory and warns without failing.</p>
                     <ol class="step-list">
                         <li><strong>manifest:</strong> Validates SemVer, keys, missing glob patterns, and shipped files.</li>
                         <li><strong>ownership:</strong> Asserts zero overlap between <code>overwrite</code> and <code>copyIfMissing</code>.</li>
                         <li><strong>surfaces:</strong> Verifies no retired leftovers exist on disk.</li>
                         <li><strong>context_routes:</strong> Validates route fields, phases, states, and source file existence.</li>
-                        <li><strong>skills:</strong> Validates <code>SKILL.md</code> frontmatter metadata and command references.</li>
                         <li><strong>commands:</strong> Validates every registry handler is importable and unique.</li>
                         <li><strong>providers:</strong> Asserts tool provider registry integrity.</li>
                         <li><strong>upgrade_contracts:</strong> Validates kit-owned escape transitions.</li>

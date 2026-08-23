@@ -1,43 +1,43 @@
 flowchart TD
     %% Subagent-Driven Development — implementation authority:
     %% AGENTS.md §8-9, starter-init/SKILL.md, and spec-research/SKILL.md
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
-    MAIN_AG["Main Agent Context Loop<br/>keeps context bounded; owns final decision"]
+    MAIN_AG["Main Agent Context Loop<br/>keeps context bounded; owns final decision"]:::agent
 
     MAIN_AG --> DECIDE{Spawning subagent<br/>useful for isolated task?}:::decision
 
-    DECIDE -- No --> INLINE["Execute work inline in main context"]:::inline
-    DECIDE -- Yes --> SPAWN["Spawn subagents with isolated context<br/>(Read-only for archaeology/research)"]:::spawn
+    DECIDE -- No --> INLINE["Execute work inline in main context"]:::gate
+    DECIDE -- Yes --> SPAWN["Spawn subagents with isolated context<br/>(Read-only for archaeology/research)"]:::core
 
-    SPAWN --> SA_ARCH["Archaeology Subagent<br/>(/starter-init Phase A)<br/>read-only search / brownfield mapping"]:::subagent
-    SPAWN --> SA_RES["Research Subagent<br/>(/spec-research SFE)<br/>bounded subsystem exploration"]:::subagent
-    SPAWN --> SA_PAR["Implementation Subagent<br/>(/spec-implement task)<br/>isolated T-NNN scope"]:::subagent
+    SPAWN --> SA_ARCH["Archaeology Subagent<br/>(/starter-init Phase A)<br/>read-only search / brownfield mapping"]:::external
+    SPAWN --> SA_RES["Research Subagent<br/>(/spec-research SFE)<br/>bounded subsystem exploration"]:::external
+    SPAWN --> SA_PAR["Implementation Subagent<br/>(/spec-implement task)<br/>isolated T-NNN scope"]:::external
 
-    SA_ARCH -->|findings| R_ARCH["Summary Report A"]:::report
-    SA_RES -->|findings| R_RES["Summary Report B"]:::report
-    SA_PAR -->|findings| R_PAR["Summary Report C"]:::report
+    SA_ARCH -->|findings| R_ARCH["Summary Report A"]:::decision
+    SA_RES -->|findings| R_RES["Summary Report B"]:::decision
+    SA_PAR -->|findings| R_PAR["Summary Report C"]:::decision
 
-    R_ARCH --> MERGE["Merge ONLY summary reports<br/>into main context<br/>Raw sweeps stay isolated"]:::merge
+    R_ARCH --> MERGE["Merge ONLY summary reports<br/>into main context<br/>Raw sweeps stay isolated"]:::core
     R_RES --> MERGE
     R_PAR --> MERGE
 
     MERGE --> MAIN_AG
     INLINE --> MAIN_AG
 
-    NOTE["Rules:<br/>- Delegated subagents are an optional runtime capability<br/>- Subagents are not CoreBase SpecHarness routes<br/>- Raw tool outputs must never flood the main context window<br/>- Archaeology and research exploration must be read-only<br/>- Main agent always reviews subagent outputs and owns final decisions"]:::note
+    NOTE["Rules:<br/>- Delegated subagents are an optional runtime capability<br/>- Subagents are not CoreBase SpecHarness routes<br/>- Raw tool outputs must never flood the main context window<br/>- Archaeology and research exploration must be read-only<br/>- Main agent always reviews subagent outputs and owns final decisions"]:::optional
 
-    classDef main fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
-    classDef subagent fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
-    classDef report fill:#fef3c7,stroke:#f59e0b,color:#78350f
-    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#0d0d0d
-    classDef inline fill:#ecfdf4,stroke:#16a34a,color:#166534
-    classDef spawn fill:#fcf3f3,stroke:#ef4444,color:#7f1d1d
-    classDef merge fill:#fff,stroke:#d0d7de,color:#0d0d0d
-    classDef note fill:#f9fafb,stroke:#e5e7eb,color:#374151
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
+    classDef optional fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
+    classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e
+    classDef agent fill:#475569,stroke:#334155,color:#fff
 
-    class MAIN_AG,MERGE main
-    class SA_ARCH,SA_RES,SA_PAR subagent
-    class R_ARCH,R_RES,R_PAR report
-    class DECIDE decision
-    class INLINE inline
-    class SPAWN spawn
+    class MAIN_AG agent
+    class DECIDE,R_ARCH,R_RES,R_PAR decision
+    class INLINE gate
+    class SPAWN,MERGE core
+    class SA_ARCH,SA_RES,SA_PAR external
+    class NOTE optional

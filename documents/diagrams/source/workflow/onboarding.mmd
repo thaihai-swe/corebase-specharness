@@ -1,37 +1,40 @@
 flowchart TD
     %% CoreBase SpecHarness Onboarding Flow — implementation authority:
     %% WORKFLOW.md §2–§3, starter-init/SKILL.md, install.sh, and cli.py init
+    %% Palette: documents/diagrams/source/_shared/palette.md
 
-    START([Untailored Project]) --> INST["install.sh<br/>Copies kit-owned overwrite files<br/>Seeds missing copyIfMissing files<br/>Runs installed doctor"]:::common
-    INST --> INIT_CMD["python3 corebase-specharness/scripts/core/cli.py init<br/>Scaffolds missing directories and seed stubs<br/>Reports onboarding readiness and stack markers"]:::common
+    START([Untailored Project]):::terminal --> INST["install.sh<br/>Copies kit-owned overwrite files<br/>Seeds missing copyIfMissing files<br/>Mirrors skills/ to .agent/skills/<br/>Runs installed doctor"]:::core
+    INST --> INIT_CMD["python3 corebase-specharness/scripts/core/cli.py init<br/>Scaffolds missing directories and seed stubs<br/>Reports onboarding readiness and stack markers"]:::core
     INIT_CMD --> MODE{starter-init mode}:::decision
 
-    MODE -->|fresh-init| FRESH["Empty or uninitialized workspace<br/>scaffold · archaeology sweep · memory pre-fill"]:::common
-    MODE -->|resync-drift| RESYNC["harness-config.yaml already exists<br/>read-only archaeology diff<br/>do not overwrite adopter edits"]:::common
+    MODE -->|fresh-init| FRESH["Empty or uninitialized workspace<br/>scaffold · archaeology sweep · memory pre-fill"]:::core
+    MODE -->|resync-drift| RESYNC["harness-config.yaml already exists<br/>read-only archaeology diff<br/>do not overwrite adopter edits"]:::core
 
     FRESH --> DETECT
     RESYNC --> DETECT
     DETECT{Greenfield or Brownfield?}:::decision
 
-    DETECT -->|Greenfield| GREEN["Greenfield<br/>Empty or kit-only repository"]:::green
-    DETECT -->|Brownfield| BROWN["Brownfield<br/>Existing project code or tests"]:::brown
+    DETECT -->|Greenfield| GREEN["Greenfield<br/>Empty or kit-only repository"]:::gate
+    DETECT -->|Brownfield| BROWN["Brownfield<br/>Existing project code or tests"]:::decision
 
-    GREEN --> GINIT["/starter-init Phase B<br/>Configure core-policies.md and project descriptors"]:::green
-    GINIT --> GMEM["Customize memory files and confirm native commands"]:::green
-    GMEM --> GFEAT["Pick first feature<br/>Route to /spec-requirements"]:::green
+    GREEN --> GINIT["/starter-init Phase B<br/>Configure core-policies.md and project descriptors"]:::gate
+    GINIT --> GMEM["Customize memory files and confirm native commands"]:::gate
+    GMEM --> GFEAT["Pick first feature<br/>Route to /spec-requirements"]:::gate
 
-    BROWN --> BARCH["/starter-init Phase A<br/>Read-only archaeology sweep via subagents<br/>Writes stack, architecture, policies, and preserved baselines"]:::brown
-    BARCH --> BINIT["/starter-init Phase B<br/>Customize core-policies.md and project facts<br/>Record baseline test commands"]:::brown
-    BINIT --> BSAFE["Pick small, safe first feature<br/>Route to /spec-research if behavior unknown"]:::brown
+    BROWN --> BARCH["/starter-init Phase A<br/>Read-only archaeology sweep via subagents<br/>Writes stack, architecture, policies, and preserved baselines"]:::decision
+    BARCH --> BINIT["/starter-init Phase B<br/>Customize core-policies.md and project facts<br/>Record baseline test commands"]:::decision
+    BINIT --> BSAFE["Pick small, safe first feature<br/>Route to /spec-research if behavior unknown"]:::decision
 
-    GFEAT --> LOOP[Standard direct-skill delivery loop]:::common
+    GFEAT --> LOOP[Standard direct-skill delivery loop]:::core
     BSAFE --> LOOP
     LOOP --> SHIP([Shipped feature + KB compounded]):::terminal
 
-    classDef terminal fill:#0d0d0d,stroke:#0d0d0d,color:#fff
-    classDef green fill:#ebf7f2,stroke:#10b981,color:#065f46
-    classDef brown fill:#fffbeb,stroke:#f59e0b,color:#92400e
-    classDef common fill:#fff,stroke:#d0d7de,color:#0d0d0d
-    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#0d0d0d
+    classDef terminal fill:#111827,stroke:#111827,color:#fff
+    classDef core fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
+    classDef gate fill:#ecfdf5,stroke:#16a34a,color:#166534
+    classDef decision fill:#fff7ed,stroke:#f59e0b,color:#78350f
 
     class START,SHIP terminal
+    class INST,INIT_CMD,FRESH,RESYNC,LOOP core
+    class GREEN,GINIT,GMEM,GFEAT gate
+    class MODE,DETECT,BROWN,BARCH,BINIT,BSAFE decision
