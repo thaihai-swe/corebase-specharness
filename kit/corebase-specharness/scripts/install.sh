@@ -80,6 +80,25 @@ else
   backup="$(mktemp -d "$target/.corezero-backup-XXXXXXXX")" || err "failed to allocate backup directory"
 fi
 
+copy_file() {
+  local src="$1" rel="$2" mode="$3"
+  local dst="$target/$rel"
+  if [[ "$mode" == seed && ( -e "$dst" || -L "$dst" ) ]]; then log "  preserve seed: $rel"; return 0; fi
+  if [[ -L "$dst" && "$mode" == overwrite ]]; then
+    if $dry_run; then
+      log "  [dry-run] backup overwrite link: $rel"
+      log "  [dry-run] remove overwrite link: $rel"
+    else
+      mkdir -p "$(dirname "$backup/$rel")"
+      cp -P "$dst" "$backup/$rel"
+      rm -- "$dst"
+    fi
+  elif [[ -f "$dst" && "$mode" == overwrite ]]; then
+    if $dry_run; then log "  [dry-run] backup: $rel"; else mkdir -p "$(dirname "$backup/$rel")"; cp "$dst" "$backup/$rel"; fi
+  fi
+  if $dry_run; then log "  [dry-run] copy: $rel"; else mkdir -p "$(dirname "$dst")"; cp "$src" "$dst"; fi
+}
+
 copy_group() {
   local group="$1" mode="$2"
   python3 - "$manifest" "$group" "$source_dir" <<'PY' | while IFS= read -r rel; do
@@ -93,21 +112,22 @@ for item in json.loads(Path(manifest).read_text())['files'][group]:
             print(path.relative_to(source).as_posix())
 PY
     [[ -n "$rel" ]] || continue
-    local src="$source_dir/$rel" dst="$target/$rel"
-    if [[ "$mode" == seed && ( -e "$dst" || -L "$dst" ) ]]; then log "  preserve seed: $rel"; continue; fi
-    if [[ -L "$dst" && "$mode" == overwrite ]]; then
-      if $dry_run; then
-        log "  [dry-run] backup overwrite link: $rel"
-        log "  [dry-run] remove overwrite link: $rel"
-      else
-        mkdir -p "$(dirname "$backup/$rel")"
-        cp -P "$dst" "$backup/$rel"
-        rm -- "$dst"
-      fi
-    elif [[ -f "$dst" && "$mode" == overwrite ]]; then
-      if $dry_run; then log "  [dry-run] backup: $rel"; else mkdir -p "$(dirname "$backup/$rel")"; cp "$dst" "$backup/$rel"; fi
-    fi
-    if $dry_run; then log "  [dry-run] copy: $rel"; else mkdir -p "$(dirname "$dst")"; cp "$src" "$dst"; fi
+    copy_file "$source_dir/$rel" "$rel" "$mode"
+  done
+}
+
+copy_skills_to_agent() {
+  [[ -d "$source_dir/skills" ]] || err "skills directory not found"
+  python3 - "$source_dir" <<'PY' | while IFS= read -r rel; do
+import sys
+from pathlib import Path
+source = Path(sys.argv[1])
+for path in (source / "skills").rglob("*"):
+    if path.is_file() and path.name != ".gitkeep" and "__pycache__" not in path.parts and not path.name.endswith((".pyc", ".pyo")) and not path.name.startswith("test_"):
+        print(path.relative_to(source).as_posix())
+PY
+    [[ -n "$rel" ]] || continue
+    copy_file "$source_dir/$rel" ".agents/$rel" overwrite
   done
 }
 
@@ -138,15 +158,27 @@ print(sum(1 for item in items for raw in glob.glob(str(Path(source) / item), rec
 PY
 )"
 
+agent_skill_count="$(python3 - "$source_dir" <<'PY'
+import sys
+from pathlib import Path
+source = Path(sys.argv[1])
+print(sum(1 for path in (source / "skills").rglob("*")
+          if path.is_file() and path.name != ".gitkeep" and "__pycache__" not in path.parts
+          and not path.name.endswith((".pyc", ".pyo")) and not path.name.startswith("test_")))
+PY
+)"
+
 log "Installing CoreBase SpecHarness v$manifest_version (overwrite files: $overwrite_count)"
 copy_group overwrite overwrite
 copy_group copyIfMissing seed
+copy_skills_to_agent
 if ! $dry_run; then
   chmod +x "$target/corebase-specharness/scripts/install.sh" "$target/corebase-specharness/scripts/validate-static-audit.py"
   python3 "$target/corebase-specharness/scripts/core/cli.py" doctor --root "$target" --json >/dev/null
 fi
 log "Installed embedded runtime: python3 corebase-specharness/scripts/core/cli.py"
 log "Upgrade report: refreshed $overwrite_count kit-owned files; preserved $preserved_count adopter-owned seeds."
+log "Mirrored $agent_skill_count skill files under .agents/skills."
 log "harness-config.yaml, memories, feature artifacts, and sessions are not replaced."
 log "Next (new/untailored repo): run /starter-init before delivery skills."
 log "Next (tailored upgrade): invoke the appropriate named delivery skill directly."

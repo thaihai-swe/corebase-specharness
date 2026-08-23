@@ -239,10 +239,20 @@ function initSmoothScroll() {
         anchor.addEventListener('click', function (e) {
             const targetId = this.getAttribute('href');
             if (!targetId || targetId === '#') return;
+            const cleanId = targetId.replace(/^#/, '');
+            if (cleanId === 'docs' || cleanId === 'product') {
+                e.preventDefault();
+                applyPageMode(cleanId);
+                return;
+            }
+            if (DOC_SECTION_IDS.has(cleanId)) {
+                applyPageMode('docs', { updateHash: false });
+            }
             const target = document.querySelector(targetId);
             if (target) {
                 e.preventDefault();
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.pushState(null, '', targetId);
             }
         });
     });
@@ -286,6 +296,8 @@ function initCodeCopyButtons() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initThemeSwitcher();
+    initModeSwitcher();
+    initSkillFilters();
     initSmoothScroll();
     initBackToTop();
     initSearch();
@@ -365,4 +377,121 @@ function initPrimaryNav() {
             lastY = y;
         }, { passive: true });
     }
+}
+
+const PAGE_MODE_KEY = 'corebase_page_mode';
+const DOC_SECTION_IDS = new Set([
+    'start-here', 'problem', 'how-it-works', 'architecture', 'memory-context',
+    'skills', 'workflow', 'verify-gate', 'getting-started', 'templates-entrypoints',
+    'governance', 'faq', 'fast-start', 'main'
+]);
+
+function getHashId() {
+    const raw = window.location.hash.replace(/^#/, '');
+    if (!raw) return '';
+    if (raw.startsWith('mode=')) return raw.slice(5);
+    return raw;
+}
+
+function resolveInitialMode() {
+    const hash = getHashId();
+    if (hash === 'product' || hash === 'docs') return hash;
+    if (hash && DOC_SECTION_IDS.has(hash)) return 'docs';
+    const stored = localStorage.getItem(PAGE_MODE_KEY);
+    if (stored === 'product' || stored === 'docs') return stored;
+    return 'product';
+}
+
+function applyPageMode(mode, options) {
+    const next = mode === 'docs' ? 'docs' : 'product';
+    const opts = options || {};
+    document.documentElement.setAttribute('data-page-mode', next);
+    if (document.body) document.body.setAttribute('data-page-mode', next);
+    localStorage.setItem(PAGE_MODE_KEY, next);
+
+    document.querySelectorAll('[data-mode-target]').forEach((btn) => {
+        const selected = btn.getAttribute('data-mode-target') === next;
+        btn.setAttribute('aria-selected', selected ? 'true' : 'false');
+        btn.classList.toggle('is-active', selected);
+    });
+
+    if (opts.updateHash !== false) {
+        const current = getHashId();
+        const keepSection = current && DOC_SECTION_IDS.has(current) && next === 'docs';
+        if (!keepSection) {
+            const url = new URL(window.location.href);
+            url.hash = next === 'docs' ? 'docs' : 'product';
+            history.replaceState(null, '', url);
+        }
+    }
+
+    if (next === 'docs') {
+        window.requestAnimationFrame(() => {
+            if (typeof renderAllMermaid === 'function') {
+                renderAllMermaid().then(() => {
+                    panZoomInstances.forEach(fitPanZoom);
+                }).catch(() => {
+                    panZoomInstances.forEach(fitPanZoom);
+                });
+            } else {
+                panZoomInstances.forEach(fitPanZoom);
+            }
+        });
+    }
+}
+
+function initModeSwitcher() {
+    const buttons = document.querySelectorAll('[data-mode-target]');
+    applyPageMode(resolveInitialMode(), { updateHash: false });
+
+    buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-mode-target');
+            applyPageMode(target);
+            if (target === 'docs') {
+                const toc = document.getElementById('docs-view') || document.getElementById('start-here');
+                if (toc) toc.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    });
+
+    window.addEventListener('hashchange', () => {
+        const hash = getHashId();
+        if (hash === 'product' || hash === 'docs') {
+            applyPageMode(hash, { updateHash: false });
+            return;
+        }
+        if (hash && DOC_SECTION_IDS.has(hash)) {
+            applyPageMode('docs', { updateHash: false });
+            const target = document.getElementById(hash);
+            if (target) {
+                window.requestAnimationFrame(() => {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+        }
+    });
+}
+
+function initSkillFilters() {
+    const bar = document.querySelector('.skills-filter-bar');
+    const cards = document.querySelectorAll('.skill-showcase-card');
+    if (!bar || !cards.length) return;
+
+    bar.addEventListener('click', (event) => {
+        const btn = event.target.closest('.skill-filter-btn');
+        if (!btn) return;
+        const filter = btn.getAttribute('data-filter') || 'all';
+        bar.querySelectorAll('.skill-filter-btn').forEach((item) => {
+            item.classList.toggle('active', item === btn);
+            item.setAttribute('aria-pressed', item === btn ? 'true' : 'false');
+        });
+        cards.forEach((card) => {
+            const category = card.getAttribute('data-category') || '';
+            const show = filter === 'all' || category === filter;
+            card.hidden = !show;
+        });
+    });
 }
