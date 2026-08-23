@@ -128,7 +128,6 @@ skills:
     prerequisites: []
     feature_artifacts: [status.md]
     writes:
-      - {path: .corebase-specharness/generated/harness-assessment.md, required: false}
       - {path: corebase-specharness/memories/repo/learned-heuristics.md, required: false}
     handoff: []
     sources:

@@ -7,12 +7,12 @@ flowchart TD
     CONTEXT --> MODE{Select bounded mode}:::decision
 
     MODE -->|assess| ASSESS["Assess<br/>run doctor --root &lt;repo&gt; --json<br/>check manifest drift · config health<br/>orphan feature directories"]:::assess
-    ASSESS --> REPORT["Write<br/>.corebase-specharness/generated/harness-assessment.md"]:::output
+    ASSESS --> REPORT["Terminal Report<br/>manifest drift and health"]:::output
 
     MODE -->|create| CREATE["Create<br/>use assessment evidence to identify<br/>missing standard directories or seeds"]:::create
     CREATE --> INIT["Propose or run approved scaffolding<br/>cli.py init / focused file creation<br/>without overwriting adopter-owned content"]:::create
 
-    MODE -->|improve| IMPROVE["Improve<br/>inspect .corebase-specharness/generated/gate-runs.json<br/>and reproducible failure evidence"]:::improve
+    MODE -->|improve| IMPROVE["Improve<br/>inspect gate failure evidence<br/>and test outcomes"]:::improve
     IMPROVE --> DRAFT["Draft evidence-backed [DRAFT] heuristics<br/>in learned-heuristics.md<br/>never silently promote policy"]:::improve
 
     MODE -->|eval| EVAL["Eval<br/>doctor package contracts · inspect CC-* rules<br/>validate confirmed gate configuration<br/>optionally verify a selected feature"]:::assess

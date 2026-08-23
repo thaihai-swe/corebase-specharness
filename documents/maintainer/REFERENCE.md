@@ -400,20 +400,14 @@ Coarse phase names (`Spec`, `Plan`, `Implement`, `Verify`, `Done`,
 `Bootstrap`) are labels on routes and a compatibility flag. They are
 separate from the detailed `status.md` tokens.
 
-## Generated and ephemeral state
+## Ephemeral session and task state
 
 | Path | Producer | Purpose |
 | --- | --- | --- |
 | `.corebase-specharness/sessions/<slug>/session.md` | `session-*` and `skill-enter` | Active resumable session and handoff state |
 | `artifacts/features/<slug>/tasks.json` | `task-*` | Generated task graph sidecar and read-only fallback |
-| `.corebase-specharness/generated/gate-runs.json` | non-dry-run `verify` | Last 50 recorded feature gate-result sets |
-| `.corebase-specharness/generated/provider-runs.json` | non-dry-run `verify` | Last 50 recorded review-provider runs |
-| `.corebase-specharness/generated/verification-runs.json` | non-dry-run `verify` | Last 50 closeout evidence records; `Done` requires a matching `harness-verify` success |
-| `.corebase-specharness/generated/closeout-overrides.json` | `status-set` / `skill-exit` override | Last 50 explicit audited Done exceptions |
-| `.corebase-specharness/generated/.gitkeep` | installer | Preserve the ignored generated directory |
-| `.corebase-specharness/generated/harness-assessment.md` | `/harness-maintain` | Optional explicit maintenance assessment |
 
-Generated runtime state must not ship in the kit except `.gitkeep`.
+Verification and closeout checks run in-memory. The runtime does not persist runtime log files.
 
 ## Manifest ownership
 
@@ -475,7 +469,7 @@ memory, and ADR handlers.
 | `context_engine.py` | context and session handlers | Build bounded context packs from named skill routes |
 | `context_state.py` | session, task, lifecycle, and ADR handlers | Atomic text writes plus session create/load/update |
 | `task_graph.py` | task and lifecycle handlers | Parse `T-NNN` tasks, detect cycles, select ready work, mutate status and evidence |
-| `handlers/artifacts.py` | readiness checks | Compute requirements readiness and AC-to-task mapping |
+| `_lib/artifact_schema.py` | readiness and structure | Feature headings, AC/task traceability, and `check_requirements_readiness` |
 | `handlers/common.py` | all handler families | Root and feature validation, normalized result construction, handoff text, candidate appends |
 
 ### Harness modules

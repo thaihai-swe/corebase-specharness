@@ -36,9 +36,9 @@ python3 corebase-specharness/scripts/core/cli.py verify --feature <slug> --skill
 
 A fresh install has `project_setup.status: deferred`, `verification.mode:
 advisory`, and no gates. A `verify` exit code of `0` in advisory mode is not a
-verification verdict. `Done` requires a successful current-config
-`verify --skill harness-verify` record plus `review.md` and Post-Ship Sync, or
-a deliberate `--verification-override --override-reason "..."` audit record.
+verification verdict. `Done` runs mechanical verification inline on
+`skill-exit --skill harness-verify`, requiring `review.md`, Post-Ship Sync, and
+passing gates (or a deliberate `--verification-override --override-reason "..."` exception).
 Configure only confirmed project gates in `corebase-specharness/project/harness-config.yaml`.
 
 `references/context-routes.yaml` is the routing authority for CoreBase SpecHarness skills.

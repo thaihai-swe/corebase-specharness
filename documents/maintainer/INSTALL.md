@@ -64,7 +64,6 @@ These are different operations. Do not treat them as aliases.
 - `corebase-specharness/memories/repo`
 - `corebase-specharness/memories/domain`
 - `corebase-specharness/project`
-- `.corebase-specharness/generated`
 - `artifacts/features`
 
 It writes a stub only when the destination does not exist:
@@ -79,8 +78,7 @@ Seed stubs: `core-policies.md`, `learned-heuristics.md`,
 `project-knowledge-base.md`, `adr-log.md`, `architecture.md`,
 `product-sense.md`, `project-constraints.md`, `glossary.md`.
 
-`init` also appends `.corebase-specharness/generated/*` to `.gitignore` when that line is
-missing. It does **not** add `.corezero-backup-*/`. Backup directories are
+`init` does **not** add `.corezero-backup-*/` to `.gitignore`. Backup directories are
 unmanaged leftovers. Adopters ignore or delete them.
 
 `init` reports `details.onboarding_readiness`:
@@ -160,14 +158,12 @@ corebase-specharness/memories/archive/deprecated-heuristics.md
 ```
 
 Paths outside the two groups are untouched. Feature artifacts, active
-sessions, generated runtime state, and files created outside managed patterns
+sessions, and files created outside managed patterns
 stay because the installer never selects them.
 
 The manifest validator also enforces required keys (`name`, `version`,
 `requires_python`, `files`), a semantic version, only the two ownership
-groups, no exact ownership overlap, existing non-glob source files, and no
-generated runtime files shipped under `.corebase-specharness/generated/` except
-`.gitkeep`.
+groups, no exact ownership overlap, existing non-glob source files, and no unmanaged leftover directories shipped in the kit payload.
 
 ## Installer sequence
 
@@ -190,7 +186,6 @@ generated runtime files shipped under `.corebase-specharness/generated/` except
 8. Expands `files.copyIfMissing`, preserving any destination that already
    exists.
 9. For a live install:
-   - creates `.corebase-specharness/generated/.gitkeep`;
    - marks `install.sh` and `validate-static-audit.py` executable;
    - runs the installed `cli.py doctor --root <target> --json`;
    - fails the install command if doctor fails.
@@ -211,7 +206,7 @@ Doctor is `python3 corebase-specharness/scripts/core/cli.py doctor`.
 - new seed copies
 
 Dry-run does not create the target, create a backup directory, copy or chmod
-files, create `.corebase-specharness/generated/.gitkeep`, or run doctor.
+files, or run doctor.
 
 ## Backups
 
@@ -258,13 +253,13 @@ Expected outcome:
    seed is `reserve_tokens: 1500` and profile payloads ≤ 4000; existing
    adopter config keeps its previous budget numbers.
 3. New copy-if-missing files are seeded when absent.
-4. Unmanaged feature artifacts, sessions, generated state, and adopter files
+4. Unmanaged feature artifacts, sessions, and adopter files
    remain untouched.
 5. Executable permissions are restored on the three shipped scripts.
 6. Installed package health is checked by doctor.
 7. The installer prints an upgrade report: kit version, overwrite count,
    preserved seed count, and a reminder that harness config, memories,
-   feature artifacts, sessions, and generated state are not replaced.
+   feature artifacts, and sessions are not replaced.
 
 If the command fails during copying or doctor, the installer does not roll
 back automatically. Restore replaced files from the backup when needed.

@@ -58,9 +58,8 @@ flowchart TB
 
     subgraph L5["Layer 5 — File Stores and Persistence"]
         FEATURES["artifacts/features/&lt;slug&gt;/<br/>status · analysis · spec · plan · tasks<br/>review · session-extracts · testing scenarios"]:::seed
-        SESSIONS[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>ephemeral resumable state"]:::generated
+        SESSIONS[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>ephemeral resumable state"]:::session
         MEMORY["corebase-specharness/memories/ · corebase-specharness/project/<br/>durable repo and domain knowledge"]:::seed
-        GENERATED[".corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json<br/>verification-runs.json · last 50"]:::generated
         MANIFEST["manifest.json<br/>overwrite · copyIfMissing"]:::owned
         INSTALL["corebase-specharness/scripts/install.sh<br/>backup · overwrite · seed · chmod · doctor"]:::owned
         CLI["corebase-specharness/scripts/core/cli.py<br/>flat command registry · normalized envelope"]:::owned
@@ -68,7 +67,6 @@ flowchart TB
         INSTALL --> MANIFEST
         MANIFEST --> FEATURES
         MANIFEST --> MEMORY
-        INSTALL --> GENERATED
         CLI --> SESSIONS
     end
 
@@ -77,7 +75,7 @@ flowchart TB
     CLI --> TASKS
     CLI --> READY
     ROUTES --> CONTEXT
-    VERIFY --> GENERATED
+    VERIFY --> FEATURES
     TASKS --> FEATURES
     STATE --> SESSIONS
     HDOCTOR --> MANIFEST
@@ -88,7 +86,7 @@ flowchart TB
     classDef layer4 fill:#ecfdf5,stroke:#16a34a,stroke-width:2px,color:#166534
     classDef owned fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
     classDef seed fill:#faf5ff,stroke:#a855f7,color:#4c1d95
-    classDef generated fill:#f3f4f6,stroke:#9ca3af,stroke-dasharray:4 3,color:#374151
+    classDef session fill:#f3f4f6,stroke:#9ca3af,stroke-dasharray:4 3,color:#374151
     classDef external fill:#f0f9ff,stroke:#0ea5e9,color:#0c4a6e,stroke-dasharray:4 3
 
     class AGENTS,SKILLS,SHARED,ROUTES layer1
@@ -97,5 +95,5 @@ flowchart TB
     class READY,HGATES,HCONFIG,HDOCTOR,VERIFY layer4
     class MANIFEST,INSTALL,CLI owned
     class FEATURES,MEMORY seed
-    class SESSIONS,GENERATED generated
+    class SESSIONS session
     class EXTERNAL,PROVIDERS external

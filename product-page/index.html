@@ -276,7 +276,7 @@
                         <span class="rule-num">04</span>
                         <div class="rule-content">
                             <h4>Mechanically Protected Done</h4>
-                            <p>Setting <code>status.md</code> to <code>Done</code> is permitted only after a matching record in <code>verification-runs.json</code> and a <code>## Post-Ship Sync</code> in <code>session-extracts.md</code>.</p>
+                            <p>Setting <code>status.md</code> to <code>Done</code> is permitted only after inline verification passes and a <code>## Post-Ship Sync</code> is recorded in <code>session-extracts.md</code>.</p>
                         </div>
                     </div>
                     <div class="rule-item">
@@ -452,7 +452,7 @@
                         <span class="layer-num">L5</span>
                         <div class="layer-info">
                             <h4>Layer 5: File Stores &amp; Persistence</h4>
-                            <p>Durable feature evidence (<code>artifacts/features/</code>), ephemeral resumable sessions (<code>.corebase-specharness/sessions/</code>), durable repository memory (<code>corebase-specharness/memories/</code>), and disposable audit run history (<code>.corebase-specharness/generated/</code>).</p>
+                            <p>Durable feature evidence (<code>artifacts/features/</code>), ephemeral resumable sessions (<code>.corebase-specharness/sessions/</code>), durable repository memory (<code>corebase-specharness/memories/</code>), and in-memory stateless verification.</p>
                         </div>
                     </div>
                 </div>
@@ -666,7 +666,7 @@
                             <tr>
                                 <td><code>/harness-maintain</code></td>
                                 <td>Verify / <code>verify</code></td>
-                                <td>Opt. <code>harness-assessment.md</code>, <code>learned-heuristics.md</code></td>
+                                <td>Opt. <code>learned-heuristics.md</code></td>
                                 <td><em>None (Diagnostics)</em></td>
                                 <td><em>Empty (no declared handoffs)</em></td>
                             </tr>
@@ -751,7 +751,7 @@
                                 <td><strong>6. Done</strong></td>
                                 <td><code>Done</code></td>
                                 <td><code>Abandoned</code></td>
-                                <td>Requires <code>review.md</code>, <code>session-extracts.md</code> with <code>## Post-Ship Sync</code>, and <code>verification-runs.json</code>.</td>
+                                <td>Requires <code>review.md</code>, <code>session-extracts.md</code> with <code>## Post-Ship Sync</code>, and passing inline verification.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -833,7 +833,7 @@
                             <tr>
                                 <td><strong>2. Scaffold Local Dirs</strong></td>
                                 <td><code>python3 corebase-specharness/scripts/core/cli.py init --json</code></td>
-                                <td>Creates missing directories (<code>corebase-specharness/memories/repo</code>, <code>corebase-specharness/memories/domain</code>, <code>corebase-specharness/project</code>, <code>.corebase-specharness/generated</code>, <code>artifacts/features</code>) and missing seed stubs. Never overwrites existing files.</td>
+                                <td>Creates missing directories (<code>corebase-specharness/memories/repo</code>, <code>corebase-specharness/memories/domain</code>, <code>corebase-specharness/project</code>, <code>artifacts/features</code>) and missing seed stubs. Never overwrites existing files.</td>
                             </tr>
                             <tr>
                                 <td><strong>3. Tailor the Repository</strong></td>
@@ -997,7 +997,7 @@ gates:
                             <tr>
                                 <td><code>verify</code></td>
                                 <td><code>--feature &lt;F&gt;</code>, opt. <code>--skill &lt;S&gt;</code>, <code>--fast</code></td>
-                                <td>Runs readiness, schema, confirmed argv gates, and logs to <code>verification-runs.json</code>.</td>
+                                <td>Runs readiness, schema, confirmed argv gates, and evaluates verification inline.</td>
                             </tr>
                             <tr>
                                 <td rowspan="3"><strong>Package &amp; Gate Health</strong></td>
@@ -1029,7 +1029,7 @@ gates:
                             <tr>
                                 <td><code>provider-run</code></td>
                                 <td><code>--category &lt;C&gt;</code>, opt. <code>--root &lt;dir&gt;</code></td>
-                                <td>Executes an explicitly selected provider action and logs to <code>provider-runs.json</code>.</td>
+                                <td>Executes an explicitly selected provider action in-memory.</td>
                             </tr>
                             <tr>
                                 <td rowspan="5"><strong>Memory, ADR &amp; Scaffold</strong></td>
@@ -1077,7 +1077,7 @@ gates:
             <div class="section-card">
                 <h3>Package Health Surface (10 Doctor Checks)</h3>
                 <ol class="step-list">
-                    <li><strong>manifest:</strong> Validates SemVer, keys, missing glob patterns, and shipped generated files.</li>
+                    <li><strong>manifest:</strong> Validates SemVer, keys, missing glob patterns, and shipped files.</li>
                     <li><strong>ownership:</strong> Asserts zero overlap between <code>overwrite</code> and <code>copyIfMissing</code>.</li>
                     <li><strong>surfaces:</strong> Verifies no retired leftovers exist on disk.</li>
                     <li><strong>context_routes:</strong> Validates route fields, phases, states, and source file existence.</li>
@@ -1129,7 +1129,7 @@ gates:
                             <tr>
                                 <td><strong>Unchecked Closeout</strong></td>
                                 <td>Agent closes features without running verification gates.</td>
-                                <td><code>Done</code> requires matching <code>verification-runs.json</code> record.</td>
+                                <td><code>Done</code> requires passing inline verification.</td>
                             </tr>
                             <tr>
                                 <td><strong>Forgotten Knowledge</strong></td>

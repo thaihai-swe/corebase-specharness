@@ -42,7 +42,7 @@ stateDiagram-v2
     Verifying --> Planning: structural or design gap
     Verifying --> Implementing: implementation defect
     Verifying --> Blocked: verification blocker
-    Verifying --> Done: verified is true plus verification-runs.json and Post-Ship Sync
+    Verifying --> Done: verified is true plus Post-Ship Sync
 
     Researching --> Blocked: research blocker
     ResearchComplete --> Blocked: handoff blocker
@@ -76,6 +76,6 @@ stateDiagram-v2
 
     note right of Done
         harness-verify is the sole Done authority.
-        Requires verification-runs.json match AND
+        Requires inline verification pass AND
         ## Post-Ship Sync in session-extracts.md.
     end note

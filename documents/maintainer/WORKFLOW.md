@@ -31,7 +31,6 @@ your-repo/
 ├── artifacts/features/<slug>/         durable feature evidence
 ├── .corebase-specharness/
 │   ├── sessions/<slug>/               ephemeral session state
-│   └── generated/                     runtime logs (gate-runs, verification-runs)
 └── corebase-specharness/
     ├── scripts/core/cli.py            embedded Python runtime & harness
     ├── project/                       adopter project config & architecture
@@ -259,7 +258,7 @@ The `<slug>` must be lowercase hyphenated alphanumeric (1–63 chars, matching `
 [6. Closeout & Memory Promotion]
    │  • /harness-verify: Strict/advisory gates, two-axis review.md
    │  • /context-memory: Post-ship sync & durable memory promotion
-   │  • Verifying → Done only after verification-runs.json + Post-Ship Sync
+   │  • Verifying → Done only after inline verification passes + Post-Ship Sync
 ```
 
 ### 4.1 Stage-by-stage contract
@@ -288,7 +287,7 @@ ightarrow$ `Done` | All tasks Done with proof, two-axis review passed, confirmed
 2. **Explicit Deviation & Re-Entry**: If planning reveals missing requirements or implementation reveals a design gap, re-enter the earlier skill explicitly (e.g., setting `status.md` to `Specifying` or `Replanning` with a documented reason). Silent phase-skipping is prohibited.
 3. **Single Active Task Discipline**: During implementation, agents must work on exactly **one** `In Progress` task at a time (`task-start` $
 ightarrow$ `task-done`).
-4. **Mechanically Protected Closeout**: Only `/harness-verify` is authorized to transition a feature to `Done`. It requires a matching record in `.corebase-specharness/generated/verification-runs.json` and a `## Post-Ship Sync` section in `session-extracts.md`.
+4. **Mechanically Protected Closeout**: Only `/harness-verify` is authorized to transition a feature to `Done`. It executes inline verification against configured gates, required artifacts, and traceability, requiring a passing result (or explicit override) and a `## Post-Ship Sync` section in `session-extracts.md`.
 
 ### 4.3 Side skills
 

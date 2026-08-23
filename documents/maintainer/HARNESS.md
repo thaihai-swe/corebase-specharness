@@ -23,11 +23,7 @@ phase / skill readiness
   + optional review provider
         │
         ▼
-      verify
-        │
-        ▼
-.corebase-specharness/generated/gate-runs.json
-.corebase-specharness/generated/provider-runs.json
+      verify (in-memory evaluation)
 ```
 
 The embedded runtime does not infer or install project verification commands.
@@ -206,10 +202,7 @@ python3 corebase-specharness/scripts/core/cli.py verify --feature <slug> --skill
 not execute the gates, and it skips shell-enabled commands. `verify` is the
 command that executes confirmed gates.
 
-A non-dry-run `verify` appends one feature result to
-`.corebase-specharness/generated/gate-runs.json` and one provider result to
-`.corebase-specharness/generated/provider-runs.json`. Each file is a JSON array capped to
-the most recent 50 runs.
+`verify` runs gates and review providers in-memory and outputs JSON or ANSI results.
 
 ## Verification pipeline
 
@@ -220,7 +213,7 @@ the most recent 50 runs.
 2. `artifact-check --trace` with the same skill or phase scope.
 3. All confirmed gates from `harness-config.yaml`.
 4. The selected review-provider action (`run`).
-5. Writes to `gate-runs.json` and `provider-runs.json` unless `--dry-run`.
+5. Reports verified status and findings in JSON output.
 6. Reports phase, artifact, traceability, gate, and provider outcomes.
 
 `verify` does not accept `--task`. Use `--skill` to scope readiness and
@@ -262,16 +255,12 @@ absent is `blocking`.
 
 `Done` is a mechanical closeout state. The normal path is only
 `skill-exit --skill harness-verify`: readiness requires `review.md` and a
-`## Post-Ship Sync` heading, while the central lifecycle writer also requires
-a matching, non-dry-run, successful current-config record in
-`.corebase-specharness/generated/verification-runs.json`. The record is feature-scoped and
-is written by `verify --skill harness-verify` (bounded to 50 runs).
+`## Post-Ship Sync` heading, while the central lifecycle writer executes
+inline verification against configured gates, artifacts, and traceability.
 
 `status-set` cannot normally set `Done`; it requires an explicit
-`--verification-override --override-reason "..."`, which writes a bounded
-`closeout-overrides.json` audit record. A different skill cannot normally exit
-to Done. An advisory exit code, `review.md`, and gate/provider logs alone never
-authorize Done.
+`--verification-override --override-reason "..."`. A different skill cannot normally exit
+to Done. An advisory exit code and `review.md` alone never authorize Done.
 
 The adopter-owned config seeds `project_setup.status: deferred`. `doctor` warns
 rather than fails until setup is `ready` and also warns when no gates exist.
@@ -422,7 +411,7 @@ These commands are explicit diagnostics. `session-end` does not run them.
 
 `/harness-maintain` interprets deterministic diagnostics and proposes bounded,
 user-approved maintenance. The skill, not the `doctor` CLI handler, owns
-`.corebase-specharness/generated/harness-assessment.md` and any proposed repair. Policy,
+any proposed repair in terminal output. Policy,
 heuristic, or configuration changes require user review.
 
 ## Extensibility

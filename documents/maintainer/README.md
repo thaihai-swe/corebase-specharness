@@ -25,7 +25,6 @@ as lookup.
 | File | Job |
 | --- | --- |
 | [OVERVIEW.md](OVERVIEW.md) | Product promise, package facts, and boundaries |
-
 | [INSTALL.md](INSTALL.md) | Install, ownership lists, backup, upgrade, `init` vs installer |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Installed topology, subsystem design, control flows, and technical roadmap |
 | [DESIGN.md](DESIGN.md) | Why the kit is shaped this way; as-built design thesis |

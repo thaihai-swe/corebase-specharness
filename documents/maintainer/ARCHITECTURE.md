@@ -80,7 +80,6 @@ service, engine directory, or background launcher.
 |  corebase-specharness/rules    shipped policy snippets                      |
 |  artifacts/features/<slug>/   durable feature evidence           |
 |  .corebase-specharness/sessions/<slug>/   ephemeral session      |
-|  .corebase-specharness/generated/         runtime audit JSON     |
 |  <project source>             only spec-implement writes here    |
 +------------------------------------------------------------------+
 ```
@@ -121,7 +120,7 @@ upward. If the hint is a file, it starts from that file's parent.
 │  • Durable Feature Evidence: artifacts/features/<slug>/                     │
 │  • Resumable Ephemeral Sessions: .corebase-specharness/sessions/<slug>/session.md      │
 │  • Durable Repository Memory: corebase-specharness/memories/ & corebase-specharness/project/      │
-│  • Disposable Runtime Logs: .corebase-specharness/generated/*.json (Last 50 runs) │
+│  • Inline Verification: deterministic checks executed in-memory             │
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -173,10 +172,9 @@ upward. If the hint is a file, it starts from that file's parent.
     rules/                   caveman, security, ponytail, ...
 .corebase-specharness/
   sessions/<slug>/           session.md
-  generated/                 gate-runs.json, provider-runs.json, verification-runs.json
 ```
 
-Installed scripts are `core/`, `install.sh`, and the two validators. Artifact
+Installed scripts are `core/`, `install.sh`, and `validate-static-audit.py`. Artifact
 structure and traceability live in `corebase-specharness/scripts/core/_lib/artifact_schema.py`.
 
 Source-repo extras that are **not** the installed payload: `documents/`,
@@ -196,7 +194,7 @@ repo-root `tests/` if present, `.github/`, `product-page/`, `scripts/`.
 | Durable memory | Repository and domain knowledge | `corebase-specharness/memories/` |
 | Delivery artifacts | Specifications, plans, tasks, reviews, evidence | `artifacts/features/<slug>/` |
 | Ephemeral session state | Resumable per-feature handoff | `.corebase-specharness/sessions/<slug>/session.md` |
-| Generated runtime state | Disposable outputs such as gate-run history | `.corebase-specharness/generated/` |
+| Inline verification | In-memory verification evaluation | N/A (stateless closeout check) |
 
 ---
 
@@ -213,7 +211,6 @@ cli.py
        ├─ handlers/sessions.py      session-start/checkpoint/end
        ├─ handlers/context.py       context-pack/load/explain
        ├─ handlers/tasks.py         task-check/start/done/block
-       ├─ handlers/artifacts.py     check_requirements_readiness
        ├─ handlers/diagnostics/     gates, providers, memory, adr
        └─ harness/doctor.py         package health
               │
@@ -347,8 +344,8 @@ details.verified = (readiness_ok AND artifacts_ok AND gates_passed AND review_ok
 - **Blocking Mode (`verification.mode: blocking`)**: Strict enforcement for
   mature repositories. Any gate or traceability failure returns `status: failed`
   and exits 1.
-- **Mechanically Protected `Done`**: Transition to `Done` requires a matching
-  successful run in `.corebase-specharness/generated/verification-runs.json` and a
+- **Mechanically Protected `Done`**: Transition to `Done` requires inline
+  verification to pass against configured gates and artifacts plus a
   `## Post-Ship Sync` header in `session-extracts.md`, or an explicit
   `--verification-override --override-reason "..."`.
 
@@ -363,12 +360,12 @@ install.sh <target>
   validate manifest (shape, safety, sources exist)
   copy overwrite  → backup then replace
   copy copyIfMissing → skip existing
-  mkdir .corebase-specharness/generated; chmod validators
+  chmod validators
   cli.py doctor --root <target>
 ```
 
 `init` is a later in-repo seeder, not the installer. It creates missing
-memory/project files and appends `.corebase-specharness/generated/*` to `.gitignore`.
+memory/project files.
 See [INSTALL.md](INSTALL.md).
 
 ### 4.2 Skill enter and exit
@@ -462,7 +459,6 @@ verify --feature F [--skill S | --phase Verify]
   arts    = evaluate_artifact_check(skill or phase, trace=True)
   gates   = [gate.run(root) for gate in config.get_gates()]
   review  = run_provider(category=review, action=run)
-  append generated/gate-runs.json, provider-runs.json, verification-runs.json
   verified = (not dry_run)
              and phase.meets_preconditions
              and no artifact/trace errors
@@ -588,12 +584,6 @@ Every shipped skill has exactly one route. Writes are strings or
 `{path, required}`. `status.md` must be optional; the envelope writes it.
 `required_handoffs` is forbidden.
 
-### 5.5 Generated store
-
-`.corebase-specharness/generated/` is runtime-only. The kit must not ship files other than
-`.gitkeep`. `verify` and `provider-run` append capped JSON arrays (last 50
-records) to `gate-runs.json`, `provider-runs.json`, and `verification-runs.json`.
-`init` appends `.corebase-specharness/generated/*` to `.gitignore`.
 
 ---
 
@@ -658,7 +648,7 @@ context reads.
 
 `doctor` is the installed health surface. Checks, in order:
 
-1. `manifest` — SemVer, required keys, missing sources, shipped generated files
+1. `manifest` — SemVer, required keys, missing sources, shipped unmanaged files
 2. `ownership` — overwrite ∩ copyIfMissing
 3. `surfaces` — removed leftovers still on disk
 4. `context_routes` — fields, phases, states, source files/sections
@@ -694,16 +684,12 @@ concerns and zero dead-code overhead:
 1. **Eliminate Double Compilation in `skill-enter`**:
    - Reuse the compiled context pack from `start_session` within `context_load`
      rather than executing `build_context_pack` twice.
-2. **Consolidate Audit Log Appender**:
-   - Share `_append_generated_record` from `handlers/common.py` across `verify`
-     (`gate-runs.json`, `verification-runs.json`) and `envelope.py` (`closeout-overrides.json`).
-3. **Consolidate Manifest Projection**:
+2. **Consolidate Manifest Projection**:
    - Factor repetitive dictionary formatting in `handlers/context.py` into a
      unified `_pack_manifest(pack)` helper.
-4. **Relocate Pseudo-Handler `handlers/artifacts.py`**:
-   - Move `check_requirements_readiness` into `harness/readiness.py` or
-     `_lib/artifact_schema.py` to maintain a clean 1:1 mapping between `handlers/`
-     and CLI verbs.
+3. **Relocate Pseudo-Handler `handlers/artifacts.py`**:
+   - Done: `check_requirements_readiness` now lives in `_lib/artifact_schema.py`
+     so `handlers/` stays 1:1 with CLI verbs.
 
 ---
 
@@ -786,8 +772,7 @@ Fast-Track Flow:
   `harness-config.yaml`, memory seeds. Initialized once.
 
 Adopter-created data is preserved because it is not matched by an overwrite
-entry. This includes `artifacts/features/`, `.corebase-specharness/` sessions, and
-generated runtime state.
+entry. This includes `artifacts/features/` and `.corebase-specharness/` sessions.
 
 ### 10.3 Architectural invariants
 
@@ -798,8 +783,7 @@ generated runtime state.
 - `--skill` is preferred. `--phase` remains compatibility on `phase-check`,
   `artifact-check`, and `verify`.
 - Adopter gates and provider selection remain explicit configuration.
-- `status.md` is durable feature state, `.corebase-specharness/sessions/` is ephemeral
-  continuity, and `.corebase-specharness/generated/` is disposable runtime state.
+- `status.md` is durable feature state, and `.corebase-specharness/sessions/` is ephemeral continuity.
 - Upgrade ownership is determined only by `overwrite` and `copyIfMissing`.
 
 ### 10.4 Related documents

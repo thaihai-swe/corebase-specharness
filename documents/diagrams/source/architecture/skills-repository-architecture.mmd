@@ -43,7 +43,7 @@ flowchart TB
     PLAN --> TASKS
     TASKS --> IMPL
     IMPL --> VERIFY
-    VERIFY -->|verification-runs.json + Post-Ship Sync| MEMORY
+    VERIFY -->|inline verification + Post-Ship Sync| MEMORY
 
     RESEARCH -. material decision .-> ADR
     REQUIREMENTS -. material decision .-> ADR

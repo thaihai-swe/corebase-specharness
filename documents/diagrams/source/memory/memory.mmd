@@ -10,10 +10,7 @@ flowchart TD
     end
 
     subgraph AUTO["Auto Tier — Failure &amp; Health State"]
-        GRUNS[".corebase-specharness/generated/gate-runs.json<br/>Gate runner execution history"]:::auto
-        PRUNS[".corebase-specharness/generated/provider-runs.json<br/>Provider execution history"]:::auto
-        VRUNS[".corebase-specharness/generated/verification-runs.json<br/>Verified closeout run history"]:::auto
-        ASSESS[".corebase-specharness/generated/harness-assessment.md<br/>Optional harness health assessment"]:::auto
+        VERIFY_LIVE["cli.py verify<br/>in-memory gate, provider, and closeout results"]:::auto
     end
 
     subgraph EXTR["Extracted Tier — Feature Candidates"]
@@ -52,7 +49,7 @@ flowchart TD
     EXT -.->|/context-memory triage| PKB
     EXT -.->|/context-memory triage| POL
     EXT -.->|/context-memory triage| DPACK
-    GRUNS -.->|harness-maintain improve<br/>draft heuristics for review| HEUR
+    VERIFY_LIVE -.->|harness-maintain improve<br/>draft heuristics for review| HEUR
 
     %% Writers
     VERIFY["harness-verify →<br/>## Post-Ship Sync record"]:::writer --> EXT
@@ -62,10 +59,8 @@ flowchart TD
     ADR_SKILL["spec-adr / cli.py adr-generate"]:::writer --> ADR_FILE
     ADR_SKILL --> ADR_LOG
     IMPROVE["harness-maintain improve"]:::writer --> HEUR
-    DOCTOR["harness-maintain assess / cli.py doctor"]:::writer --> ASSESS
-    GATE_RUN["cli.py verify"]:::writer --> GRUNS
-    GATE_RUN --> PRUNS
-    GATE_RUN --> VRUNS
+    DOCTOR["harness-maintain assess / cli.py doctor"]:::writer --> VERIFY_LIVE
+    GATE_RUN["cli.py verify"]:::writer --> VERIFY_LIVE
 
     classDef instr fill:#10b981,stroke:#047857,color:#fff
     classDef auto fill:#f59e0b,stroke:#b45309,color:#fff
@@ -77,7 +72,7 @@ flowchart TD
     classDef writer fill:#fff,stroke:#0d0d0d,color:#0d0d0d
 
     class POL,PKB,HEUR,ADR_LOG instr
-    class GRUNS,PRUNS,VRUNS,ASSESS auto
+    class VERIFY_LIVE auto
     class EXT,PROMO extr
     class DPACK domain
     class ADR_FILE adr

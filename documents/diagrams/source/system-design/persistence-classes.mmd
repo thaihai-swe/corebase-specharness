@@ -21,11 +21,6 @@ flowchart TD
         SESS[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>objective · progress updates · handoff updates<br/>retained in place by session-end"]:::session
     end
 
-    subgraph GENERATED["Disposable Runtime Output"]
-        KEEP[".corebase-specharness/generated/.gitkeep<br/>created by installer"]:::generated
-        RUNS[".corebase-specharness/generated/<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>latest 50 non-dry-run result sets"]:::generated
-        ASSESS[".corebase-specharness/generated/harness-assessment.md<br/>optional explicit harness-maintain output"]:::generated
-    end
 
     INSTALL["install.sh<br/>backup · overwrite · seed · chmod · doctor"]:::writer
     SKILLS["11 peer skills<br/>procedure, judgment, and artifact ownership"]:::writer
@@ -36,30 +31,25 @@ flowchart TD
     INSTALL --> PROJECT
     INSTALL --> MEMORY
     INSTALL --> FEATURE_README
-    INSTALL --> KEEP
 
     SKILLS --> PROJECT
     SKILLS --> MEMORY
     SKILLS --> ART
     SKILLS --> EXTRACTS
-    SKILLS --> ASSESS
 
     CLI --> ART
     CLI --> EXTRACTS
     CLI --> SESS
-    CLI --> RUNS
     CLI --> PROJECT
 
     INSTALL -.->|unmatched paths remain untouched| ART
     INSTALL -.->|unmatched paths remain untouched| SESS
-    INSTALL -.->|unmatched paths remain untouched| RUNS
 
     classDef kit fill:#fef3c7,stroke:#d97706,color:#78350f
     classDef seed fill:#eef2ff,stroke:#6366f1,color:#312e81
     classDef memory fill:#ecfdf5,stroke:#16a34a,color:#166534
     classDef feature fill:#fef3c7,stroke:#f59e0b,color:#78350f
     classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
-    classDef generated fill:#f3f4f6,stroke:#9ca3af,stroke-dasharray:4 3,color:#374151
     classDef writer fill:#fff,stroke:#0d0d0d,color:#0d0d0d
 
     class KIT_FILES kit
@@ -67,5 +57,4 @@ flowchart TD
     class MEMORY memory
     class ART,EXTRACTS feature
     class SESS session
-    class KEEP,RUNS,ASSESS generated
     class INSTALL,SKILLS,CLI writer

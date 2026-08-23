@@ -24,7 +24,7 @@ flowchart TD
     SEED --> CLOSE
     SKIP --> CLOSE
 
-    CLOSE["Non-dry-run closeout:<br/>create .corebase-specharness/generated/.gitkeep<br/>chmod shipped scripts executable"]:::action
+    CLOSE["Non-dry-run closeout:<br/>chmod shipped scripts executable<br/>run installed doctor"]:::action
     CLOSE --> DOCTOR["Run installed CLI<br/>python3 corebase-specharness/scripts/core/cli.py doctor"]:::verify
     DOCTOR --> READY([Ready for peer skills or /starter-init]):::terminal
 

@@ -15,12 +15,10 @@ flowchart TB
     OVERWRITE --- OW_DESC["manifest.json · README.md · AGENTS.md · EXTERNAL_SKILLS.md<br/>11 skills + shared files · references/<br/>corebase-specharness/scripts/ · rules/ · CONTEXT_AND_MEMORY.md<br/>state-machine.yaml · validators"]:::overwrite
     SEED --- SEED_DESC["corebase-specharness/MASTER_INDEX.md<br/>project configuration and provider guides<br/>repository/domain/archive memory seeds<br/>artifacts/features/README.md"]:::seed
 
-    UNMANAGED["Paths not selected by overwrite<br/>adopter-created feature artifacts, sessions,<br/>generated runs, ADRs, memory, and project code"]:::preserve
+    UNMANAGED["Paths not selected by overwrite<br/>adopter-created feature artifacts, sessions,<br/>ADRs, memory, and project code"]:::preserve
     TARGET --> UNMANAGED
 
-    GENERATED[".corebase-specharness/generated/<br/>installer creates .gitkeep<br/>gate-runs.json · provider-runs.json · verification-runs.json<br/>optional harness-assessment.md"]:::generated
     SESSION[".corebase-specharness/sessions/&lt;slug&gt;/session.md<br/>created or resumed by skill-enter / session-start<br/>retained in place by session-end"]:::session
-    TARGET --> GENERATED
     TARGET --> SESSION
 
     VALIDATE["Non-dry-run closeout<br/>chmod shipped scripts · run installed doctor"]:::installer
@@ -34,7 +32,6 @@ flowchart TB
     classDef overwrite fill:#fef3c7,stroke:#f59e0b,color:#78350f
     classDef seed fill:#eef2ff,stroke:#6366f1,color:#312e81
     classDef preserve fill:#f0fdf4,stroke:#22c55e,color:#14532d
-    classDef generated fill:#f3f4f6,stroke:#9ca3af,stroke-dasharray:4 3,color:#374151
     classDef session fill:#f3e8ff,stroke:#9333ea,color:#4c1d95
     classDef external fill:#f8fafc,stroke:#94a3b8,color:#475569,stroke-dasharray:4 3
 
@@ -43,6 +40,5 @@ flowchart TB
     class OVERWRITE,OW_DESC overwrite
     class SEED,SEED_DESC seed
     class UNMANAGED preserve
-    class GENERATED generated
     class SESSION session
     class DOC external

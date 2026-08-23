@@ -58,7 +58,7 @@ providers:
 - Check provider status: `python3 corebase-specharness/scripts/core/cli.py provider-check --category review --json`
 - Manual diff review: `ocr review` (or `ocr review --from <base> --to <head>` for a branch range)
 - Automatic verification: `python3 corebase-specharness/scripts/core/cli.py verify --skill harness-verify` automatically executes the active review provider action (`ocr review`).
-- `/harness-verify` records provider status and findings in `artifacts/features/<slug>/review.md` and appends run history to `.corebase-specharness/generated/provider-runs.json` (capped to 50 runs).
+- `/harness-verify` records provider status and findings in `artifacts/features/<slug>/review.md`.
 
 ## Code intelligence providers
 

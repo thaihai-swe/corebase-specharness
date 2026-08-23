@@ -69,8 +69,7 @@ The kit gives an agent a bounded operating loop:
    durable feature artifacts.
 3. Check named-skill readiness (or coarse `--phase` compatibility) and
    explicitly confirmed repository verification commands.
-4. Record gate and provider run outcomes in `.corebase-specharness/generated/` without
-   claiming `verified: true` in advisory mode.
+4. Run gates and verify features deterministically in-memory.
 5. Preserve adopter-owned project knowledge, memory baselines, and feature
    artifacts across kit upgrades.
 
@@ -88,7 +87,7 @@ Developers invoke skills. Agents run the harness.
 | `/spec-implement` | Executes tasks with proof and session continuity |
 | `/harness-verify` | Runs gates, checks traceability, and closes the feature |
 | `/context-memory` | Promotes only reusable lessons into durable memory |
-| `/harness-maintain` | Audits harness health and interprets gate-run evidence |
+| `/harness-maintain` | Audits harness health and diagnoses execution findings |
 | `/spec-adr` | Records an architectural decision and updates its log |
 | `/spec-testing-scenario` | Produces feature testing scenarios |
 
@@ -109,18 +108,17 @@ Otherwise tell it to read `skills/<name>/SKILL.md` and follow that procedure.
 | Lifecycle state | Feature tokens in `status.md`; kit-owned `state-machine.yaml` |
 | Context routing | `references/context-routes.yaml`, profile payloads, and inspectable packs |
 | Memory | Repository memory, domain packs, session state, and line-audit thresholds |
-| Verification | Artifact structure/traceability, confirmed gates, doctor, and generated run logs |
+| Verification | Artifact structure/traceability, confirmed gates, inline verification, and doctor |
 | Optional integrations | Local tool providers selected in `tool-providers.md` |
 
-## Three state classes
+## Two state classes
 
-The kit keeps three kinds of state in three places. Do not mix them.
+The kit keeps two kinds of state in two places. Verification and closeout checks run inline.
 
 | Class | Path | Lifetime | Owner |
 | --- | --- | --- | --- |
 | Durable feature evidence | `artifacts/features/<slug>/` | Lives with the feature | Adopter / delivery skills |
 | Ephemeral session continuity | `.corebase-specharness/sessions/<slug>/session.md` | Resumable working state; not archived on `session-end`; fingerprints survive compact and a new chat | Envelope and session commands |
-| Disposable runtime audit | `.corebase-specharness/generated/` | Last 50 verification, closeout-override, gate, and provider runs | `verify`, `status-set`/`skill-exit`, `/harness-maintain` |
 
 `status.md` is the durable feature-state authority. Do not hand-edit
 `- Phase:`. Use `skill-enter`, `skill-exit`, or `status-set`.
@@ -130,7 +128,7 @@ The kit keeps three kinds of state in three places. Do not mix them.
 | Actor | Owns | Does not own |
 | --- | --- | --- |
 | Installer | Copy payload, seed missing files, chmod three scripts, run doctor | Tailoring memory, adding gates, running `/starter-init` |
-| `init` CLI | Missing directories, missing seed stubs, `.gitignore` line `.corebase-specharness/generated/*`, `onboarding_readiness` report | Rewriting existing adopter files, inventing stack or gates |
+| `init` CLI | Missing directories, missing seed stubs, `onboarding_readiness` report | Rewriting existing adopter files, inventing stack or gates |
 | Skill Markdown | Procedure, judgment, required headings, HALT stop conditions, handoff choice | Deterministic file locks, task transitions, gate execution |
 | Embedded CLI | Context packs, sessions, task graph, readiness, gates, doctor, memory size, ADR draft | Skill selection, semantic review, memory promotion |
 | Adopter / human | Product decisions, gate confirmation, approval, acceptance | Kit implementation |

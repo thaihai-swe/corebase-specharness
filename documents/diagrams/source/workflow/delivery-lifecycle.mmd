@@ -48,7 +48,7 @@ flowchart TD
         VERDICT{details.verified and review pass?}:::decision
         SYNC["Write ## Post-Ship Sync in session-extracts.md<br/>then skill-exit to Done"]:::gate
         MEMORY["/context-memory after Done<br/>triage candidates into durable memory"]:::gate
-        DONE["status.md → Done<br/>only after verification-runs.json + Post-Ship Sync"]:::gate
+        DONE["status.md → Done<br/>only after inline verification + Post-Ship Sync"]:::gate
         IMPL --> VERIFY --> VERDICT
         VERDICT -->|Fail / ChangesRequested| IMPL
         VERDICT -->|Spec or plan gap| PLAN
@@ -62,7 +62,7 @@ flowchart TD
     end
 
     MAINTAIN["/harness-maintain<br/>explicit assessment and user-approved maintenance"]:::optional
-    MAINTAIN -.->|may write harness-assessment.md| VERIFY
+    MAINTAIN -.->|proposes fixes to| VERIFY
 
     classDef terminal fill:#0d0d0d,stroke:#0d0d0d,color:#fff
     classDef setup fill:#eff6ff,stroke:#2563eb,color:#1e3a8a
