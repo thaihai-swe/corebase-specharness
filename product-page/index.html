@@ -59,7 +59,8 @@
     <noscript>
         <div class="js-warning">
             <strong>Diagrams need JavaScript.</strong> The kit itself doesn't &mdash; this page renders live Mermaid
-            diagrams from <code>documents/diagrams/source/</code> at runtime. Enable JS to view them, or browse the sources on
+            diagrams from <code>documents/diagrams/source/</code> at runtime. Enable JS to view them, or browse the
+            sources on
             <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness" rel="noopener">GitHub</a>.
         </div>
     </noscript>
@@ -69,7 +70,8 @@
     <header class="main-header">
         <nav class="main-nav container" aria-label="Primary">
             <a href="#product" class="nav-brand" aria-label="CoreBase SpecHarness home">
-                <span class="nav-brand-mark">CoreBase SpecHarness <span class="badge success" style="margin-left:8px;font-size:0.75rem;">v1.0.0</span></span>
+                <span class="nav-brand-mark">CoreBase SpecHarness <span class="badge success"
+                        style="margin-left:8px;font-size:0.75rem;">v1.0.0</span></span>
             </a>
 
             <div class="mode-switch" role="tablist" aria-label="Page view">
@@ -78,8 +80,8 @@
             </div>
 
             <div class="nav-end">
-                <button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav"
-                    aria-label="Toggle navigation menu">
+                <button id="nav-toggle" class="nav-toggle" type="button" aria-expanded="false"
+                    aria-controls="primary-nav" aria-label="Toggle navigation menu">
                     <span class="nav-toggle-bar"></span>
                     <span class="nav-toggle-bar"></span>
                     <span class="nav-toggle-bar"></span>
@@ -147,7 +149,9 @@
                             aria-label="Toggle theme">
                             <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                                 <circle cx="12" cy="12" r="4"></circle>
-                                <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+                                <path
+                                    d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41">
+                                </path>
                             </svg>
                             <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true">
                                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
@@ -169,17 +173,24 @@
                 <section class="product-hero" aria-labelledby="product-heading">
                     <div class="product-hero-copy">
                         <span class="eyebrow-mono accent">v1.0.0 · Production Ready · Skills-First Delivery</span>
-                        <h1 id="product-heading">Turn agent chat into <span class="hero-gradient-text">inspectable delivery</span>.</h1>
-                        <p class="subtitle">CoreBase SpecHarness is an embedded, skills-first spec-driven kit for AI coding agents. It compiles bounded context per skill, records durable feature artifacts, enforces a mechanical task graph, and protects closeout with evidence &mdash; no daemon, no hosted engine, no inferred next step.</p>
+                        <h1 id="product-heading">Turn agent chat into <span class="hero-gradient-text">inspectable
+                                delivery</span>.</h1>
+                        <p class="subtitle">CoreBase SpecHarness is an embedded, skills-first spec-driven kit for AI
+                            coding agents. It compiles bounded context per skill, records durable feature artifacts,
+                            enforces a mechanical task graph, and protects closeout with evidence &mdash; no daemon, no
+                            hosted engine, no inferred next step.</p>
                         <div class="product-cta-group">
                             <a href="#docs" class="btn-primary">Open Developer Docs →</a>
                             <a href="#product-start" class="btn-secondary">Install in 10 minutes</a>
-                            <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness" target="_blank" rel="noopener" class="btn-secondary">View Source ↗</a>
+                            <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness" target="_blank" rel="noopener"
+                                class="btn-secondary">View Source ↗</a>
                         </div>
                         <div class="hero-author">
                             Architected &amp; built by <strong>Thai Hai</strong> ·
-                            <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness" target="_blank" rel="noopener">GitHub</a> ·
-                            <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness/issues" target="_blank" rel="noopener">Issues</a>
+                            <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness" target="_blank"
+                                rel="noopener">GitHub</a> ·
+                            <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness/issues" target="_blank"
+                                rel="noopener">Issues</a>
                         </div>
                     </div>
 
@@ -193,9 +204,8 @@
                             <span>install.sh · copy-with-seed</span>
                         </div>
                         <div class="terminal-body">
-                            <pre><code>bash kit/corebase-specharness/scripts/install.sh /path/to/project
-cd /path/to/project
-python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></pre>
+                            <pre><code>bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh /path/to/project
+cd /path/to/project</code></pre>
                         </div>
                     </aside>
                 </section>
@@ -209,42 +219,50 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                     <div class="stat-pill">
                         <span class="stat-val">27</span>
                         <span class="stat-lbl">CLI commands</span>
-                        <span class="stat-desc">Stdlib Python mechanics. No daemon, no required third-party runtime.</span>
+                        <span class="stat-desc">Stdlib Python mechanics. No daemon, no required third-party
+                            runtime.</span>
                     </div>
                     <div class="stat-pill">
                         <span class="stat-val">49–80%</span>
                         <span class="stat-lbl">Session token savings</span>
-                        <span class="stat-desc">SHA-256 fingerprints re-inject only changed sources unless <code>--full</code>.</span>
+                        <span class="stat-desc">SHA-256 fingerprints re-inject only changed sources unless
+                            <code>--full</code>.</span>
                     </div>
                     <div class="stat-pill">
                         <span class="stat-val">Done ≠ 0</span>
                         <span class="stat-lbl">Protected closeout</span>
-                        <span class="stat-desc">Advisory mode can exit 0. It cannot claim <code>verified: true</code>.</span>
+                        <span class="stat-desc">Advisory mode can exit 0. It cannot claim
+                            <code>verified: true</code>.</span>
                     </div>
                 </section>
 
                 <section id="product-thesis" aria-labelledby="thesis-heading">
                     <span class="eyebrow-mono accent">Design thesis</span>
                     <h2 id="thesis-heading">Three layers most agent kits collapse</h2>
-                    <p class="node-desc">The agent chooses a skill. The route says what to load and what must exist. The CLI checks files, tokens, and transitions. Nobody in this loop infers the next product decision.</p>
+                    <p class="node-desc">The agent chooses a skill. The route says what to load and what must exist. The
+                        CLI checks files, tokens, and transitions. Nobody in this loop infers the next product decision.
+                    </p>
                     <div class="arch-boxes">
                         <div class="arch-box">
                             <span class="arch-layer">Layer 1 · Procedure</span>
                             <h4>Agent procedures</h4>
                             <p class="arch-path"><code>skills/&lt;name&gt;/SKILL.md</code></p>
-                            <p>Humans refine how an agent should think: intake, design heuristics, halt rules, and output shape. Markdown is the interface.</p>
+                            <p>Humans refine how an agent should think: intake, design heuristics, halt rules, and
+                                output shape. Markdown is the interface.</p>
                         </div>
                         <div class="arch-box">
                             <span class="arch-layer">Layer 2 · Contract</span>
                             <h4>Declarative routes &amp; lifecycle</h4>
                             <p class="arch-path"><code>context-routes.yaml</code> + <code>state-machine.yaml</code></p>
-                            <p>Maintainers change what the runtime will load, require, and allow. Immune to prompt injection.</p>
+                            <p>Maintainers change what the runtime will load, require, and allow. Immune to prompt
+                                injection.</p>
                         </div>
                         <div class="arch-box">
                             <span class="arch-layer">Layer 3 · Mechanics</span>
                             <h4>Deterministic Python CLI</h4>
                             <p class="arch-path"><code>corebase-specharness/scripts/core/cli.py</code></p>
-                            <p>Budgets, fingerprints, task graphs, argv gates, and atomic writes. Facts, not a hidden workflow runner.</p>
+                            <p>Budgets, fingerprints, task graphs, argv gates, and atomic writes. Facts, not a hidden
+                                workflow runner.</p>
                         </div>
                     </div>
                 </section>
@@ -256,32 +274,45 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                         <article class="feature-card">
                             <div class="feature-icon-badge" aria-hidden="true">01</div>
                             <h3>Bounded context compiler</h3>
-                            <p>Route-declared sources, intent-matched domain packs, and local retrieval with secret redaction. Must sources stay; Should sources drop on overflow. Every pack exposes a selection manifest.</p>
+                            <p>Route-declared sources, intent-matched domain packs, and local retrieval with secret
+                                redaction. Must sources stay; Should sources drop on overflow. Every pack exposes a
+                                selection manifest.</p>
                         </article>
                         <article class="feature-card">
                             <div class="feature-icon-badge" aria-hidden="true">02</div>
                             <h3>Files are the database</h3>
-                            <p>Feature state, tasks, sessions, memory, and config live as Markdown, YAML, and JSON the owner can read without the CLI. <code>tasks.md</code> is canonical; <code>tasks.json</code> is its sidecar.</p>
+                            <p>Feature state, tasks, sessions, memory, and config live as Markdown, YAML, and JSON the
+                                owner can read without the CLI. <code>tasks.md</code> is canonical;
+                                <code>tasks.json</code> is its sidecar.
+                            </p>
                         </article>
                         <article class="feature-card">
                             <div class="feature-icon-badge" aria-hidden="true">03</div>
                             <h3>One readiness evaluator</h3>
-                            <p><code>phase-check</code>, <code>skill-exit</code>, and <code>verify</code> share one readiness path. Advisory mode reports <code>deferred</code>. Blocking mode fails closed. Done still needs evidence.</p>
+                            <p><code>phase-check</code>, <code>skill-exit</code>, and <code>verify</code> share one
+                                readiness path. Advisory mode reports <code>deferred</code>. Blocking mode fails closed.
+                                Done still needs evidence.</p>
                         </article>
                         <article class="feature-card">
                             <div class="feature-icon-badge" aria-hidden="true">04</div>
                             <h3>Single-task implementation</h3>
-                            <p><code>task-start</code> locks exactly one <code>In Progress</code> task. <code>task-done</code> requires fresh <code>--evidence</code>. Jumping without a checkpoint is rejected.</p>
+                            <p><code>task-start</code> locks exactly one <code>In Progress</code> task.
+                                <code>task-done</code> requires fresh <code>--evidence</code>. Jumping without a
+                                checkpoint is rejected.
+                            </p>
                         </article>
                         <article class="feature-card">
                             <div class="feature-icon-badge" aria-hidden="true">05</div>
                             <h3>Upgrade-safe ownership</h3>
-                            <p>Install is copy-with-seed. Kit-owned files overwrite; adopter-owned memory and project stubs seed once. No vendor instruction files are created.</p>
+                            <p>Install is copy-with-seed. Kit-owned files overwrite; adopter-owned memory and project
+                                stubs seed once. No vendor instruction files are created.</p>
                         </article>
                         <article class="feature-card">
                             <div class="feature-icon-badge" aria-hidden="true">06</div>
                             <h3>Optional providers stay optional</h3>
-                            <p>Review and code-intelligence providers default to <code>active: none</code>. The kit never installs provider binaries. <code>/harness-verify</code> still reviews on two axes without them.</p>
+                            <p>Review and code-intelligence providers default to <code>active: none</code>. The kit
+                                never installs provider binaries. <code>/harness-verify</code> still reviews on two axes
+                                without them.</p>
                         </article>
                     </div>
                 </section>
@@ -289,14 +320,21 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                 <section id="product-skills" aria-labelledby="skills-heading">
                     <span class="eyebrow-mono accent">Skill catalog</span>
                     <h2 id="skills-heading">11 peer skills. No hierarchy.</h2>
-                    <p class="node-desc">A common delivery route is guidance, not a pipeline object. Filter by job, then open the docs matrix for writes, enter/exit tokens, and declared handoffs.</p>
+                    <p class="node-desc">A common delivery route is guidance, not a pipeline object. Filter by job, then
+                        open the docs matrix for writes, enter/exit tokens, and declared handoffs.</p>
                     <div class="skills-filter-bar" role="group" aria-label="Filter skills">
-                        <button type="button" class="skill-filter-btn active" data-filter="all" aria-pressed="true">All</button>
-                        <button type="button" class="skill-filter-btn" data-filter="bootstrap" aria-pressed="false">Bootstrap</button>
-                        <button type="button" class="skill-filter-btn" data-filter="spec" aria-pressed="false">Spec</button>
-                        <button type="button" class="skill-filter-btn" data-filter="plan" aria-pressed="false">Plan</button>
-                        <button type="button" class="skill-filter-btn" data-filter="implement" aria-pressed="false">Implement</button>
-                        <button type="button" class="skill-filter-btn" data-filter="verify" aria-pressed="false">Verify</button>
+                        <button type="button" class="skill-filter-btn active" data-filter="all"
+                            aria-pressed="true">All</button>
+                        <button type="button" class="skill-filter-btn" data-filter="bootstrap"
+                            aria-pressed="false">Bootstrap</button>
+                        <button type="button" class="skill-filter-btn" data-filter="spec"
+                            aria-pressed="false">Spec</button>
+                        <button type="button" class="skill-filter-btn" data-filter="plan"
+                            aria-pressed="false">Plan</button>
+                        <button type="button" class="skill-filter-btn" data-filter="implement"
+                            aria-pressed="false">Implement</button>
+                        <button type="button" class="skill-filter-btn" data-filter="verify"
+                            aria-pressed="false">Verify</button>
                     </div>
                     <div class="skills-showcase-grid">
                         <article class="skill-showcase-card" data-category="bootstrap">
@@ -304,7 +342,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/starter-init</span>
                                 <span class="skill-category-tag">Bootstrap</span>
                             </div>
-                            <p>Tailor an untailored repository. Seed project memory and propose confirmed verification gates. Recommended only once.</p>
+                            <p>Tailor an untailored repository. Seed project memory and propose confirmed verification
+                                gates. Recommended only once.</p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">bootstrap · 2500</span></span>
                                 <span>handoff → research / requirements</span>
@@ -315,7 +354,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/spec-research</span>
                                 <span class="skill-category-tag">Spec</span>
                             </div>
-                            <p>Evidence-based analysis of unknown behavior, brownfield subsystems, and incidents. Writes <code>analysis.md</code>.</p>
+                            <p>Evidence-based analysis of unknown behavior, brownfield subsystems, and incidents. Writes
+                                <code>analysis.md</code>.
+                            </p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">research · 4000</span></span>
                                 <span>Researching → ResearchComplete</span>
@@ -326,7 +367,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/spec-requirements</span>
                                 <span class="skill-category-tag">Spec</span>
                             </div>
-                            <p>Feature contract and numbered acceptance criteria. Writes <code>spec.md</code>; optional proposal and review artifacts.</p>
+                            <p>Feature contract and numbered acceptance criteria. Writes <code>spec.md</code>; optional
+                                proposal and review artifacts.</p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">requirements · 3500</span></span>
                                 <span>Specifying → SpecApproved</span>
@@ -337,7 +379,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/spec-plan</span>
                                 <span class="skill-category-tag">Plan</span>
                             </div>
-                            <p>Technical design against an approved spec. Writes <code>plan.md</code>. Does not invent missing requirements.</p>
+                            <p>Technical design against an approved spec. Writes <code>plan.md</code>. Does not invent
+                                missing requirements.</p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">planning · 3500</span></span>
                                 <span>Planning → Planning</span>
@@ -348,7 +391,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/spec-tasks</span>
                                 <span class="skill-category-tag">Plan</span>
                             </div>
-                            <p>Sequenced task graph with 100% AC coverage. Writes canonical <code>tasks.md</code> and generates <code>tasks.json</code>.</p>
+                            <p>Sequenced task graph with 100% AC coverage. Writes canonical <code>tasks.md</code> and
+                                generates <code>tasks.json</code>.</p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">planning · 3500</span></span>
                                 <span>TaskPlanning → PlanApproved</span>
@@ -359,7 +403,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/spec-implement</span>
                                 <span class="skill-category-tag">Implement</span>
                             </div>
-                            <p>Single-task loop with proof and session continuity. Coding is blocked until spec, plan, and tasks exist.</p>
+                            <p>Single-task loop with proof and session continuity. Coding is blocked until spec, plan,
+                                and tasks exist.</p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">implement · 4000</span></span>
                                 <span>Implementing → Implementing</span>
@@ -370,7 +415,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/harness-verify</span>
                                 <span class="skill-category-tag">Verify</span>
                             </div>
-                            <p>Gates, traceability, two-axis review, and closeout. Only this skill may transition to <code>Done</code>.</p>
+                            <p>Gates, traceability, two-axis review, and closeout. Only this skill may transition to
+                                <code>Done</code>.
+                            </p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">verify · 3500</span></span>
                                 <span>Verifying → Done</span>
@@ -381,7 +428,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/context-memory</span>
                                 <span class="skill-category-tag">Verify</span>
                             </div>
-                            <p>Promote only reusable lessons into durable PKB, heuristics, and domain packs. Compaction is explicit.</p>
+                            <p>Promote only reusable lessons into durable PKB, heuristics, and domain packs. Compaction
+                                is explicit.</p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">compact · 2500</span></span>
                                 <span>durable memory · no token</span>
@@ -392,7 +440,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/spec-adr</span>
                                 <span class="skill-category-tag">Plan</span>
                             </div>
-                            <p>Record a material architectural decision and update the ADR log. Side skill, no declared handoffs.</p>
+                            <p>Record a material architectural decision and update the ADR log. Side skill, no declared
+                                handoffs.</p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">planning · 3500</span></span>
                                 <span>writes project/adr/</span>
@@ -403,7 +452,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/spec-testing-scenario</span>
                                 <span class="skill-category-tag">Verify</span>
                             </div>
-                            <p>Repeatable manual QA and regression scenarios from the approved spec. Writes <code>testing-scenarios.md</code>.</p>
+                            <p>Repeatable manual QA and regression scenarios from the approved spec. Writes
+                                <code>testing-scenarios.md</code>.
+                            </p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">verify · 3500</span></span>
                                 <span>needs spec.md only</span>
@@ -414,7 +465,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <span class="skill-name">/harness-maintain</span>
                                 <span class="skill-category-tag">Verify</span>
                             </div>
-                            <p>Audit harness health and diagnose execution findings. Optional write to <code>learned-heuristics.md</code>.</p>
+                            <p>Audit harness health and diagnose execution findings. Optional write to
+                                <code>learned-heuristics.md</code>.
+                            </p>
                             <div class="skill-card-bottom">
                                 <span>profile <span class="skill-budget">verify · 3500</span></span>
                                 <span>diagnostics · no token</span>
@@ -430,30 +483,42 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                         <div class="step-card">
                             <span class="step-badge">1. Install / Upgrade</span>
                             <h4>Copy the kit</h4>
-                            <p>Installer copies overwrite-owned files, seeds missing adopter stubs, and runs doctor. It does not install dependencies, write vendor instruction files, or infer project commands.</p>
-                            <pre><code>bash kit/corebase-specharness/scripts/install.sh /path/to/project</code></pre>
+                            <p>Installer copies overwrite-owned files, seeds missing adopter stubs, and runs doctor. It
+                                does not install dependencies, write vendor instruction files, or infer project
+                                commands.</p>
+                            <pre><code>bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh /path/to/project</code></pre>
                         </div>
                         <div class="step-card">
                             <span class="step-badge">2. Scaffold</span>
                             <h4><code>init</code></h4>
-                            <p>Creates missing directories (<code>repo</code>, <code>domain</code>, <code>project</code>, <code>artifacts/features</code>) and missing seed stubs. Never overwrites existing adopter files.</p>
+                            <p>Creates missing directories (<code>repo</code>, <code>domain</code>,
+                                <code>project</code>, <code>artifacts/features</code>) and missing seed stubs. Never
+                                overwrites existing adopter files.
+                            </p>
                             <pre><code>python3 corebase-specharness/scripts/core/cli.py init --json</code></pre>
                         </div>
                         <div class="step-card">
                             <span class="step-badge">3. Tailor</span>
                             <h4><code>/starter-init</code></h4>
-                            <p>Agent procedure that customizes seeded memory and asks the adopter to confirm repository-native verification gates in <code>harness-config.yaml</code>.</p>
+                            <p>Agent procedure that customizes seeded memory and asks the adopter to confirm
+                                repository-native verification gates in <code>harness-config.yaml</code>.</p>
                             <pre><code>python3 corebase-specharness/scripts/core/cli.py doctor --json</code></pre>
                         </div>
                     </div>
                     <div class="callout info">
-                        A fresh install has <code>project_setup.status: deferred</code> and <code>verification.mode: advisory</code>. A <code>verify</code> exit code of <code>0</code> in advisory mode is not a verification verdict. Inspect <code>status</code> and <code>details.verified</code>.
+                        A fresh install has <code>project_setup.status: deferred</code> and
+                        <code>verification.mode: advisory</code>. A <code>verify</code> exit code of <code>0</code> in
+                        advisory mode is not a verification verdict. Inspect <code>status</code> and
+                        <code>details.verified</code>.
                     </div>
                 </section>
 
                 <section class="product-cta-banner" aria-labelledby="cta-heading">
                     <h2 id="cta-heading">Need the contracts, diagrams, and command matrix?</h2>
-                    <p>Developer Docs keep the 12-section reference: topology, context compiler, skill routes, lifecycle states, verification, CLI, and anti-patterns. Live Mermaid sources render from <code>documents/diagrams/source/</code>.</p>
+                    <p>Developer Docs keep the 12-section reference: topology, context compiler, skill routes, lifecycle
+                        states, verification, CLI, and anti-patterns. Live Mermaid sources render from
+                        <code>documents/diagrams/source/</code>.
+                    </p>
                     <div class="product-cta-group">
                         <a href="#docs" class="btn-primary">Enter Developer Docs →</a>
                         <a href="#getting-started" class="btn-secondary">Jump to install playbook</a>
@@ -469,11 +534,16 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
             <div class="hero">
                 <span class="eyebrow-mono accent">v1.0.0 · Developer Documentation</span>
                 <h1>CoreBase SpecHarness</h1>
-                <p class="subtitle">An embedded, skills-first spec-driven delivery kit for AI coding agents. It compiles bounded context per skill, records durable feature artifacts, enforces mechanical task graphs, and protects closeout with verifiable evidence &mdash; turning conversational chaos into deterministic engineering discipline.</p>
+                <p class="subtitle">An embedded, skills-first spec-driven delivery kit for AI coding agents. It compiles
+                    bounded context per skill, records durable feature artifacts, enforces mechanical task graphs, and
+                    protects closeout with verifiable evidence &mdash; turning conversational chaos into deterministic
+                    engineering discipline.</p>
                 <div class="hero-author">
-                    Architected &amp; Built by <strong>Thai Hai</strong> &middot; <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness"
-                        target="_blank" rel="noopener">GitHub</a> &middot; <a
-                        href="https://github.com/thaihai-swe/CoreBase-SpecHarness/issues" target="_blank" rel="noopener">Issues &amp; Feedback</a>
+                    Architected &amp; Built by <strong>Thai Hai</strong> &middot; <a
+                        href="https://github.com/thaihai-swe/CoreBase-SpecHarness" target="_blank"
+                        rel="noopener">GitHub</a> &middot; <a
+                        href="https://github.com/thaihai-swe/CoreBase-SpecHarness/issues" target="_blank"
+                        rel="noopener">Issues &amp; Feedback</a>
                 </div>
                 <nav class="doc-links" aria-label="Primary actions">
                     <a href="#getting-started" class="doc-link">Get Started in 10 Min →</a>
@@ -494,12 +564,20 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                     <span class="eyebrow-mono">Architectural Overview</span>
                     <span class="about-status"><span class="status-dot"></span> Release v1.0.0</span>
                 </div>
-                <h2 id="about-heading" class="about-title">Why CoreBase SpecHarness Exists: The Spec-Anchored Thesis</h2>
+                <h2 id="about-heading" class="about-title">Why CoreBase SpecHarness Exists: The Spec-Anchored Thesis
+                </h2>
                 <p>
-                    Modern AI coding agents excel at generating code but routinely fail at long-term software discipline: they jump straight to editing files, lose context across long conversations, invent phantom requirements, declare work complete without verification, and leave behind zero inspectable reasoning.
+                    Modern AI coding agents excel at generating code but routinely fail at long-term software
+                    discipline: they jump straight to editing files, lose context across long conversations, invent
+                    phantom requirements, declare work complete without verification, and leave behind zero inspectable
+                    reasoning.
                 </p>
                 <p>
-                    <strong>CoreBase SpecHarness solves this at the root.</strong> It is copied directly into an adopter repository as a self-contained kit. It introduces an embedded Python CLI and 11 peer skills that force work through an inspectable 6-phase pipeline (Discovery &rarr; Specification &rarr; Architecture &rarr; Breakdown &rarr; Execution &rarr; Closeout). Repository markdown files are the single system of record, while the CLI enforces mechanical gates and context bounds.
+                    <strong>CoreBase SpecHarness solves this at the root.</strong> It is copied directly into an adopter
+                    repository as a self-contained kit. It introduces an embedded Python CLI and 11 peer skills that
+                    force work through an inspectable 6-phase pipeline (Discovery &rarr; Specification &rarr;
+                    Architecture &rarr; Breakdown &rarr; Execution &rarr; Closeout). Repository markdown files are the
+                    single system of record, while the CLI enforces mechanical gates and context bounds.
                 </p>
                 <div class="about-tags">
                     <span class="about-tag">3-Layer Separation</span>
@@ -547,7 +625,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                         <div class="audience-card">
                             <span class="audience-label">Solution Architect</span>
                             <h3>Evaluate System Design</h3>
-                            <p class="node-desc">Inspect the 3-layer separation, 5-layer topology, memory tiers, and token budget ceilings.</p>
+                            <p class="node-desc">Inspect the 3-layer separation, 5-layer topology, memory tiers, and
+                                token budget ceilings.</p>
                             <ul>
                                 <li>Read <a href="#architecture">Architecture &amp; Topology</a>.</li>
                                 <li>Review <a href="#memory-context">Memory &amp; Context Engineering</a>.</li>
@@ -558,18 +637,21 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                         <div class="audience-card">
                             <span class="audience-label">Platform Engineer</span>
                             <h3>Install &amp; Integrate</h3>
-                            <p class="node-desc">Install the kit, configure repo-native test/lint gates, and customize durable memory seeds.</p>
+                            <p class="node-desc">Install the kit, configure repo-native test/lint gates, and customize
+                                durable memory seeds.</p>
                             <ul>
                                 <li>Follow <a href="#getting-started">10-Minute Installation</a>.</li>
                                 <li>Review <a href="#governance">Ownership &amp; Upgrade Contracts</a>.</li>
                                 <li>Run <code>python3 corebase-specharness/scripts/core/cli.py doctor</code>.</li>
                             </ul>
-                            <a class="btn btn-secondary audience-link" href="#getting-started">Install CoreBase SpecHarness</a>
+                            <a class="btn btn-secondary audience-link" href="#getting-started">Install CoreBase
+                                SpecHarness</a>
                         </div>
                         <div class="audience-card">
                             <span class="audience-label">Developer &amp; Agent</span>
                             <h3>Ship Features Safely</h3>
-                            <p class="node-desc">Execute the 6-phase lifecycle: enter skills, write artifacts, lock tasks, prove evidence, and sync memory.</p>
+                            <p class="node-desc">Execute the 6-phase lifecycle: enter skills, write artifacts, lock
+                                tasks, prove evidence, and sync memory.</p>
                             <ul>
                                 <li>Follow <a href="#workflow">The Canonical 6-Phase Lifecycle</a>.</li>
                                 <li>Use <a href="#skills">The 11 Direct Peer Skills</a>.</li>
@@ -580,7 +662,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                         <div class="audience-card">
                             <span class="audience-label">Maintainer</span>
                             <h3>Kit Health &amp; Releases</h3>
-                            <p class="node-desc">Maintain manifest ownership, routes, state machine, and release hygiene for the upstream kit.</p>
+                            <p class="node-desc">Maintain manifest ownership, routes, state machine, and release hygiene
+                                for the upstream kit.</p>
                             <ul>
                                 <li>Read <a href="#templates-entrypoints">CLI Command Matrix</a>.</li>
                                 <li>Run static audit and consistency validators.</li>
@@ -593,41 +676,52 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
 
                 <div class="section-card anchor-target" id="fast-start">
                     <h3>The Five Non-Negotiable Engineering Invariants</h3>
-                    <p>CoreBase SpecHarness mechanically enforces these rules through CLI validators and the state engine:</p>
+                    <p>CoreBase SpecHarness mechanically enforces these rules through CLI validators and the state
+                        engine:</p>
                     <div class="rule-grid">
                         <div class="rule-item">
                             <span class="rule-num">01</span>
                             <div class="rule-content">
                                 <h4>No Code Without Spec &amp; Plan</h4>
-                                <p>Coding is prohibited until <code>spec.md</code>, <code>plan.md</code>, and <code>tasks.md</code> exist under <code>artifacts/features/&lt;slug&gt;/</code> with 100% AC coverage.</p>
+                                <p>Coding is prohibited until <code>spec.md</code>, <code>plan.md</code>, and
+                                    <code>tasks.md</code> exist under <code>artifacts/features/&lt;slug&gt;/</code> with
+                                    100% AC coverage.
+                                </p>
                             </div>
                         </div>
                         <div class="rule-item">
                             <span class="rule-num">02</span>
                             <div class="rule-content">
                                 <h4>Single Active Task Execution</h4>
-                                <p>During implementation, exactly one task must be <code>In Progress</code> at a time via <code>task-start</code>. Task jumping without checkpointing is rejected.</p>
+                                <p>During implementation, exactly one task must be <code>In Progress</code> at a time
+                                    via <code>task-start</code>. Task jumping without checkpointing is rejected.</p>
                             </div>
                         </div>
                         <div class="rule-item">
                             <span class="rule-num">03</span>
                             <div class="rule-content">
                                 <h4>Fresh Evidence on Task Completion</h4>
-                                <p><code>task-done</code> requires explicit <code>--evidence</code> with test or compilation output. Asserting done without fresh proof is rejected.</p>
+                                <p><code>task-done</code> requires explicit <code>--evidence</code> with test or
+                                    compilation output. Asserting done without fresh proof is rejected.</p>
                             </div>
                         </div>
                         <div class="rule-item">
                             <span class="rule-num">04</span>
                             <div class="rule-content">
                                 <h4>Mechanically Protected Done</h4>
-                                <p>Setting <code>status.md</code> to <code>Done</code> is permitted only after inline verification passes and a <code>## Post-Ship Sync</code> is recorded in <code>session-extracts.md</code>.</p>
+                                <p>Setting <code>status.md</code> to <code>Done</code> is permitted only after inline
+                                    verification passes and a <code>## Post-Ship Sync</code> is recorded in
+                                    <code>session-extracts.md</code>.
+                                </p>
                             </div>
                         </div>
                         <div class="rule-item">
                             <span class="rule-num">05</span>
                             <div class="rule-content">
                                 <h4>Advisory Mode Never Authorizes Closeout</h4>
-                                <p>When gates are unconfirmed, advisory verification exits 0 for inspection but reports <code>details.verified: false</code>, preventing closeout without explicit override.</p>
+                                <p>When gates are unconfirmed, advisory verification exits 0 for inspection but reports
+                                    <code>details.verified: false</code>, preventing closeout without explicit override.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -639,7 +733,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                 <h2>2. The Problem &amp; The 3-Layer Thesis</h2>
                 <div class="section-card">
                     <h3>The AI Coding Trap</h3>
-                    <p>AI models have reached high reasoning capability, yet agentic software projects frequently collapse into unmaintainable states. The failure is not intelligence; it is <strong>boundary collapse</strong>:</p>
+                    <p>AI models have reached high reasoning capability, yet agentic software projects frequently
+                        collapse into unmaintainable states. The failure is not intelligence; it is <strong>boundary
+                            collapse</strong>:</p>
 
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
@@ -664,12 +760,15 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <tr>
                                     <td><strong>Requirements</strong></td>
                                     <td>Vague chat prompts interpreted differently each turn</td>
-                                    <td>Formal <code>spec.md</code> with 3-wave grilling and numbered <code>AC-*</code> IDs</td>
+                                    <td>Formal <code>spec.md</code> with 3-wave grilling and numbered <code>AC-*</code>
+                                        IDs</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Task Execution</strong></td>
                                     <td>Uncontrolled bulk edits across unrelated files</td>
-                                    <td>Atomic single-task loop (<code>task-start</code> &rarr; edit &rarr; proof &rarr; <code>task-done</code>)</td>
+                                    <td>Atomic single-task loop (<code>task-start</code> &rarr; edit &rarr; proof &rarr;
+                                        <code>task-done</code>)
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Verification</strong></td>
@@ -688,25 +787,33 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
 
                 <div class="section-card">
                     <h3>The Three-Layer Separation of Concerns</h3>
-                    <p>CoreBase SpecHarness strictly decouples human/agent judgment from declarative contracts and deterministic code:</p>
+                    <p>CoreBase SpecHarness strictly decouples human/agent judgment from declarative contracts and
+                        deterministic code:</p>
                     <div class="arch-boxes">
                         <div class="arch-box">
                             <span class="arch-layer">Layer 1</span>
                             <h4>Agent Procedures (Markdown)</h4>
-                            <p class="arch-path"><code>skills/&lt;name&gt;/SKILL.md</code> + <code>skills/_shared/</code></p>
-                            <p>Guides agent reasoning, intake grilling, modular design heuristics, and output formatting. Owned by human &amp; agent judgment.</p>
+                            <p class="arch-path"><code>skills/&lt;name&gt;/SKILL.md</code> +
+                                <code>skills/_shared/</code>
+                            </p>
+                            <p>Guides agent reasoning, intake grilling, modular design heuristics, and output
+                                formatting. Owned by human &amp; agent judgment.</p>
                         </div>
                         <div class="arch-box">
                             <span class="arch-layer">Layer 2</span>
                             <h4>System Contracts (Declarative YAML/JSON)</h4>
-                            <p class="arch-path"><code>references/context-routes.yaml</code> + <code>state-machine.yaml</code></p>
-                            <p>Single source of truth for routing, prerequisites, artifact schemas, and lifecycle state tokens. Immune to prompt injection.</p>
+                            <p class="arch-path"><code>references/context-routes.yaml</code> +
+                                <code>state-machine.yaml</code>
+                            </p>
+                            <p>Single source of truth for routing, prerequisites, artifact schemas, and lifecycle state
+                                tokens. Immune to prompt injection.</p>
                         </div>
                         <div class="arch-box">
                             <span class="arch-layer">Layer 3</span>
                             <h4>Deterministic Mechanics (Stdlib Python CLI)</h4>
                             <p class="arch-path"><code>corebase-specharness/scripts/core/cli.py</code></p>
-                            <p>Enforces budgets, computes fingerprint diffs, parses task graphs, executes argv gates, and logs audit runs. No external daemon required.</p>
+                            <p>Enforces budgets, computes fingerprint diffs, parses task graphs, executes argv gates,
+                                and logs audit runs. No external daemon required.</p>
                         </div>
                     </div>
                 </div>
@@ -723,26 +830,33 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                         <div class="step-card">
                             <span class="step-badge">1. Enter Skill</span>
                             <h4><code>skill-enter</code></h4>
-                            <p>Agent selects a named skill. The CLI verifies prerequisites, initializes <code>status.md</code>, resumes session, and compiles a bounded context pack.</p>
+                            <p>Agent selects a named skill. The CLI verifies prerequisites, initializes
+                                <code>status.md</code>, resumes session, and compiles a bounded context pack.
+                            </p>
                             <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
   --skill spec-plan --feature auth-oauth --intent "design oauth provider"</code></pre>
                         </div>
                         <div class="step-card">
                             <span class="step-badge">2. Produce Artifact</span>
                             <h4>Follow Procedure</h4>
-                            <p>Agent follows <code>SKILL.md</code> to inspect bounded code, design module seams, and write required artifacts (<code>analysis.md</code>, <code>spec.md</code>, <code>plan.md</code>, <code>tasks.md</code>).</p>
+                            <p>Agent follows <code>SKILL.md</code> to inspect bounded code, design module seams, and
+                                write required artifacts (<code>analysis.md</code>, <code>spec.md</code>,
+                                <code>plan.md</code>, <code>tasks.md</code>).
+                            </p>
                         </div>
                         <div class="step-card">
                             <span class="step-badge">3. Check Readiness</span>
                             <h4><code>artifact-check</code></h4>
-                            <p>CLI evaluates structural headings and enforces 100% bidirectional traceability between Acceptance Criteria and Tasks.</p>
+                            <p>CLI evaluates structural headings and enforces 100% bidirectional traceability between
+                                Acceptance Criteria and Tasks.</p>
                             <pre><code>python3 corebase-specharness/scripts/core/cli.py artifact-check \
   --feature auth-oauth --skill spec-plan --trace</code></pre>
                         </div>
                         <div class="step-card">
                             <span class="step-badge">4. Exit &amp; Handoff</span>
                             <h4><code>skill-exit</code></h4>
-                            <p>CLI confirms required output files exist, transitions lifecycle state, checkpoints the session, and enforces explicit handoff to the next peer skill.</p>
+                            <p>CLI confirms required output files exist, transitions lifecycle state, checkpoints the
+                                session, and enforces explicit handoff to the next peer skill.</p>
                             <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-exit \
   --skill spec-plan --feature auth-oauth --handoff spec-tasks</code></pre>
                         </div>
@@ -751,8 +865,12 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
 
                 <div class="section-card">
                     <h3>Interactive Architecture Diagram</h3>
-                    <p>The diagram below renders live from <code>documents/diagrams/source/architecture/system-architecture.mmd</code>:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/system-architecture.mmd" role="img" aria-label="System Architecture Diagram">
+                    <p>The diagram below renders live from
+                        <code>documents/diagrams/source/architecture/system-architecture.mmd</code>:
+                    </p>
+                    <div class="mermaid-render"
+                        data-mmd="documents/diagrams/source/architecture/system-architecture.mmd" role="img"
+                        aria-label="System Architecture Diagram">
                         <div class="diagram-loading">Loading live architecture diagram...</div>
                     </div>
                 </div>
@@ -768,35 +886,52 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                             <span class="layer-num">L1</span>
                             <div class="layer-info">
                                 <h4>Layer 1: Direct Peer Skills &amp; Routing</h4>
-                                <p>11 peer-level skill procedures in <code>skills/</code>, an overwrite mirror at <code>.agent/skills/</code> for standard agent discovery, shared behavioral rules in <code>skills/_shared/</code>, and the central routing authority <code>references/context-routes.yaml</code>. The CLI still reads <code>skills/</code>. Optional specialist guides live in <code>EXTERNAL_SKILLS.md</code>.</p>
+                                <p>11 peer-level skill procedures in <code>skills/</code>, an overwrite mirror at
+                                    <code>.agent/skills/</code> for standard agent discovery, shared behavioral rules in
+                                    <code>skills/_shared/</code>, and the central routing authority
+                                    <code>references/context-routes.yaml</code>. The CLI still reads
+                                    <code>skills/</code>. Optional specialist guides live in
+                                    <code>EXTERNAL_SKILLS.md</code>.
+                                </p>
                             </div>
                         </div>
                         <div class="layer-item">
                             <span class="layer-num">L2</span>
                             <div class="layer-info">
                                 <h4>Layer 2: Context Compiler &amp; Budget Engine</h4>
-                                <p>Implemented in <code>context_engine.py</code>. Manages Must/Should source tiers, domain memory keyword triggers, automatic session delta caching (<code>session.md</code> fingerprints), and secret redaction.</p>
+                                <p>Implemented in <code>context_engine.py</code>. Manages Must/Should source tiers,
+                                    domain memory keyword triggers, automatic session delta caching
+                                    (<code>session.md</code> fingerprints), and secret redaction.</p>
                             </div>
                         </div>
                         <div class="layer-item">
                             <span class="layer-num">L3</span>
                             <div class="layer-info">
                                 <h4>Layer 3: State Machine &amp; Task Graph Engine</h4>
-                                <p>Kit-owned lifecycle authority in <code>state-machine.yaml</code> (Schema v1). Manages canonical <code>tasks.md</code> parsing, dependency cycles, locked transitions, <code>tasks.json</code> sidecar synchronization, and <code>[:HALT]</code> brakes.</p>
+                                <p>Kit-owned lifecycle authority in <code>state-machine.yaml</code> (Schema v1). Manages
+                                    canonical <code>tasks.md</code> parsing, dependency cycles, locked transitions,
+                                    <code>tasks.json</code> sidecar synchronization, and <code>[:HALT]</code> brakes.
+                                </p>
                             </div>
                         </div>
                         <div class="layer-item">
                             <span class="layer-num">L4</span>
                             <div class="layer-info">
                                 <h4>Layer 4: Verification Harness &amp; Diagnostics</h4>
-                                <p>Unified readiness evaluator in <code>harness/readiness.py</code>, git-diff argv gate runner in <code>harness/gates.py</code>, package health orchestrator <code>doctor.py</code>, and optional tool provider boundaries.</p>
+                                <p>Unified readiness evaluator in <code>harness/readiness.py</code>, git-diff argv gate
+                                    runner in <code>harness/gates.py</code>, package health orchestrator
+                                    <code>doctor.py</code>, and optional tool provider boundaries.
+                                </p>
                             </div>
                         </div>
                         <div class="layer-item">
                             <span class="layer-num">L5</span>
                             <div class="layer-info">
                                 <h4>Layer 5: File Stores &amp; Persistence</h4>
-                                <p>Durable feature evidence (<code>artifacts/features/</code>), ephemeral resumable sessions (<code>.corebase-specharness/sessions/</code>), durable repository memory (<code>corebase-specharness/memories/</code>), and in-memory stateless verification.</p>
+                                <p>Durable feature evidence (<code>artifacts/features/</code>), ephemeral resumable
+                                    sessions (<code>.corebase-specharness/sessions/</code>), durable repository memory
+                                    (<code>corebase-specharness/memories/</code>), and in-memory stateless verification.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -804,24 +939,33 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
 
                 <div class="section-card">
                     <h3>Installed Repository Boundary</h3>
-                    <p>The diagram below shows how CoreBase SpecHarness embeds into an adopter repository with zero external services:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/system-design/installed-boundary.mmd" role="img" aria-label="Installed Boundary Diagram">
+                    <p>The diagram below shows how CoreBase SpecHarness embeds into an adopter repository with zero
+                        external services:</p>
+                    <div class="mermaid-render"
+                        data-mmd="documents/diagrams/source/system-design/installed-boundary.mmd" role="img"
+                        aria-label="Installed Boundary Diagram">
                         <div class="diagram-loading">Loading live boundary diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>Skills &amp; Repository Package Architecture</h3>
-                    <p>How the 11 peer skills, embedded CLI runtime, and shared references map to the 6 delivery phases in an adopter tree:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/skills-repository-architecture.mmd" role="img" aria-label="Skills Repository Architecture Diagram">
+                    <p>How the 11 peer skills, embedded CLI runtime, and shared references map to the 6 delivery phases
+                        in an adopter tree:</p>
+                    <div class="mermaid-render"
+                        data-mmd="documents/diagrams/source/architecture/skills-repository-architecture.mmd" role="img"
+                        aria-label="Skills Repository Architecture Diagram">
                         <div class="diagram-loading">Loading live package architecture diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>Persistence Classes &amp; Upgrade Ownership</h3>
-                    <p><code>manifest.json</code> partitions files into two strict ownership classes, guaranteeing that kit upgrades never overwrite adopter project configuration or memory:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/system-design/persistence-classes.mmd" role="img" aria-label="Persistence Classes Diagram">
+                    <p><code>manifest.json</code> partitions files into two strict ownership classes, guaranteeing that
+                        kit upgrades never overwrite adopter project configuration or memory:</p>
+                    <div class="mermaid-render"
+                        data-mmd="documents/diagrams/source/system-design/persistence-classes.mmd" role="img"
+                        aria-label="Persistence Classes Diagram">
                         <div class="diagram-loading">Loading live persistence diagram...</div>
                     </div>
                 </div>
@@ -832,17 +976,38 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                 <h2>5. Memory &amp; Context Compiler</h2>
                 <div class="section-card">
                     <h3>The 8-Step Context Compilation Pipeline</h3>
-                    <p>Rather than dumping entire codebases into prompts, <code>context_engine.py</code> dynamically builds a bounded, verifiable context pack for each skill invocation using the single routing authority in <code>references/context-routes.yaml</code>. Session auto-delta unions <code>last_context_fingerprint</code> and <code>last_context_slices</code> from <code>session.md</code> <strong>before</strong> budget math unless <code>--full</code> is passed:</p>
+                    <p>Rather than dumping entire codebases into prompts, <code>context_engine.py</code> dynamically
+                        builds a bounded, verifiable context pack for each skill invocation using the single routing
+                        authority in <code>references/context-routes.yaml</code>. Session auto-delta unions
+                        <code>last_context_fingerprint</code> and <code>last_context_slices</code> from
+                        <code>session.md</code> <strong>before</strong> budget math unless <code>--full</code> is
+                        passed:
+                    </p>
 
                     <div class="pipeline-flow">
-                        <div class="pipe-step"><strong>1. Universal Bootstrap:</strong> Universal communication and core policies (<code>caveman.md</code>, <code>core-policies.md</code>) loaded as Must.</div>
-                        <div class="pipe-step"><strong>2. Route Sources:</strong> Declarative files and H2 sections from <code>references/context-routes.yaml</code>.</div>
-                        <div class="pipe-step"><strong>3. Feature Evidence:</strong> <code>status.md</code>, <code>spec.md</code>, <code>plan.md</code>, and other route-declared feature files.</div>
-                        <div class="pipe-step"><strong>4. Task Excerpt:</strong> Compact single-task payload when <code>--task T-NNN</code> is supplied (omits full <code>tasks.md</code>).</div>
-                        <div class="pipe-step"><strong>5. Add-Sources:</strong> Validated repository-relative paths passed via repeatable <code>--add-source</code>.</div>
-                        <div class="pipe-step"><strong>6. Domain Memory:</strong> Selected when keywords intersect <code>corebase-specharness/memories/domain/&lt;name&gt;/glossary.md</code> <code>triggers</code>.</div>
-                        <div class="pipe-step"><strong>7. Local Retrieval:</strong> Bounded, path-scoped evidence search with automated secret pattern redaction.</div>
-                        <div class="pipe-step"><strong>8. Auto-Delta then Budget Math:</strong> Unchanged files and H2 slices are skipped first. Must sources stay; Should sources drop on overflow. Effective budget capped by <code>max_injected_tokens (6000) - reserve_tokens (1500) = 4500</code>.</div>
+                        <div class="pipe-step"><strong>1. Universal Bootstrap:</strong> Universal communication and core
+                            policies (<code>caveman.md</code>, <code>core-policies.md</code>) loaded as Must.</div>
+                        <div class="pipe-step"><strong>2. Route Sources:</strong> Declarative files and H2 sections from
+                            <code>references/context-routes.yaml</code>.
+                        </div>
+                        <div class="pipe-step"><strong>3. Feature Evidence:</strong> <code>status.md</code>,
+                            <code>spec.md</code>, <code>plan.md</code>, and other route-declared feature files.
+                        </div>
+                        <div class="pipe-step"><strong>4. Task Excerpt:</strong> Compact single-task payload when
+                            <code>--task T-NNN</code> is supplied (omits full <code>tasks.md</code>).
+                        </div>
+                        <div class="pipe-step"><strong>5. Add-Sources:</strong> Validated repository-relative paths
+                            passed via repeatable <code>--add-source</code>.</div>
+                        <div class="pipe-step"><strong>6. Domain Memory:</strong> Selected when keywords intersect
+                            <code>corebase-specharness/memories/domain/&lt;name&gt;/glossary.md</code>
+                            <code>triggers</code>.
+                        </div>
+                        <div class="pipe-step"><strong>7. Local Retrieval:</strong> Bounded, path-scoped evidence search
+                            with automated secret pattern redaction.</div>
+                        <div class="pipe-step"><strong>8. Auto-Delta then Budget Math:</strong> Unchanged files and H2
+                            slices are skipped first. Must sources stay; Should sources drop on overflow. Effective
+                            budget capped by <code>max_injected_tokens (6000) - reserve_tokens (1500) = 4500</code>.
+                        </div>
                     </div>
                 </div>
 
@@ -866,7 +1031,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <tr>
                                     <td><code>reserve_tokens</code></td>
                                     <td><code>1500</code> tokens</td>
-                                    <td>Guaranteed reserve buffer for model conversation history and system instructions (effective payload ceiling = 4500).</td>
+                                    <td>Guaranteed reserve buffer for model conversation history and system instructions
+                                        (effective payload ceiling = 4500).</td>
                                 </tr>
                                 <tr>
                                     <td><code>payload_budget</code></td>
@@ -901,20 +1067,31 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                             </tbody>
                         </table>
                     </div>
-                    <p>Channel caps apply to non-Must sources after skip-before-budget: <code>max_bootstrap_tokens: 1200</code>, <code>max_project_tokens: 1200</code>, <code>max_feature_tokens: 1600</code>, <code>max_retrieved_tokens: 1000</code>, <code>max_source_excerpt_tokens: 400</code>, <code>max_retrieval_files: 4</code>.</p>
+                    <p>Channel caps apply to non-Must sources after skip-before-budget:
+                        <code>max_bootstrap_tokens: 1200</code>, <code>max_project_tokens: 1200</code>,
+                        <code>max_feature_tokens: 1600</code>, <code>max_retrieved_tokens: 1000</code>,
+                        <code>max_source_excerpt_tokens: 400</code>, <code>max_retrieval_files: 4</code>.
+                    </p>
                 </div>
 
                 <div class="section-card">
                     <h3>Named-Route Compilation</h3>
-                    <p>Route sources, H2 slices, and auto-delta run <strong>before</strong> budget math. Skipped files consume zero channel tokens, so a later <code>Should</code> source such as <code>code-design.md</code> can fit after bootstrap is already in the chat:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/context-routing.mmd" role="img" aria-label="Context Routing Diagram">
+                    <p>Route sources, H2 slices, and auto-delta run <strong>before</strong> budget math. Skipped files
+                        consume zero channel tokens, so a later <code>Should</code> source such as
+                        <code>code-design.md</code> can fit after bootstrap is already in the chat:
+                    </p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/context-routing.mmd"
+                        role="img" aria-label="Context Routing Diagram">
                         <div class="diagram-loading">Loading live context routing diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card anchor-target" id="token-cost">
                     <h3>Measured Pack Tokens (Kit-Seed Probe)</h3>
-                    <p>Figures below are <code>cl100k_base</code> pack tokens against the kit seed. Feature artifact rows used tiny stubs; real features scale those rows. Bootstrap and route-rule tokens are kit-stable. Isolated is a first load or <code>--full</code>. Sequential is the same uncompacted chat with <code>--full</code> omitted.</p>
+                    <p>Figures below are <code>cl100k_base</code> pack tokens against the kit seed. Feature artifact
+                        rows used tiny stubs; real features scale those rows. Bootstrap and route-rule tokens are
+                        kit-stable. Isolated is a first load or <code>--full</code>. Sequential is the same uncompacted
+                        chat with <code>--full</code> omitted.</p>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -968,12 +1145,18 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                             </tbody>
                         </table>
                     </div>
-                    <p>Documented range across turns is 49–80%. Isolated <code>/spec-plan</code> and <code>/spec-adr</code> drop <code>code-design.md</code> because bootstrap already fills <code>max_bootstrap_tokens</code>. Sequential plan can include it because skipped bootstrap does not consume that channel.</p>
+                    <p>Documented range across turns is 49–80%. Isolated <code>/spec-plan</code> and
+                        <code>/spec-adr</code> drop <code>code-design.md</code> because bootstrap already fills
+                        <code>max_bootstrap_tokens</code>. Sequential plan can include it because skipped bootstrap does
+                        not consume that channel.
+                    </p>
                 </div>
 
                 <div class="section-card anchor-target" id="auto-delta">
                     <h3>Session Auto-Delta &amp; The <code>--full</code> Contract</h3>
-                    <p>SHA-256 fingerprints live in <code>.corebase-specharness/sessions/&lt;slug&gt;/session.md</code> (<code>last_context_fingerprint</code>, <code>last_context_slices</code>). The compiler never inspects the live chat window. Those two stores do not talk to each other.</p>
+                    <p>SHA-256 fingerprints live in <code>.corebase-specharness/sessions/&lt;slug&gt;/session.md</code>
+                        (<code>last_context_fingerprint</code>, <code>last_context_slices</code>). The compiler never
+                        inspects the live chat window. Those two stores do not talk to each other.</p>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -1012,9 +1195,14 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                             </tbody>
                         </table>
                     </div>
-                    <p><code>--full</code> reloads <strong>that skill’s</strong> complete route pack. It does not wipe <code>session.md</code>, start a new feature, or replay earlier skills. <code>session-end</code> does not clear fingerprints. Compacting a memory file on disk is not conversation compact — that file’s hash changes and is re-injected if the next route still needs it.</p>
+                    <p><code>--full</code> reloads <strong>that skill’s</strong> complete route pack. It does not wipe
+                        <code>session.md</code>, start a new feature, or replay earlier skills. <code>session-end</code>
+                        does not clear fingerprints. Compacting a memory file on disk is not conversation compact — that
+                        file’s hash changes and is re-injected if the next route still needs it.
+                    </p>
 
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/context-stack.mmd" role="img" aria-label="Context Stack Diagram">
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/context-stack.mmd"
+                        role="img" aria-label="Context Stack Diagram">
                         <div class="diagram-loading">Loading live context stack...</div>
                     </div>
                 </div>
@@ -1022,23 +1210,33 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                 <div class="section-card">
                     <h3>3-Tier Durable Memory Architecture</h3>
                     <p>Project knowledge compounds over time without human maintenance overhead:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/memory/memory.mmd" role="img" aria-label="Memory Architecture Diagram">
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/memory/memory.mmd" role="img"
+                        aria-label="Memory Architecture Diagram">
                         <div class="diagram-loading">Loading live memory diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>The Post-Ship Sync &amp; Knowledge Loop</h3>
-                    <p>Closing a feature to <code>Done</code> requires recording a verified <code>## Post-Ship Sync</code> section in <code>session-extracts.md</code>. The developer or agent then invokes <code>/context-memory</code> to triage candidates into <code>learned-heuristics.md</code> and <code>project-knowledge-base.md</code>:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/memory/self-improving-kb.mmd" role="img" aria-label="Self-Improving KB Diagram">
+                    <p>Closing a feature to <code>Done</code> requires recording a verified
+                        <code>## Post-Ship Sync</code> section in <code>session-extracts.md</code>. The developer or
+                        agent then invokes <code>/context-memory</code> to triage candidates into
+                        <code>learned-heuristics.md</code> and <code>project-knowledge-base.md</code>:
+                    </p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/memory/self-improving-kb.mmd"
+                        role="img" aria-label="Self-Improving KB Diagram">
                         <div class="diagram-loading">Loading live knowledge loop...</div>
                     </div>
                 </div>
 
                 <div class="section-card anchor-target" id="subagent-fanout">
                     <h3>Subagent Fan-Out &amp; Boundary Control</h3>
-                    <p>Delegated subagents are an optional runtime capability, not CoreBase SpecHarness routes. Do not pass subagent names to <code>context-load</code>. The main agent keeps <code>session.md</code>, owns the final decision, and merges only summary reports. Raw tool sweeps stay isolated so they cannot flood the live window or the auto-delta baseline.</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/subagent-fanout.mmd" role="img" aria-label="Subagent Fan-Out Diagram">
+                    <p>Delegated subagents are an optional runtime capability, not CoreBase SpecHarness routes. Do not
+                        pass subagent names to <code>context-load</code>. The main agent keeps <code>session.md</code>,
+                        owns the final decision, and merges only summary reports. Raw tool sweeps stay isolated so they
+                        cannot flood the live window or the auto-delta baseline.</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/subagent-fanout.mmd"
+                        role="img" aria-label="Subagent Fan-Out Diagram">
                         <div class="diagram-loading">Loading live subagent fan-out...</div>
                     </div>
                     <div class="comparison-table-wrapper">
@@ -1069,7 +1267,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                             </tbody>
                         </table>
                     </div>
-                    <p>If the runtime does not provide subagents, execute the same work inline. Either path must keep archaeology and research read-only until the main agent writes a declared artifact.</p>
+                    <p>If the runtime does not provide subagents, execute the same work inline. Either path must keep
+                        archaeology and research read-only until the main agent writes a declared artifact.</p>
                 </div>
             </section>
 
@@ -1078,15 +1277,21 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                 <h2>6. The 11 CoreBase SpecHarness Skills Catalog</h2>
                 <div class="section-card">
                     <h3>Direct Peer Skill Taxonomy</h3>
-                    <p>All skills operate as direct, peer-level entrypoints. There are no sub-skills or hidden layers:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/skills-taxonomy.mmd" role="img" aria-label="Skills Taxonomy Diagram">
+                    <p>All skills operate as direct, peer-level entrypoints. There are no sub-skills or hidden layers:
+                    </p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/architecture/skills-taxonomy.mmd"
+                        role="img" aria-label="Skills Taxonomy Diagram">
                         <div class="diagram-loading">Loading live skills taxonomy...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>Comprehensive Skill Routing Matrix</h3>
-                    <p>Direct contract from <code>references/context-routes.yaml</code>. Context profiles determine token payload budgets: <code>bootstrap: 2500</code>, <code>research: 4000</code>, <code>requirements: 3500</code>, <code>planning: 3500</code>, <code>implement: 4000</code>, <code>verify: 3500</code>, <code>compact: 2500</code>.</p>
+                    <p>Direct contract from <code>references/context-routes.yaml</code>. Context profiles determine
+                        token payload budgets: <code>bootstrap: 2500</code>, <code>research: 4000</code>,
+                        <code>requirements: 3500</code>, <code>planning: 3500</code>, <code>implement: 4000</code>,
+                        <code>verify: 3500</code>, <code>compact: 2500</code>.
+                    </p>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -1102,7 +1307,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <tr>
                                     <td><code>/starter-init</code></td>
                                     <td>Bootstrap / <code>bootstrap</code></td>
-                                    <td><code>corebase-specharness/project</code>, <code>corebase-specharness/memories/repo</code></td>
+                                    <td><code>corebase-specharness/project</code>,
+                                        <code>corebase-specharness/memories/repo</code>
+                                    </td>
                                     <td><em>None (Setup)</em></td>
                                     <td><code>spec-research</code>, <code>spec-requirements</code></td>
                                 </tr>
@@ -1116,7 +1323,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <tr>
                                     <td><code>/spec-requirements</code></td>
                                     <td>Spec / <code>requirements</code></td>
-                                    <td><code>spec.md</code> (opt. <code>proposal.md</code>, <code>requirements-review.md</code>)</td>
+                                    <td><code>spec.md</code> (opt. <code>proposal.md</code>,
+                                        <code>requirements-review.md</code>)
+                                    </td>
                                     <td><code>Specifying</code> &rarr; <code>SpecApproved</code></td>
                                     <td><code>spec-plan</code>, <code>spec-research</code></td>
                                 </tr>
@@ -1137,16 +1346,21 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <tr>
                                     <td><code>/spec-implement</code></td>
                                     <td>Implement / <code>implement</code></td>
-                                    <td>Project source + task proof (opt. <code>tasks.md</code>, <code>session-extracts.md</code>)</td>
+                                    <td>Project source + task proof (opt. <code>tasks.md</code>,
+                                        <code>session-extracts.md</code>)
+                                    </td>
                                     <td><code>Implementing</code> &rarr; <code>Implementing</code></td>
-                                    <td><code>harness-verify</code>, <code>spec-plan</code>, <code>spec-requirements</code></td>
+                                    <td><code>harness-verify</code>, <code>spec-plan</code>,
+                                        <code>spec-requirements</code>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>/harness-verify</code></td>
                                     <td>Verify / <code>verify</code></td>
                                     <td><code>review.md</code></td>
                                     <td><code>Verifying</code> &rarr; <code>Done</code></td>
-                                    <td><code>context-memory</code>, <code>spec-implement</code>, <code>spec-plan</code></td>
+                                    <td><code>context-memory</code>, <code>spec-implement</code>, <code>spec-plan</code>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>/context-memory</code></td>
@@ -1158,7 +1372,8 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <tr>
                                     <td><code>/spec-adr</code></td>
                                     <td>Plan / <code>planning</code></td>
-                                    <td><code>corebase-specharness/project/adr/</code> (opt. <code>adr-log.md</code>)</td>
+                                    <td><code>corebase-specharness/project/adr/</code> (opt. <code>adr-log.md</code>)
+                                    </td>
                                     <td><em>None (Side Skill)</em></td>
                                     <td><em>Empty (no declared handoffs)</em></td>
                                 </tr>
@@ -1183,7 +1398,11 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
 
                 <div class="section-card anchor-target" id="skill-headings">
                     <h3>Headings: Runtime Versus Procedure</h3>
-                    <p>The runtime checks specific markdown headings via <code>REQUIRED_HEADINGS</code> in <code>artifact_schema.py</code>. Missing ones become <code>artifact-check</code> warnings (or errors in blocking mode). Other headings named in a <code>SKILL.md</code> are procedure, not runtime.</p>
+                    <p>The runtime checks specific markdown headings via <code>REQUIRED_HEADINGS</code> in
+                        <code>artifact_schema.py</code>. Missing ones become <code>artifact-check</code> warnings (or
+                        errors in blocking mode). Other headings named in a <code>SKILL.md</code> are procedure, not
+                        runtime.
+                    </p>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -1196,18 +1415,22 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                             <tbody>
                                 <tr>
                                     <td><code>spec.md</code></td>
-                                    <td><code>## Metadata</code>, <code>## Problem Statement</code>, <code>## Acceptance Criteria</code></td>
+                                    <td><code>## Metadata</code>, <code>## Problem Statement</code>,
+                                        <code>## Acceptance Criteria</code>
+                                    </td>
                                     <td><code>full-intake</code>, <code>clarify-reentry</code></td>
                                 </tr>
                                 <tr>
                                     <td><code>plan.md</code></td>
                                     <td><code>## Metadata</code>, <code>## Approach</code></td>
-                                    <td><code>simple-plan</code>, <code>moderate-plan</code>, <code>complex-plan</code></td>
+                                    <td><code>simple-plan</code>, <code>moderate-plan</code>, <code>complex-plan</code>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>tasks.md</code></td>
                                     <td><code>## Metadata</code>, <code>## Tasks</code></td>
-                                    <td><code>mvp-first</code>, <code>incremental</code>, <code>parallel-team</code></td>
+                                    <td><code>mvp-first</code>, <code>incremental</code>, <code>parallel-team</code>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>review.md</code></td>
@@ -1217,7 +1440,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 <tr>
                                     <td><code>analysis.md</code></td>
                                     <td><em>None (procedure-only)</em></td>
-                                    <td><code>bug-diagnosis</code>, <code>brownfield-map</code>, <code>ambiguity-resolution</code></td>
+                                    <td><code>bug-diagnosis</code>, <code>brownfield-map</code>,
+                                        <code>ambiguity-resolution</code>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>status.md</code></td>
@@ -1227,7 +1452,9 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                             </tbody>
                         </table>
                     </div>
-                    <p>External skills in <code>EXTERNAL_SKILLS.md</code> are auxiliary specialists. They are not CoreBase SpecHarness routes. Do not pass external skill names to <code>context-load</code> or treat them as lifecycle gates.</p>
+                    <p>External skills in <code>EXTERNAL_SKILLS.md</code> are auxiliary specialists. They are not
+                        CoreBase SpecHarness routes. Do not pass external skill names to <code>context-load</code> or
+                        treat them as lifecycle gates.</p>
                 </div>
             </section>
 
@@ -1236,39 +1463,49 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                 <h2>7. The Canonical 6-Phase Lifecycle</h2>
                 <div class="section-card">
                     <h3>End-to-End Delivery Sequence</h3>
-                    <p>The diagram below renders live from <code>documents/diagrams/source/workflow/delivery-lifecycle.mmd</code>:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/delivery-lifecycle.mmd" role="img" aria-label="Delivery Lifecycle Diagram">
+                    <p>The diagram below renders live from
+                        <code>documents/diagrams/source/workflow/delivery-lifecycle.mmd</code>:
+                    </p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/delivery-lifecycle.mmd"
+                        role="img" aria-label="Delivery Lifecycle Diagram">
                         <div class="diagram-loading">Loading live delivery lifecycle...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>End-to-End CLI Execution Walkthrough</h3>
-                    <p>A complete walkthrough of how coding agents interact with CoreBase SpecHarness from first prompt to closeout:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/end-to-end-sequence.mmd" role="img" aria-label="End-to-End Sequence Diagram">
+                    <p>A complete walkthrough of how coding agents interact with CoreBase SpecHarness from first prompt
+                        to closeout:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/end-to-end-sequence.mmd"
+                        role="img" aria-label="End-to-End Sequence Diagram">
                         <div class="diagram-loading">Loading live sequence diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>Artifact Data Flow</h3>
-                    <p>How knowledge and evidence flow from the initial user prompt and <code>analysis.md</code> through specifications, sequenced tasks, code proof, and finally into durable repository memory:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/dataflow.mmd" role="img" aria-label="Dataflow Diagram">
+                    <p>How knowledge and evidence flow from the initial user prompt and <code>analysis.md</code> through
+                        specifications, sequenced tasks, code proof, and finally into durable repository memory:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/dataflow.mmd" role="img"
+                        aria-label="Dataflow Diagram">
                         <div class="diagram-loading">Loading live dataflow diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>Artifact Traceability Chain</h3>
-                    <p>Every line of code traces directly back to an Acceptance Criterion, and every completed task requires verified proof:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/traceability.mmd" role="img" aria-label="Traceability Diagram">
+                    <p>Every line of code traces directly back to an Acceptance Criterion, and every completed task
+                        requires verified proof:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/traceability.mmd"
+                        role="img" aria-label="Traceability Diagram">
                         <div class="diagram-loading">Loading live traceability diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>The 15 Lifecycle States &amp; Exception Handling</h3>
-                    <p>Governed by <code>state-machine.yaml</code> (Schema v1). Features progress through 10 mainline states and 5 exception states across 6 phases:</p>
+                    <p>Governed by <code>state-machine.yaml</code> (Schema v1). Features progress through 10 mainline
+                        states and 5 exception states across 6 phases:</p>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -1288,13 +1525,19 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                 </tr>
                                 <tr>
                                     <td><strong>2. Spec</strong></td>
-                                    <td><code>Researching</code> &rarr; <code>ResearchComplete</code> &rarr; <code>Specifying</code> &rarr; <code>SpecApproved</code></td>
-                                    <td><code>NeedsClarification</code>, <code>Blocked</code>, <code>Abandoned</code></td>
-                                    <td>Requires <code>spec.md</code> and <code>status.md</code> for downstream progression.</td>
+                                    <td><code>Researching</code> &rarr; <code>ResearchComplete</code> &rarr;
+                                        <code>Specifying</code> &rarr; <code>SpecApproved</code>
+                                    </td>
+                                    <td><code>NeedsClarification</code>, <code>Blocked</code>, <code>Abandoned</code>
+                                    </td>
+                                    <td>Requires <code>spec.md</code> and <code>status.md</code> for downstream
+                                        progression.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>3. Plan</strong></td>
-                                    <td><code>Planning</code> &rarr; <code>TaskPlanning</code> &rarr; <code>PlanApproved</code></td>
+                                    <td><code>Planning</code> &rarr; <code>TaskPlanning</code> &rarr;
+                                        <code>PlanApproved</code>
+                                    </td>
                                     <td><code>Replanning</code>, <code>Blocked</code>, <code>Abandoned</code></td>
                                     <td>Requires <code>spec.md</code> to exist.</td>
                                 </tr>
@@ -1314,7 +1557,10 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                                     <td><strong>6. Done</strong></td>
                                     <td><code>Done</code></td>
                                     <td><code>Abandoned</code></td>
-                                    <td>Requires <code>review.md</code>, <code>session-extracts.md</code> with <code>## Post-Ship Sync</code>, and passing inline verification (<code>details.verified: true</code>).</td>
+                                    <td>Requires <code>review.md</code>, <code>session-extracts.md</code> with
+                                        <code>## Post-Ship Sync</code>, and passing inline verification
+                                        (<code>details.verified: true</code>).
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1324,20 +1570,27 @@ python3 corebase-specharness/scripts/core/cli.py doctor --root . --json</code></
                 <div class="section-card">
                     <h3>The Complete State Transition Graph</h3>
                     <p>Visual map of all valid mainline, deviation, and exception transitions:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/status-machine.mmd" role="img" aria-label="Status Machine Diagram">
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/status-machine.mmd"
+                        role="img" aria-label="Status Machine Diagram">
                         <div class="diagram-loading">Loading live state machine...</div>
                     </div>
                 </div>
 
                 <div class="section-card anchor-target" id="task-loop">
                     <h3>Canonical Task Format &amp; Execution Loop</h3>
-                    <p>Never edit task checkboxes or <code>tasks.json</code> by hand. <code>tasks.md</code> is canonical; <code>tasks.json</code> is a generated sidecar and a read-only fallback when <code>tasks.md</code> is missing. IDs are <code>T-NNN</code> only. Older <code>TASK-*</code> IDs are not parsed.</p>
+                    <p>Never edit task checkboxes or <code>tasks.json</code> by hand. <code>tasks.md</code> is
+                        canonical; <code>tasks.json</code> is a generated sidecar and a read-only fallback when
+                        <code>tasks.md</code> is missing. IDs are <code>T-NNN</code> only. Older <code>TASK-*</code> IDs
+                        are not parsed.
+                    </p>
                     <pre><code>- [ ] T-001 Add retry budget calculation
   - Status: Not Started
   - Depends on:
   - Covers: AC-01
   - Validation evidence:</code></pre>
-                    <p>The implement loop after <code>skill-enter --skill spec-implement</code>. Do not re-run <code>skill-enter</code> between tasks:</p>
+                    <p>The implement loop after <code>skill-enter --skill spec-implement</code>. Do not re-run
+                        <code>skill-enter</code> between tasks:
+                    </p>
                     <pre><code>python3 corebase-specharness/scripts/core/cli.py task-check --feature &lt;slug&gt;
 python3 corebase-specharness/scripts/core/cli.py task-start --feature &lt;slug&gt; --task T-001
 python3 corebase-specharness/scripts/core/cli.py context-load \
@@ -1356,15 +1609,21 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
                             <tbody>
                                 <tr>
                                     <td><code>Not Started</code></td>
-                                    <td><code>Not Started</code>, <code>In Progress</code>, <code>Blocked</code>, <code>Deferred</code></td>
+                                    <td><code>Not Started</code>, <code>In Progress</code>, <code>Blocked</code>,
+                                        <code>Deferred</code>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>In Progress</code></td>
-                                    <td><code>Not Started</code>, <code>In Progress</code>, <code>Blocked</code>, <code>Done</code>, <code>Deferred</code></td>
+                                    <td><code>Not Started</code>, <code>In Progress</code>, <code>Blocked</code>,
+                                        <code>Done</code>, <code>Deferred</code>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>Blocked</code></td>
-                                    <td><code>Not Started</code>, <code>In Progress</code>, <code>Blocked</code>, <code>Deferred</code></td>
+                                    <td><code>Not Started</code>, <code>In Progress</code>, <code>Blocked</code>,
+                                        <code>Deferred</code>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>Done</code></td>
@@ -1377,7 +1636,9 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
                             </tbody>
                         </table>
                     </div>
-                    <p><code>[:HALT</code> in <code>spec.md</code>, <code>plan.md</code>, or <code>tasks.md</code> blocks all task mutations until it is removed. Named tokens below are procedure stop conditions. The runtime only looks for the substring <code>[:HALT</code>.</p>
+                    <p><code>[:HALT</code> in <code>spec.md</code>, <code>plan.md</code>, or <code>tasks.md</code>
+                        blocks all task mutations until it is removed. Named tokens below are procedure stop conditions.
+                        The runtime only looks for the substring <code>[:HALT</code>.</p>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -1401,7 +1662,9 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
                                 </tr>
                                 <tr>
                                     <td><code>[:HALT SYNC REQUIRED]</code></td>
-                                    <td><code>/harness-verify</code> — <code>## Post-Ship Sync</code> is missing from <code>session-extracts.md</code>.</td>
+                                    <td><code>/harness-verify</code> — <code>## Post-Ship Sync</code> is missing from
+                                        <code>session-extracts.md</code>.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>[:HALT SECURITY]</code></td>
@@ -1414,8 +1677,10 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
 
                 <div class="section-card anchor-target" id="walkthrough">
                     <h3>Step-by-Step Feature Walkthrough (End-to-End Example)</h3>
-                    <p>Real-world delivery flow for a concrete feature (e.g. <code>checkout-retry-queue</code>) from first prompt through mechanical closeout:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/end-to-end-execution.mmd" role="img" aria-label="End-to-End Execution Sequence">
+                    <p>Real-world delivery flow for a concrete feature (e.g. <code>checkout-retry-queue</code>) from
+                        first prompt through mechanical closeout:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/end-to-end-execution.mmd"
+                        role="img" aria-label="End-to-End Execution Sequence">
                         <div class="diagram-loading">Loading live execution walkthrough...</div>
                     </div>
                     <ol class="step-list">
@@ -1424,14 +1689,18 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
                             <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
   --skill spec-research --feature checkout-retry-queue \
   --intent "investigate why payment gateway timeout drops orders" --json</code></pre>
-                            <p>Isolate the failure seam, author <code>analysis.md</code> (Findings, High Risk Paths, Kaizen Countermeasures), and exit with <code>--handoff spec-requirements</code>.</p>
+                            <p>Isolate the failure seam, author <code>analysis.md</code> (Findings, High Risk Paths,
+                                Kaizen Countermeasures), and exit with <code>--handoff spec-requirements</code>.</p>
                         </li>
                         <li>
                             <strong>2. Specify (<code>/spec-requirements</code>):</strong>
                             <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
   --skill spec-requirements --feature checkout-retry-queue \
   --intent "define requirements for persistent retry queue" --json</code></pre>
-                            <p>Resolve requirements, author <code>spec.md</code> with <code>REQ-01</code> and verifiable <code>AC-01</code>, <code>AC-02</code>, run <code>phase-check</code>, and exit with <code>--handoff spec-plan</code>.</p>
+                            <p>Resolve requirements, author <code>spec.md</code> with <code>REQ-01</code> and verifiable
+                                <code>AC-01</code>, <code>AC-02</code>, run <code>phase-check</code>, and exit with
+                                <code>--handoff spec-plan</code>.
+                            </p>
                         </li>
                         <li>
                             <strong>3. Design (<code>/spec-plan</code> + <code>/spec-adr</code>):</strong>
@@ -1440,14 +1709,17 @@ python3 corebase-specharness/scripts/core/cli.py task-done \
   --intent "design background retry worker and idempotency store" --json
 python3 corebase-specharness/scripts/core/cli.py adr-generate \
   --feature checkout-retry-queue --title "PostgreSQL SKIP LOCKED for Retry Queue" --json</code></pre>
-                            <p>Apply Clean Architecture / Deep Modules, write <code>plan.md</code> with DoR, and exit with <code>--handoff spec-tasks</code>.</p>
+                            <p>Apply Clean Architecture / Deep Modules, write <code>plan.md</code> with DoR, and exit
+                                with <code>--handoff spec-tasks</code>.</p>
                         </li>
                         <li>
                             <strong>4. Break Down (<code>/spec-tasks</code>):</strong>
                             <pre><code>python3 corebase-specharness/scripts/core/cli.py skill-enter \
   --skill spec-tasks --feature checkout-retry-queue --json
 python3 corebase-specharness/scripts/core/cli.py task-check --feature checkout-retry-queue --json</code></pre>
-                            <p>Write sequenced <code>tasks.md</code> mapping every AC to <code>T-001</code>, <code>T-002</code>, then exit with <code>--handoff spec-implement</code>.</p>
+                            <p>Write sequenced <code>tasks.md</code> mapping every AC to <code>T-001</code>,
+                                <code>T-002</code>, then exit with <code>--handoff spec-implement</code>.
+                            </p>
                         </li>
                         <li>
                             <strong>5. Implement &amp; Prove (<code>/spec-implement</code>):</strong>
@@ -1476,17 +1748,21 @@ python3 corebase-specharness/scripts/core/cli.py skill-exit \
                 <h2>8. The Verification Harness &amp; Closeout</h2>
                 <div class="section-card">
                     <h3>The 4-Part Verification Matrix</h3>
-                    <p>The <code>verify</code> command combines mechanical preconditions, artifact schemas, requirement traceability, and repository-native gates into a single verdict:</p>
+                    <p>The <code>verify</code> command combines mechanical preconditions, artifact schemas, requirement
+                        traceability, and repository-native gates into a single verdict:</p>
 
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/verify-gate.mmd" role="img" aria-label="Verify Gate Diagram">
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/verify-gate.mmd" role="img"
+                        aria-label="Verify Gate Diagram">
                         <div class="diagram-loading">Loading live verify gate...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>Gating Layers &amp; Policy Cascade</h3>
-                    <p>How the verification engine evaluates artifact existence, schema completeness, AC traceability, confirmed project argv gates, and review providers in order:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/gating-layers.mmd" role="img" aria-label="Gating Layers Diagram">
+                    <p>How the verification engine evaluates artifact existence, schema completeness, AC traceability,
+                        confirmed project argv gates, and review providers in order:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/gating-layers.mmd"
+                        role="img" aria-label="Gating Layers Diagram">
                         <div class="diagram-loading">Loading live gating layers diagram...</div>
                     </div>
                 </div>
@@ -1498,14 +1774,20 @@ python3 corebase-specharness/scripts/core/cli.py skill-exit \
                             <span class="rule-num">A</span>
                             <div class="rule-content">
                                 <h4>Advisory Mode (<code>verification.mode: advisory</code>)</h4>
-                                <p>Default for new installs. Reports missing gates and incomplete tasks as warnings with <code>status: deferred</code>. Exits 0 to allow inspection without breaking scripts, but marks <code>details.verified: false</code>. <strong>Does NOT authorize Done.</strong></p>
+                                <p>Default for new installs. Reports missing gates and incomplete tasks as warnings with
+                                    <code>status: deferred</code>. Exits 0 to allow inspection without breaking scripts,
+                                    but marks <code>details.verified: false</code>. <strong>Does NOT authorize
+                                        Done.</strong>
+                                </p>
                             </div>
                         </div>
                         <div class="rule-item">
                             <span class="rule-num">B</span>
                             <div class="rule-content">
                                 <h4>Blocking Mode (<code>verification.mode: blocking</code>)</h4>
-                                <p>Strict mode for mature codebases (fallback when key is missing). Any gate failure, broken link, or missing task proof immediately sets <code>status: failed</code>, exits 1, and blocks state progression.</p>
+                                <p>Strict mode for mature codebases (fallback when key is missing). Any gate failure,
+                                    broken link, or missing task proof immediately sets <code>status: failed</code>,
+                                    exits 1, and blocks state progression.</p>
                             </div>
                         </div>
                     </div>
@@ -1513,16 +1795,23 @@ python3 corebase-specharness/scripts/core/cli.py skill-exit \
 
                 <div class="section-card">
                     <h3>Mandatory Post-Ship Sync Sequence</h3>
-                    <p>Closing a feature requires a verified Post-Ship Sync sweep before <code>status.md</code> can be transitioned to <code>Done</code>:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/memory/post-ship-sync.mmd" role="img" aria-label="Post-Ship Sync Diagram">
+                    <p>Closing a feature requires a verified Post-Ship Sync sweep before <code>status.md</code> can be
+                        transitioned to <code>Done</code>:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/memory/post-ship-sync.mmd"
+                        role="img" aria-label="Post-Ship Sync Diagram">
                         <div class="diagram-loading">Loading live sync diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card anchor-target" id="runtime-model">
                     <h3>Unified Readiness Evaluator &amp; Runtime Model</h3>
-                    <p><code>readiness.py</code> (<code>check_readiness</code>) is the single evaluator behind <code>verify</code>, <code>phase-check</code>, and <code>skill-exit</code>. It evaluates route prerequisites, mechanical preconditions, confirmed gates, and state-machine transitions in a single pass.</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/system-design/runtime-model.mmd" role="img" aria-label="Runtime Model Sequence Diagram">
+                    <p><code>readiness.py</code> (<code>check_readiness</code>) is the single evaluator behind
+                        <code>verify</code>, <code>phase-check</code>, and <code>skill-exit</code>. It evaluates route
+                        prerequisites, mechanical preconditions, confirmed gates, and state-machine transitions in a
+                        single pass.
+                    </p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/system-design/runtime-model.mmd"
+                        role="img" aria-label="Runtime Model Sequence Diagram">
                         <div class="diagram-loading">Loading live runtime model...</div>
                     </div>
                     <div class="comparison-table-wrapper">
@@ -1537,18 +1826,25 @@ python3 corebase-specharness/scripts/core/cli.py skill-exit \
                             <tbody>
                                 <tr>
                                     <td><code>--skill &lt;name&gt;</code> (Preferred)</td>
-                                    <td>Route <code>prerequisites</code> only (avoids inheriting unowned phase requirements).</td>
-                                    <td>Done extras only (<code>review.md</code> + Post-Ship Sync in <code>session-extracts.md</code>).</td>
+                                    <td>Route <code>prerequisites</code> only (avoids inheriting unowned phase
+                                        requirements).</td>
+                                    <td>Done extras only (<code>review.md</code> + Post-Ship Sync in
+                                        <code>session-extracts.md</code>).
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>--phase &lt;name&gt;</code> (Compatibility)</td>
                                     <td><code>state-machine.yaml</code> phase preconditions.</td>
-                                    <td>Plan / Implement / Verify / Done extras (requirements readiness, all tasks done, evidence).</td>
+                                    <td>Plan / Implement / Verify / Done extras (requirements readiness, all tasks done,
+                                        evidence).</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <p>Passing both <code>--skill</code> and <code>--phase</code> fails loudly. Closeout skills (<code>/context-memory</code>, <code>/harness-maintain</code>) skip token transition checks after <code>Done</code> or <code>Abandoned</code> so post-ship work is never blocked as an illegal transition.</p>
+                    <p>Passing both <code>--skill</code> and <code>--phase</code> fails loudly. Closeout skills
+                        (<code>/context-memory</code>, <code>/harness-maintain</code>) skip token transition checks
+                        after <code>Done</code> or <code>Abandoned</code> so post-ship work is never blocked as an
+                        illegal transition.</p>
                 </div>
             </section>
 
@@ -1557,7 +1853,9 @@ python3 corebase-specharness/scripts/core/cli.py skill-exit \
                 <h2>9. Getting Started (Install &amp; Onboarding)</h2>
                 <div class="section-card">
                     <h3>10-Minute Installation Guide</h3>
-                    <p>CoreBase SpecHarness requires Python &ge; 3.10 and a Bash-compatible shell. The installer, CLI <code>init</code>, and <code>/starter-init</code> are three distinct operations:</p>
+                    <p>CoreBase SpecHarness requires Python &ge; 3.10 and a Bash-compatible shell. The installer, CLI
+                        <code>init</code>, and <code>/starter-init</code> are three distinct operations:
+                    </p>
 
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
@@ -1571,28 +1869,37 @@ python3 corebase-specharness/scripts/core/cli.py skill-exit \
                             <tbody>
                                 <tr>
                                     <td><strong>1. Install / Upgrade</strong></td>
-                                    <td><code>bash kit/corebase-specharness/scripts/install.sh &lt;target&gt;</code></td>
-                                    <td>Copies overwrite-owned files, seeds missing <code>copyIfMissing</code> stubs, mirrors <code>skills/</code> to <code>.agent/skills/</code>, makes scripts executable, and runs doctor.</td>
+                                    <td><code>bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh &lt;target&gt;</code>
+                                    </td>
+                                    <td>Copies overwrite-owned files, seeds missing <code>copyIfMissing</code> stubs,
+                                        mirrors <code>skills/</code> to <code>.agent/skills/</code>, makes scripts
+                                        executable, and runs doctor.</td>
                                 </tr>
                                 <tr>
                                     <td><strong>2. Scaffold Local Dirs</strong></td>
                                     <td><code>python3 corebase-specharness/scripts/core/cli.py init --json</code></td>
-                                    <td>Creates missing directories (<code>repo</code>, <code>domain</code>, <code>project</code>, <code>artifacts/features</code>) and missing seed stubs. Never overwrites existing files.</td>
+                                    <td>Creates missing directories (<code>repo</code>, <code>domain</code>,
+                                        <code>project</code>, <code>artifacts/features</code>) and missing seed stubs.
+                                        Never overwrites existing files.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>3. Tailor the Repository</strong></td>
                                     <td><code>/starter-init</code></td>
-                                    <td>Agent procedure that customizes seeded memory (<code>architecture.md</code>, <code>tech-stack.md</code>, <code>project-knowledge-base.md</code>) and proposes confirmed verification gates.</td>
+                                    <td>Agent procedure that customizes seeded memory (<code>architecture.md</code>,
+                                        <code>tech-stack.md</code>, <code>project-knowledge-base.md</code>) and proposes
+                                        confirmed verification gates.
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
                     <pre><code># 1. Preview installation with dry-run
-bash kit/corebase-specharness/scripts/install.sh /path/to/your-project --dry-run
+bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh /path/to/your-project --dry-run
 
 # 2. Run live installation (copies overwrite files, seeds missing configs)
-bash kit/corebase-specharness/scripts/install.sh /path/to/your-project
+bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh /path/to/your-project
 
 # 3. Enter target repo, scaffold missing dirs, and verify installation health
 cd /path/to/your-project
@@ -1602,8 +1909,11 @@ python3 corebase-specharness/scripts/core/cli.py doctor --json</code></pre>
 
                 <div class="section-card">
                     <h3>Installer Overwrite / Seed / Backup Loop</h3>
-                    <p>How a checkout or extracted release archive copies kit-owned files, seeds missing adopter stubs, and allocates a backup directory. <code>--dry-run</code> reports the plan without mutating the target:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/install-flow.mmd" role="img" aria-label="Install Flow Diagram">
+                    <p>How a checkout or extracted release archive copies kit-owned files, seeds missing adopter stubs,
+                        and allocates a backup directory. <code>--dry-run</code> reports the plan without mutating the
+                        target:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/install-flow.mmd"
+                        role="img" aria-label="Install Flow Diagram">
                         <div class="diagram-loading">Loading live install flow diagram...</div>
                     </div>
                 </div>
@@ -1611,14 +1921,16 @@ python3 corebase-specharness/scripts/core/cli.py doctor --json</code></pre>
                 <div class="section-card">
                     <h3>Repository Onboarding Workflow</h3>
                     <p>Greenfield vs. Brownfield archaeology onboarding paths:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/onboarding.mmd" role="img" aria-label="Onboarding Flow Diagram">
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/onboarding.mmd" role="img"
+                        aria-label="Onboarding Flow Diagram">
                         <div class="diagram-loading">Loading live onboarding diagram...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>Configuring Verification Gates</h3>
-                    <p>Customize <code>corebase-specharness/project/harness-config.yaml</code> with your native test and lint commands:</p>
+                    <p>Customize <code>corebase-specharness/project/harness-config.yaml</code> with your native test and
+                        lint commands:</p>
                     <pre><code># corebase-specharness/project/harness-config.yaml
 verification:
   mode: advisory    # Switch to blocking once gates are confirmed
@@ -1636,7 +1948,8 @@ gates:
 
                 <div class="section-card anchor-target" id="ownership">
                     <h3>Manifest Ownership &amp; Backup Invariants</h3>
-                    <p><code>kit/manifest.json</code> defines two ownership groups. Upgrades replace only kit-owned files; adopter configuration and durable memory are never overwritten.</p>
+                    <p><code>kit/manifest.json</code> defines two ownership groups. Upgrades replace only kit-owned
+                        files; adopter configuration and durable memory are never overwritten.</p>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -1649,18 +1962,45 @@ gates:
                             <tbody>
                                 <tr>
                                     <td><strong><code>files.overwrite</code></strong> (kit-owned)</td>
-                                    <td><code>manifest.json</code>, <code>README.md</code>, <code>AGENTS.md</code>, <code>EXTERNAL_SKILLS.md</code>, <code>skills/**</code> plus the <code>.agent/skills/**</code> overwrite mirror, <code>references/context-routes.yaml</code>, <code>references/tool-providers-registry.json</code>, <code>corebase-specharness/scripts/core/**</code>, <code>corebase-specharness/scripts/install.sh</code>, <code>corebase-specharness/rules/**</code>, <code>corebase-specharness/project/state-machine.yaml</code>, <code>corebase-specharness/scripts/validate-static-audit.py</code></td>
+                                    <td><code>manifest.json</code>, <code>README.md</code>, <code>AGENTS.md</code>,
+                                        <code>EXTERNAL_SKILLS.md</code>, <code>skills/**</code> plus the
+                                        <code>.agent/skills/**</code> overwrite mirror,
+                                        <code>references/context-routes.yaml</code>,
+                                        <code>references/tool-providers-registry.json</code>,
+                                        <code>corebase-specharness/scripts/core/**</code>,
+                                        <code>corebase-specharness/scripts/install.sh</code>,
+                                        <code>corebase-specharness/rules/**</code>,
+                                        <code>corebase-specharness/project/state-machine.yaml</code>,
+                                        <code>corebase-specharness/scripts/validate-static-audit.py</code>
+                                    </td>
                                     <td>Backed up, then replaced on upgrade.</td>
                                 </tr>
                                 <tr>
                                     <td><strong><code>files.copyIfMissing</code></strong> (adopter-owned)</td>
-                                    <td><code>corebase-specharness/MASTER_INDEX.md</code>, <code>corebase-specharness/memories/repo/**</code>, <code>corebase-specharness/project/architecture.md</code>, <code>corebase-specharness/project/tech-stack.md</code>, <code>corebase-specharness/project/product-sense.md</code>, <code>corebase-specharness/project/project-constraints.md</code>, <code>corebase-specharness/project/glossary.md</code>, <code>corebase-specharness/project/harness-config.yaml</code>, <code>corebase-specharness/project/tool-providers.md</code>, <code>artifacts/features/README.md</code>, <code>corebase-specharness/memories/domain/**</code>, <code>corebase-specharness/memories/archive/**</code></td>
+                                    <td><code>corebase-specharness/MASTER_INDEX.md</code>,
+                                        <code>corebase-specharness/memories/repo/**</code>,
+                                        <code>corebase-specharness/project/architecture.md</code>,
+                                        <code>corebase-specharness/project/tech-stack.md</code>,
+                                        <code>corebase-specharness/project/product-sense.md</code>,
+                                        <code>corebase-specharness/project/project-constraints.md</code>,
+                                        <code>corebase-specharness/project/glossary.md</code>,
+                                        <code>corebase-specharness/project/harness-config.yaml</code>,
+                                        <code>corebase-specharness/project/tool-providers.md</code>,
+                                        <code>artifacts/features/README.md</code>,
+                                        <code>corebase-specharness/memories/domain/**</code>,
+                                        <code>corebase-specharness/memories/archive/**</code>
+                                    </td>
                                     <td>Seeded once. Existing files are preserved untouched.</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <p>Backups live at <code>.corezero-backup-&lt;random&gt;/</code> (allocated via <code>mktemp -d</code>, not a timestamp). They contain only overwritten files, not the whole repo, and are never automatically added to <code>.gitignore</code>. <code>init</code> outputs <code>onboarding_readiness</code> (detected stacks, native instruction files, confirmed gates, and unknowns).</p>
+                    <p>Backups live at <code>.corezero-backup-&lt;random&gt;/</code> (allocated via
+                        <code>mktemp -d</code>, not a timestamp). They contain only overwritten files, not the whole
+                        repo, and are never automatically added to <code>.gitignore</code>. <code>init</code> outputs
+                        <code>onboarding_readiness</code> (detected stacks, native instruction files, confirmed gates,
+                        and unknowns).
+                    </p>
                 </div>
             </section>
 
@@ -1683,7 +2023,9 @@ gates:
 
                 <div class="section-card">
                     <h3>Complete 27-Command CLI Reference Matrix</h3>
-                    <p>Flat command registry executed via <code>python3 corebase-specharness/scripts/core/cli.py &lt;command&gt; [options]</code>:</p>
+                    <p>Flat command registry executed via
+                        <code>python3 corebase-specharness/scripts/core/cli.py &lt;command&gt; [options]</code>:
+                    </p>
                     <div class="comparison-table-wrapper">
                         <table class="comparison-table">
                             <thead>
@@ -1698,103 +2040,162 @@ gates:
                                 <tr>
                                     <td rowspan="3"><strong>Lifecycle &amp; Envelope</strong></td>
                                     <td><code>skill-enter</code></td>
-                                    <td><code>--skill &lt;S&gt;</code>, <code>--feature &lt;F&gt;</code>, opt. <code>--intent</code>, <code>--budget</code>, <code>--full</code>, <code>--add-source</code></td>
-                                    <td>Loads the named-skill context pack, opens/resumes session, sets route enter state in <code>status.md</code>.</td>
+                                    <td><code>--skill &lt;S&gt;</code>, <code>--feature &lt;F&gt;</code>, opt.
+                                        <code>--intent</code>, <code>--budget</code>, <code>--full</code>,
+                                        <code>--add-source</code>
+                                    </td>
+                                    <td>Loads the named-skill context pack, opens/resumes session, sets route enter
+                                        state in <code>status.md</code>.</td>
                                 </tr>
                                 <tr>
                                     <td><code>skill-exit</code></td>
-                                    <td><code>--skill &lt;S&gt;</code>, <code>--feature &lt;F&gt;</code>, <code>--handoff &lt;H&gt;</code>, opt. <code>--progress</code>, <code>--next-action</code></td>
-                                    <td>Validates required writes, evaluates readiness, updates lifecycle state. <code>Done</code> reserved for <code>harness-verify</code>.</td>
+                                    <td><code>--skill &lt;S&gt;</code>, <code>--feature &lt;F&gt;</code>,
+                                        <code>--handoff &lt;H&gt;</code>, opt. <code>--progress</code>,
+                                        <code>--next-action</code>
+                                    </td>
+                                    <td>Validates required writes, evaluates readiness, updates lifecycle state.
+                                        <code>Done</code> reserved for <code>harness-verify</code>.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>status-set</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--phase &lt;token&gt;</code>, opt. <code>--next-step</code>, <code>--verification-override</code></td>
-                                    <td>Sets lifecycle token (used for exception states: <code>Blocked</code>, <code>Replanning</code>, <code>NeedsClarification</code>).</td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--phase &lt;token&gt;</code>, opt.
+                                        <code>--next-step</code>, <code>--verification-override</code>
+                                    </td>
+                                    <td>Sets lifecycle token (used for exception states: <code>Blocked</code>,
+                                        <code>Replanning</code>, <code>NeedsClarification</code>).
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td rowspan="3"><strong>Session Continuity</strong></td>
                                     <td><code>session-start</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--skill &lt;S&gt;</code>, opt. <code>--intent</code>, <code>--objective</code></td>
-                                    <td>Creates or resumes <code>.corebase-specharness/sessions/&lt;slug&gt;/session.md</code> with JSON frontmatter.</td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--skill &lt;S&gt;</code>, opt.
+                                        <code>--intent</code>, <code>--objective</code>
+                                    </td>
+                                    <td>Creates or resumes
+                                        <code>.corebase-specharness/sessions/&lt;slug&gt;/session.md</code> with JSON
+                                        frontmatter.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>session-checkpoint</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--progress &quot;...&quot;</code>, opt. <code>--next-action</code>, <code>--blocker</code>, <code>--decision</code></td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--progress &quot;...&quot;</code>, opt.
+                                        <code>--next-action</code>, <code>--blocker</code>, <code>--decision</code>
+                                    </td>
                                     <td>Appends an inspectable progress checkpoint to the active feature session.</td>
                                 </tr>
                                 <tr>
                                     <td><code>session-end</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--next-action &quot;...&quot;</code>, opt. <code>--candidate</code></td>
-                                    <td>Persists final handoff and candidate lessons. Keeps session file for resume.</td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--next-action &quot;...&quot;</code>,
+                                        opt. <code>--candidate</code></td>
+                                    <td>Persists final handoff and candidate lessons. Keeps session file for resume.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td rowspan="3"><strong>Context Compiler</strong></td>
                                     <td><code>context-pack</code></td>
-                                    <td><code>--skill &lt;S&gt;</code>, opt. <code>--feature &lt;F&gt;</code>, <code>--task &lt;T&gt;</code>, <code>--budget &lt;N&gt;</code></td>
-                                    <td>Plans and prints the selected/omitted sources and budget allocation for a named skill.</td>
+                                    <td><code>--skill &lt;S&gt;</code>, opt. <code>--feature &lt;F&gt;</code>,
+                                        <code>--task &lt;T&gt;</code>, <code>--budget &lt;N&gt;</code>
+                                    </td>
+                                    <td>Plans and prints the selected/omitted sources and budget allocation for a named
+                                        skill.</td>
                                 </tr>
                                 <tr>
                                     <td><code>context-load</code></td>
-                                    <td><code>--skill &lt;S&gt;</code>, opt. <code>--feature &lt;F&gt;</code>, <code>--task &lt;T&gt;</code>, <code>--full</code>, <code>--add-source</code></td>
-                                    <td>Renders bounded context payload. Uses session auto-delta unless <code>--full</code> is passed.</td>
+                                    <td><code>--skill &lt;S&gt;</code>, opt. <code>--feature &lt;F&gt;</code>,
+                                        <code>--task &lt;T&gt;</code>, <code>--full</code>, <code>--add-source</code>
+                                    </td>
+                                    <td>Renders bounded context payload. Uses session auto-delta unless
+                                        <code>--full</code> is passed.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>context-explain</code></td>
-                                    <td><code>--skill &lt;S&gt;</code>, opt. <code>--feature &lt;F&gt;</code>, <code>--intent &quot;...&quot;</code></td>
-                                    <td>Explains provenance, trust labels, inclusion/omission reasons, and budget breakdown.</td>
+                                    <td><code>--skill &lt;S&gt;</code>, opt. <code>--feature &lt;F&gt;</code>,
+                                        <code>--intent &quot;...&quot;</code>
+                                    </td>
+                                    <td>Explains provenance, trust labels, inclusion/omission reasons, and budget
+                                        breakdown.</td>
                                 </tr>
                                 <tr>
                                     <td rowspan="4"><strong>Task Graph Engine</strong></td>
                                     <td><code>task-check</code></td>
                                     <td><code>--feature &lt;F&gt;</code></td>
-                                    <td>Parses canonical <code>tasks.md</code>, validates dependency cycles, and returns ready unblocked tasks.</td>
+                                    <td>Parses canonical <code>tasks.md</code>, validates dependency cycles, and returns
+                                        ready unblocked tasks.</td>
                                 </tr>
                                 <tr>
                                     <td><code>task-start</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--task &lt;T-NNN&gt;</code>, opt. <code>--note</code></td>
-                                    <td>Locks single task to <code>In Progress</code> and syncs machine-readable <code>tasks.json</code> sidecar.</td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--task &lt;T-NNN&gt;</code>, opt.
+                                        <code>--note</code>
+                                    </td>
+                                    <td>Locks single task to <code>In Progress</code> and syncs machine-readable
+                                        <code>tasks.json</code> sidecar.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>task-done</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--task &lt;T-NNN&gt;</code>, <code>--evidence &quot;...&quot;</code></td>
-                                    <td>Marks task <code>Done</code> with verifiable test/build proof and updates <code>tasks.json</code>.</td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--task &lt;T-NNN&gt;</code>,
+                                        <code>--evidence &quot;...&quot;</code>
+                                    </td>
+                                    <td>Marks task <code>Done</code> with verifiable test/build proof and updates
+                                        <code>tasks.json</code>.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>task-block</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--task &lt;T-NNN&gt;</code>, <code>--note &quot;...&quot;</code></td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--task &lt;T-NNN&gt;</code>,
+                                        <code>--note &quot;...&quot;</code>
+                                    </td>
                                     <td>Marks task <code>Blocked</code> with mandatory blocking rationale note.</td>
                                 </tr>
                                 <tr>
                                     <td rowspan="3"><strong>Readiness &amp; Verification</strong></td>
                                     <td><code>phase-check</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--skill &lt;S&gt;</code> (or opt. <code>--phase &lt;P&gt;</code>)</td>
-                                    <td>Evaluates skill route prerequisites or phase preconditions plus readiness rules.</td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--skill &lt;S&gt;</code> (or opt.
+                                        <code>--phase &lt;P&gt;</code>)
+                                    </td>
+                                    <td>Evaluates skill route prerequisites or phase preconditions plus readiness rules.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>artifact-check</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, <code>--skill &lt;S&gt;</code> (or opt. <code>--phase &lt;P&gt;</code>), opt. <code>--trace</code></td>
-                                    <td>Validates artifact markdown headings and bidirectional Acceptance Criteria &harr; Task mapping.</td>
+                                    <td><code>--feature &lt;F&gt;</code>, <code>--skill &lt;S&gt;</code> (or opt.
+                                        <code>--phase &lt;P&gt;</code>), opt. <code>--trace</code>
+                                    </td>
+                                    <td>Validates artifact markdown headings and bidirectional Acceptance Criteria
+                                        &harr; Task mapping.</td>
                                 </tr>
                                 <tr>
                                     <td><code>verify</code></td>
-                                    <td><code>--feature &lt;F&gt;</code>, opt. <code>--skill &lt;S&gt;</code>, <code>--fast</code></td>
-                                    <td>Runs readiness, schema, confirmed argv gates, and evaluates verification inline.</td>
+                                    <td><code>--feature &lt;F&gt;</code>, opt. <code>--skill &lt;S&gt;</code>,
+                                        <code>--fast</code>
+                                    </td>
+                                    <td>Runs readiness, schema, confirmed argv gates, and evaluates verification inline.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td rowspan="3"><strong>Package &amp; Gate Health</strong></td>
                                     <td><code>doctor</code></td>
                                     <td>opt. <code>--root &lt;dir&gt;</code>, <code>--json</code></td>
-                                    <td>Runs 10 named package-health checks (9 can fail the command; <code>project_setup</code> is advisory).</td>
+                                    <td>Runs 10 named package-health checks (9 can fail the command;
+                                        <code>project_setup</code> is advisory).
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>gate-check</code></td>
                                     <td>opt. <code>--root &lt;dir&gt;</code>, <code>--fast</code></td>
-                                    <td>Validates configured gate executables without running them. Skips <code>allow_shell</code> commands. <code>verify</code> is the command that executes gates.</td>
+                                    <td>Validates configured gate executables without running them. Skips
+                                        <code>allow_shell</code> commands. <code>verify</code> is the command that
+                                        executes gates.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>gate-list</code></td>
                                     <td>opt. <code>--root &lt;dir&gt;</code></td>
-                                    <td>Lists all confirmed argv-safe verification gates from <code>harness-config.yaml</code>.</td>
+                                    <td>Lists all confirmed argv-safe verification gates from
+                                        <code>harness-config.yaml</code>.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td rowspan="3"><strong>Tool Providers</strong></td>
@@ -1804,39 +2205,55 @@ gates:
                                 </tr>
                                 <tr>
                                     <td><code>provider-check</code></td>
-                                    <td>opt. <code>--category {review,code-intelligence}</code>, <code>--root &lt;dir&gt;</code></td>
+                                    <td>opt. <code>--category {review,code-intelligence}</code>,
+                                        <code>--root &lt;dir&gt;</code>
+                                    </td>
                                     <td>Checks availability and connectivity of selected external tool providers.</td>
                                 </tr>
                                 <tr>
                                     <td><code>provider-run</code></td>
-                                    <td><code>--category &lt;C&gt;</code>, opt. <code>--action &lt;A&gt;</code>, <code>--feature &lt;F&gt;</code>, <code>--root &lt;dir&gt;</code></td>
+                                    <td><code>--category &lt;C&gt;</code>, opt. <code>--action &lt;A&gt;</code>,
+                                        <code>--feature &lt;F&gt;</code>, <code>--root &lt;dir&gt;</code>
+                                    </td>
                                     <td>Executes an explicitly selected provider action in-memory.</td>
                                 </tr>
                                 <tr>
                                     <td rowspan="5"><strong>Memory, ADR &amp; Scaffold</strong></td>
                                     <td><code>init</code></td>
                                     <td>opt. <code>--root &lt;dir&gt;</code></td>
-                                    <td>Creates missing directories (repo, domain, project, artifacts) and stub files without overwriting adopter content.</td>
+                                    <td>Creates missing directories (repo, domain, project, artifacts) and stub files
+                                        without overwriting adopter content.</td>
                                 </tr>
                                 <tr>
                                     <td><code>status</code></td>
-                                    <td>opt. <code>--feature &lt;F&gt;</code>, <code>--next</code>, <code>--root &lt;dir&gt;</code></td>
-                                    <td>Reports current feature lifecycle token, delivery profile, blockers, and valid handoffs.</td>
+                                    <td>opt. <code>--feature &lt;F&gt;</code>, <code>--next</code>,
+                                        <code>--root &lt;dir&gt;</code>
+                                    </td>
+                                    <td>Reports current feature lifecycle token, delivery profile, blockers, and valid
+                                        handoffs.</td>
                                 </tr>
                                 <tr>
                                     <td><code>memory-audit</code></td>
-                                    <td>opt. <code>--mode {advisory,warn,block}</code>, <code>--root &lt;dir&gt;</code></td>
-                                    <td>Audits durable memory files against warning (200) and hard line limits (3200).</td>
+                                    <td>opt. <code>--mode {advisory,warn,block}</code>, <code>--root &lt;dir&gt;</code>
+                                    </td>
+                                    <td>Audits durable memory files against warning (200) and hard line limits (3200).
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>memory-gate</code></td>
-                                    <td>opt. <code>--mode {advisory,warn,block}</code>, <code>--root &lt;dir&gt;</code></td>
-                                    <td>Evaluates whether durable repository memory exceeds configured line thresholds.</td>
+                                    <td>opt. <code>--mode {advisory,warn,block}</code>, <code>--root &lt;dir&gt;</code>
+                                    </td>
+                                    <td>Evaluates whether durable repository memory exceeds configured line thresholds.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><code>adr-generate</code></td>
-                                    <td>opt. <code>--feature &lt;F&gt;</code>, <code>--title &quot;...&quot;</code>, <code>--decision &quot;...&quot;</code>, <code>--reversibility {Easy,Moderate,Hard}</code></td>
-                                    <td>Generates numbered <code>corebase-specharness/project/adr/ADR-NNN.md</code> and updates <code>adr-log.md</code>.</td>
+                                    <td>opt. <code>--feature &lt;F&gt;</code>, <code>--title &quot;...&quot;</code>,
+                                        <code>--decision &quot;...&quot;</code>,
+                                        <code>--reversibility {Easy,Moderate,Hard}</code>
+                                    </td>
+                                    <td>Generates numbered <code>corebase-specharness/project/adr/ADR-NNN.md</code> and
+                                        updates <code>adr-log.md</code>.</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1845,8 +2262,11 @@ gates:
 
                 <div class="section-card anchor-target" id="providers">
                     <h3>Optional Tool Providers &amp; Code Intelligence</h3>
-                    <p>Providers are opt-in. New installs keep <code>active: none</code> and <code>mode: optional</code> in both categories. The installer does not install, authenticate, or enable provider binaries. Configure them in <code>corebase-specharness/project/tool-providers.md</code>.</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/code-intel-integration.mmd" role="img" aria-label="Code Intelligence Integration Diagram">
+                    <p>Providers are opt-in. New installs keep <code>active: none</code> and <code>mode: optional</code>
+                        in both categories. The installer does not install, authenticate, or enable provider binaries.
+                        Configure them in <code>corebase-specharness/project/tool-providers.md</code>.</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/code-intel-integration.mmd"
+                        role="img" aria-label="Code Intelligence Integration Diagram">
                         <div class="diagram-loading">Loading live code intelligence diagram...</div>
                     </div>
                     <div class="comparison-table-wrapper">
@@ -1881,7 +2301,15 @@ gates:
                             </tbody>
                         </table>
                     </div>
-                    <p id="code-intel"><code>provider-run</code> without <code>--action</code> defaults to <code>run</code> for <code>review</code> and <code>check</code> for <code>code-intelligence</code>. <code>check</code> reports availability and does not execute a binary. Shell gates in <code>harness-config.yaml</code> require both <code>allow_shell: true</code> and a non-empty <code>shell_rationale</code>. If a code-intelligence provider is unavailable or inactive, agents fall back to bounded local search (<code>grep</code> / <code>read</code>) and record <code>[CI tool unavailable]</code> without failing verification.</p>
+                    <p id="code-intel"><code>provider-run</code> without <code>--action</code> defaults to
+                        <code>run</code> for <code>review</code> and <code>check</code> for
+                        <code>code-intelligence</code>. <code>check</code> reports availability and does not execute a
+                        binary. Shell gates in <code>harness-config.yaml</code> require both
+                        <code>allow_shell: true</code> and a non-empty <code>shell_rationale</code>. If a
+                        code-intelligence provider is unavailable or inactive, agents fall back to bounded local search
+                        (<code>grep</code> / <code>read</code>) and record <code>[CI tool unavailable]</code> without
+                        failing verification.
+                    </p>
                 </div>
             </section>
 
@@ -1890,33 +2318,47 @@ gates:
                 <h2>11. Governance, Release &amp; Integrity</h2>
                 <div class="section-card">
                     <h3>Release Pipeline &amp; Versioning</h3>
-                    <p>CoreBase SpecHarness follows strict SemVer versioning with automated CI smoke tests and GitHub Pages deployments:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/release-flow.mmd" role="img" aria-label="Release Flow Diagram">
+                    <p>CoreBase SpecHarness follows strict SemVer versioning with automated CI smoke tests and GitHub
+                        Pages deployments:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/workflow/release-flow.mmd"
+                        role="img" aria-label="Release Flow Diagram">
                         <div class="diagram-loading">Loading live release pipeline...</div>
                     </div>
                 </div>
 
                 <div class="section-card">
                     <h3>Package Health Surface (10 Doctor Checks)</h3>
-                    <p><code>doctor</code> runs 10 named package-health checks. The first 9 can fail the command; <code>project_setup</code> is advisory and warns without failing.</p>
+                    <p><code>doctor</code> runs 10 named package-health checks. The first 9 can fail the command;
+                        <code>project_setup</code> is advisory and warns without failing.
+                    </p>
                     <ol class="step-list">
-                        <li><strong>manifest:</strong> Validates SemVer, keys, missing glob patterns, and shipped files.</li>
-                        <li><strong>ownership:</strong> Asserts zero overlap between <code>overwrite</code> and <code>copyIfMissing</code>.</li>
+                        <li><strong>manifest:</strong> Validates SemVer, keys, missing glob patterns, and shipped files.
+                        </li>
+                        <li><strong>ownership:</strong> Asserts zero overlap between <code>overwrite</code> and
+                            <code>copyIfMissing</code>.
+                        </li>
                         <li><strong>surfaces:</strong> Verifies no retired leftovers exist on disk.</li>
-                        <li><strong>context_routes:</strong> Validates route fields, phases, states, and source file existence.</li>
+                        <li><strong>context_routes:</strong> Validates route fields, phases, states, and source file
+                            existence.</li>
                         <li><strong>commands:</strong> Validates every registry handler is importable and unique.</li>
                         <li><strong>providers:</strong> Asserts tool provider registry integrity.</li>
                         <li><strong>upgrade_contracts:</strong> Validates kit-owned escape transitions.</li>
-                        <li><strong>static_audit:</strong> Asserts reachability of all shipped <code>core.*</code> modules.</li>
+                        <li><strong>static_audit:</strong> Asserts reachability of all shipped <code>core.*</code>
+                            modules.</li>
                         <li><strong>configuration:</strong> Validates <code>harness-config.yaml</code> schema.</li>
-                        <li><strong>project_setup:</strong> Warns if <code>project_setup.status</code> is <code>deferred</code> or no confirmed verification gates exist. Advisory/no-gate verification cannot authorize <code>Done</code> without an explicit override.</li>
+                        <li><strong>project_setup:</strong> Warns if <code>project_setup.status</code> is
+                            <code>deferred</code> or no confirmed verification gates exist. Advisory/no-gate
+                            verification cannot authorize <code>Done</code> without an explicit override.
+                        </li>
                     </ol>
                 </div>
 
                 <div class="section-card">
                     <h3>Harness Assessment &amp; Maintenance Loop</h3>
-                    <p>How <code>/harness-maintain</code> audits harness health, evaluates doctor output, and maps execution findings to fixes:</p>
-                    <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/harness-maintenance.mmd" role="img" aria-label="Harness Maintenance Diagram">
+                    <p>How <code>/harness-maintain</code> audits harness health, evaluates doctor output, and maps
+                        execution findings to fixes:</p>
+                    <div class="mermaid-render" data-mmd="documents/diagrams/source/harness/harness-maintenance.mmd"
+                        role="img" aria-label="Harness Maintenance Diagram">
                         <div class="diagram-loading">Loading live harness maintenance diagram...</div>
                     </div>
                 </div>
@@ -1940,7 +2382,9 @@ gates:
                                 <tr>
                                     <td><strong>Premature Coding</strong></td>
                                     <td>Agent modifies code before understanding requirements.</td>
-                                    <td><code>skill-exit</code> fails if <code>spec.md</code>, <code>plan.md</code>, or <code>tasks.md</code> are missing.</td>
+                                    <td><code>skill-exit</code> fails if <code>spec.md</code>, <code>plan.md</code>, or
+                                        <code>tasks.md</code> are missing.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Context Exhaustion</strong></td>
@@ -1950,12 +2394,14 @@ gates:
                                 <tr>
                                     <td><strong>Task Jumping</strong></td>
                                     <td>Agent works on multiple tasks at once and loses focus.</td>
-                                    <td><code>task-start</code> locks exactly one active <code>In Progress</code> task.</td>
+                                    <td><code>task-start</code> locks exactly one active <code>In Progress</code> task.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Phantom Completion</strong></td>
                                     <td>Agent marks tasks done without running tests.</td>
-                                    <td><code>task-done</code> rejects completion without fresh <code>--evidence</code>.</td>
+                                    <td><code>task-done</code> rejects completion without fresh <code>--evidence</code>.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Unchecked Closeout</strong></td>
@@ -1975,7 +2421,8 @@ gates:
                                 <tr>
                                     <td><strong>Upgrade Overwrites</strong></td>
                                     <td>Kit updates wipe out adopter project configurations.</td>
-                                    <td>Strict <code>overwrite</code> vs <code>copyIfMissing</code> manifest boundaries.</td>
+                                    <td>Strict <code>overwrite</code> vs <code>copyIfMissing</code> manifest boundaries.
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td><strong>Advisory False Positives</strong></td>
@@ -1999,14 +2446,18 @@ gates:
         <div class="container footer-content">
             <div class="footer-brand">
                 <strong>CoreBase SpecHarness v1.0.0</strong> &middot; Spec-Anchored AI Software Delivery
-                <p class="footer-desc">An open, skills-first engineering harness for AI coding agents. Licensed for open engineering excellence.</p>
+                <p class="footer-desc">An open, skills-first engineering harness for AI coding agents. Licensed for open
+                    engineering excellence.</p>
             </div>
             <div class="footer-links">
                 <a href="#product">Product</a>
                 <a href="#docs">Developer Docs</a>
-                <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness" target="_blank" rel="noopener">GitHub Repository</a>
-                <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness/blob/main/documents/INDEX.md" target="_blank" rel="noopener">Documentation Index</a>
-                <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness/issues" target="_blank" rel="noopener">Report Issue</a>
+                <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness" target="_blank" rel="noopener">GitHub
+                    Repository</a>
+                <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness/blob/main/documents/INDEX.md"
+                    target="_blank" rel="noopener">Documentation Index</a>
+                <a href="https://github.com/thaihai-swe/CoreBase-SpecHarness/issues" target="_blank"
+                    rel="noopener">Report Issue</a>
             </div>
         </div>
     </footer>

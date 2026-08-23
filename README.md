@@ -56,10 +56,10 @@ Install the embedded payload into your target project:
 
 ```bash
 # Preview changes (dry run)
-bash kit/corebase-specharness/scripts/install.sh /path/to/your-repo --dry-run
+bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh /path/to/your-repo --dry-run
 
 # Live install
-bash kit/corebase-specharness/scripts/install.sh /path/to/your-repo
+bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh /path/to/your-repo
 ```
 
 The installer:
