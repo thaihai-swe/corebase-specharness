@@ -36,7 +36,7 @@ context:
   # Portable limits: do not assume an agent exposes its model context window.
   max_injected_tokens: 6000
   reserve_tokens: 1500
-  max_bootstrap_tokens: 800
+  max_bootstrap_tokens: 1200
   max_project_tokens: 1200
   max_feature_tokens: 1600
   max_retrieved_tokens: 1000

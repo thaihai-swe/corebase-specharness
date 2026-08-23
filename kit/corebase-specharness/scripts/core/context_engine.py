@@ -260,7 +260,7 @@ def _channel_limits(root):
     feature_limit = int(context.get("max_feature_tokens", 1600))
     project_limit = int(context.get("max_project_tokens", 1200))
     return {
-        "bootstrap": int(context.get("max_bootstrap_tokens", 800)),
+        "bootstrap": int(context.get("max_bootstrap_tokens", 1200)),
         "project": project_limit,
         "feature": feature_limit,
         "task": feature_limit,

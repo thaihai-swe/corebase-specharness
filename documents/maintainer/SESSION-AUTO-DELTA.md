@@ -23,7 +23,7 @@ Each skill requires context:
 
 Without intelligent delta loading:
 1. **Redundant token spend:** Over 60%–80% of prompt payload on later turns re-injects identical files already present in the active chat window.
-2. **Channel budget starvation:** Mandatory bootstrap (~570 tokens) loaded before budget checks fills channel caps (e.g. `max_bootstrap_tokens: 800`), crowding out optional `Should` files (such as `code-design.md`).
+2. **Channel budget starvation:** Mandatory bootstrap (~570 tokens) loaded before budget checks fills channel caps (e.g. `max_bootstrap_tokens: 1200`), crowding out optional `Should` files (such as `code-design.md`).
 3. **Single-turn amnesia:** Naive delta mechanisms only compare against the immediate predecessor skill, forgetting context loaded two skills prior.
 4. **All-or-nothing file re-injection:** Needing one additional section from a 1,000-token architecture doc forced reloading the full document.
 

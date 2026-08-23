@@ -72,7 +72,7 @@ Session auto-delta does not change the *route*. It changes whether an already-lo
 | **`/spec-adr`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (6)<br>• `architecture.md` [Snapshot, Boundaries, Safe Change] (59)<br>• `code-design.md` **omitted** (`channel budget exceeded: bootstrap`) | **657** | **1,235** |
 | **`/spec-testing-scenario`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (413)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (6)<br>• `tasks.md` (57)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193) | **848** | **1,047** |
 
-Isolated `/spec-plan` and `/spec-adr` drop `code-design.md` because bootstrap (`caveman.md` + `core-policies.md`) already fills `max_bootstrap_tokens` (800). Session auto-delta skips those unchanged bootstrap files **before** budget, so the same `Should` source can be selected.
+Isolated `/spec-plan` and `/spec-adr` drop `code-design.md` because bootstrap (`caveman.md` + `core-policies.md`) already fills `max_bootstrap_tokens` (1200). Session auto-delta skips those unchanged bootstrap files **before** budget, so the same `Should` source can be selected.
 
 ### Sequential session auto-delta (same feature, same uncompacted chat, omit `--full`)
 

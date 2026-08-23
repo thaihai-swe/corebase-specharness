@@ -131,7 +131,7 @@ Shipped global and channel limits:
 | --- | ---: |
 | `max_injected_tokens` | 6,000 |
 | `reserve_tokens` | 1,500 |
-| `max_bootstrap_tokens` | 800 |
+| `max_bootstrap_tokens` | 1,200 |
 | `max_project_tokens` | 1,200 |
 | `max_feature_tokens` | 1,600 |
 | `max_retrieved_tokens` | 1,000 |

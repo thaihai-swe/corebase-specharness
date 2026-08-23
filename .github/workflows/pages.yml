@@ -14,8 +14,7 @@ jobs:
         uses: actions/configure-pages@v4
       - name: Copy docs to site directory
         run: |
-          mkdir -p _site
-          mkdir -p _site/adopters _site/maintainers
+          mkdir -p _site/adopters _site/maintainers _site/documents
           cp -R kit/corebase-specharness/* _site/adopters/
           cp kit/README.md _site/adopters/README.md
           cp product-page/index.html _site/index.html
