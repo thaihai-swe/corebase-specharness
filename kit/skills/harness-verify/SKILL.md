@@ -50,6 +50,7 @@ This skill is the **sole authority** for validating AC completion and transition
 
 1. **Pre-flight**:
    - Run `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill harness-verify --feature <slug> --intent "<request>"`.
+   - Omit `--full` unless this conversation was compacted, this is the first skill in a new chat on an existing feature, the user asked to reload context, or the pack is known stale. See `skills/_shared/context-loading.md`.
    - Run `python3 corebase-specharness/scripts/core/cli.py phase-check --feature <slug> --skill harness-verify`.
 
 2. **Mechanical Gate Audit**:

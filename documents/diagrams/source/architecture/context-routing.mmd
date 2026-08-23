@@ -25,21 +25,20 @@ flowchart TD
     INTENT -->|No| SCORE
     RETRIEVE --> SCORE["Score and order candidates<br/>tier · keyword score · token size · path"]:::group
 
+    SCORE --> DELTA{"Delta mode?"}:::decision
+    DELTA -->|--full or no baseline| BUDGET
+    DELTA -->|--delta-from or session cache| AUTO_DELTA["Session auto-delta before budget<br/>union last_context_fingerprint<br/>and last_context_slices in session.md<br/>skip unchanged files and H2 sections<br/>pass --full after compact or new chat"]:::output
+    AUTO_DELTA --> BUDGET
+
     CONFIG["corebase-specharness/project/harness-config.yaml<br/>profile payload · injected ceiling<br/>channel limits · retrieval limits"]:::source --> BUDGET
-    SCORE --> BUDGET["Apply payload and channel budgets"]:::group
+    BUDGET["Apply payload and channel budgets<br/>skipped delta sources do not consume caps"]:::group
     BUDGET --> MUST["Retain every Must source<br/>report mandatory overruns"]:::core
     BUDGET --> SHOULD["Select or omit Should sources<br/>with explicit reasons"]:::group
 
     MUST --> PACK
     SHOULD --> PACK
-    PACK["Inspectable context pack<br/>selected + omitted + fingerprints<br/>provenance + trust + tokens + warnings"]:::output
-    PACK --> DELTA{"Delta mode?"}:::decision
-    DELTA -->|--full| OUTPUT
-    DELTA -->|--delta-from supplied| DELTA_PACK["Return only new or changed selected sources"]:::output
-    DELTA -->|session last_context_fingerprint present| AUTO_DELTA["Session auto-delta<br/>SHA-256 fingerprint diff<br/>re-inject only modified files"]:::output
-    DELTA -->|no prior pack| OUTPUT
-    DELTA_PACK --> OUTPUT
-    AUTO_DELTA --> OUTPUT
+    PACK["Inspectable context pack<br/>selected + omitted + delta_omitted<br/>fingerprints + slices + tokens"]:::output
+    PACK --> OUTPUT
     OUTPUT[("context-pack: manifest only<br/>context-load / skill-enter: content + manifest<br/>context-explain: selection findings")]:::output
 
     classDef terminal fill:#111827,stroke:#111827,color:#fff
@@ -54,4 +53,5 @@ flowchart TD
 
     class START terminal
     class RESOLVE,FEATURE,PREREQ,INTENT,DELTA decision
+    class AUTO_DELTA,PACK,OUTPUT output
     class ERROR,FEATURE_ERROR,PREREQ_ERROR fail

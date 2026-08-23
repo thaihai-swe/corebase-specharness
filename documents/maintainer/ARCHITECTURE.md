@@ -103,7 +103,7 @@ upward. If the hint is a file, it starts from that file's parent.
 │  [Layer 2 — Context Compiler & Budget Engine]                               │
 │  • Route source loader with Must / Should / Skip prioritization             │
 │  • Domain pack trigger matching via glossary keywords                       │
-│  • Session Auto-Delta caching (session.md last_context_fingerprint)         │
+│  • Session Auto-Delta caching (accumulated fingerprints + H2 slices)        │
 │  • Secret redaction & task-scoped context slimming                          │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  [Layer 3 — State Machine & Task Graph Engine]                              │
@@ -257,18 +257,30 @@ Compilation Sequence:
 5. Add-Sources: Validated repository-relative paths matching pinnable_sources
 6. Domain Memory Packs: Triggered by keyword intersection in glossary.md
 7. Bounded Local Retrieval: Path-scoped keyword search with secret redaction
-8. Token Estimate & Budget Pruning:
+8. Session Auto-Delta (unless `--full`):
+   Compare candidate files and H2 sections to the union cache in session.md
+   (`last_context_fingerprint`, `last_context_slices`). Unchanged sources are
+   omitted before budget math so they do not consume channel caps.
+   Valid only while skipped files remain in this conversation. After compact
+   or a new chat on the same feature, pass `--full`. The compiler does not
+   detect those events; session-end does not clear the cache.
+9. Token Estimate & Budget Pruning:
    Tokens = tiktoken cl100k_base when available, else len(text) / 4.0
    Ceiling = min(profile_payload or --budget, max_injected_tokens - reserve_tokens)
    Must sources are guaranteed (warnings emitted on overflow);
    Should sources drop on payload or channel overflow.
+   Measured isolated vs sequential pack tokens: [TOKEN-COST.md](TOKEN-COST.md).
 ```
 
 #### Compiler optimizations
-- **Session Auto-Delta**: Uses `last_context_fingerprint` in
-  `.corezero/sessions/<slug>/session.md` to compute SHA-256 fingerprint diffs.
-  Re-injects only modified files, saving 60–80% of context tokens across
-  multi-turn iterations. `--full` bypasses the cache.
+- **Session Auto-Delta**: Uses `last_context_fingerprint` and
+  `last_context_slices` in `.corezero/sessions/<slug>/session.md` to compute
+  SHA-256 fingerprint diffs across skills in the same session. Re-injects
+  only new or modified files, and only new or changed H2 sections of files a
+  prior skill already loaded. `--full` bypasses the cache. Hashes live on
+  disk; file bodies live in the chat. After a conversation compact or on
+  the first skill of a new chat for the same feature, the agent must pass
+  `--full`. Full rules: [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 - **In-Memory Fingerprinting**: Computes hashes directly from loaded memory
   buffers without redundant disk re-reads.
 - **Budget Ceiling**: Budget math enforces `min(budget, max_injected_tokens - reserve_tokens)`.
@@ -419,8 +431,11 @@ build_context_pack(skill, feature, intent, task, budget, add_sources)
   sort: always-on, then Must, then score, then smaller, then path
   keep Must even if over budget
   drop non-Must on payload or channel overflow
-  optional --delta-from or session last_context_fingerprint keeps only fingerprint changes
-  --full disables session auto-delta
+  optional --delta-from or session last_context_fingerprint / last_context_slices
+    keeps only fingerprint changes (union of packs loaded in this session;
+    extra H2 sections of an already-loaded file are injected alone)
+  --full disables session auto-delta (required after compact or new chat
+    on the same feature; session-end does not clear fingerprints)
 ```
 
 ### 4.5 Task lifecycle
@@ -500,6 +515,8 @@ YAML:
   "closed": false,
   "ended_at": "<isoformat seconds, set on session-end>",
   "last_context_tokens": 0,
+  "last_context_fingerprint": {},
+  "last_context_slices": {},
   "token_usage_estimate": 0
 }
 ---
@@ -519,8 +536,11 @@ Writes lock the target file itself, then `atomic_write` (sibling tempfile,
 `session-checkpoint` appends `## Progress Update` and
 `## Handoff Update` blocks and increments `updates`. Recorded `--decision`
 values accumulate in `metadata.decisions` for `adr-generate`. `session-end` sets
-`closed` and does not delete the file. A later `session-start` reopens a closed
-session and appends `## Session Reopened`.
+`closed` and does not delete the file. It does **not** clear
+`last_context_fingerprint` or `last_context_slices`. A later `session-start`
+reopens a closed session, appends `## Session Reopened`, and keeps those
+hashes, so a new chat on the same feature still needs `--full` on the first
+skill.
 
 ### 5.3 Lifecycle store
 
@@ -788,6 +808,7 @@ generated runtime state.
 - Design thesis: [DESIGN.md](DESIGN.md)
 - As-built requirements: [SPEC-REQUIREMENTS.md](SPEC-REQUIREMENTS.md)
 - Memory and budgets: [MEMORY.md](MEMORY.md)
+- Token cost (isolated vs session auto-delta): [TOKEN-COST.md](TOKEN-COST.md)
 - Harness and gates: [HARNESS.md](HARNESS.md)
 - CLI reference: [REFERENCE.md](REFERENCE.md)
 - Install and upgrade: [INSTALL.md](INSTALL.md)

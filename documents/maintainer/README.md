@@ -33,7 +33,9 @@ as lookup.
 | [WORKFLOW.md](WORKFLOW.md) | Usage guide, 6-phase lifecycle, transition graph, and command map |
 | [SKILLS.md](SKILLS.md) | Eleven routes, per-skill contracts, writes, and handoffs |
 | [HARNESS.md](HARNESS.md) | Readiness algorithm, gates, verify verdict, doctor, providers |
-| [MEMORY.md](MEMORY.md) | Context packs, budgets, retrieval policy, memory audit |
+| [MEMORY.md](MEMORY.md) | Context packs, budgets, retrieval, memory audit, compact / new-chat auto-delta |
+| [SESSION-AUTO-DELTA.md](SESSION-AUTO-DELTA.md) | Session auto-delta feature: union baseline, H2 slice diffs, skip-before-budget, `--full` |
+| [TOKEN-COST.md](TOKEN-COST.md) | Isolated vs session-delta pack tokens, step costs, compact / new-chat usage |
 | [REFERENCE.md](REFERENCE.md) | CLI options, envelope fields, artifacts, runtime module map |
 | [RELEASING.md](RELEASING.md) | Kit-maintainer release only |
 

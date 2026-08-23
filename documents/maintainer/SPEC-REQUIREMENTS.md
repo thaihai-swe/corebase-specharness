@@ -251,8 +251,9 @@ Coarse `artifact-check --phase` file sets (`PHASE_FILES` fallback):
 | X-11 | `context-load` must not read paths outside the repository root. |
 | X-12 | Token budget is `min(requested or profile payload, max_injected_tokens - reserve_tokens)`. Default seed: 6000 max, 1500 reserve, profile payloads 2500–4000. Existing adopter config is copy-if-missing and keeps its old seed. |
 | X-13 | Channel caps apply to non-Must sources: bootstrap, project, feature/task, retrieved, durable_memory, explicit. |
-| X-14 | Packs expose tokenizer mode (`cl100k_base` or `chars_per_token_estimate`), fingerprints, and optional `--delta-from` change sets. When `--full` is omitted, an existing session `last_context_fingerprint` in `session.md` is used as the delta baseline. |
+| X-14 | Packs expose tokenizer mode (`cl100k_base` or `chars_per_token_estimate`), fingerprints, and optional `--delta-from` change sets. When `--full` is omitted, an existing session `last_context_fingerprint` / `last_context_slices` in `session.md` is the accumulated delta baseline for the session. Later skills inject only new or changed files and only new or changed H2 sections. |
 | X-15 | Session token usage is accumulated in `session.md` `token_usage_estimate`. `status` and context commands warn at `thresholds.session_warn_tokens` (seed 40000) and report a hard-budget breach at `thresholds.session_hard_tokens` (seed 80000). |
+| X-16 | Auto-delta is valid only while skipped sources remain in the live conversation. The compiler does not detect conversation compact or a new chat. The agent must pass `--full` after compact, on the first skill of a new chat for the same feature, when the user asks to reload context, or when the pack is known stale. `--full` is an agent flag; the user invokes skills and, when needed, says reload context. |
 
 `reserve_tokens` still shrinks the injectable ceiling. New-install seed: 6000 max, 1500 reserve, ceiling 4500.
 
@@ -266,8 +267,9 @@ Coarse `artifact-check --phase` file sets (`PHASE_FILES` fallback):
 | N-02 | Session files have JSON front matter plus Markdown body with `Objective`, `Progress`, and `Handoff`. |
 | N-03 | `session-start` / `skill-enter` create or resume. A closed session is reopened rather than overwritten. |
 | N-04 | `session-checkpoint` appends progress/handoff and records decisions in metadata. It requires an existing session. |
-| N-05 | `session-end` requires a handoff, may append memory candidates to `session-extracts.md`, and marks the session closed. |
+| N-05 | `session-end` requires a handoff, may append memory candidates to `session-extracts.md`, and marks the session closed. It does not delete `session.md` and does not clear `last_context_fingerprint` / `last_context_slices`. |
 | N-06 | Writes use a lock plus atomic replace. |
+| N-07 | A later `session-start` / `skill-enter` reopens a closed session in place and keeps the fingerprint maps. The first skill of a new conversation on that feature must pass `--full`. |
 
 ---
 

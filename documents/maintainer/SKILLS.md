@@ -374,7 +374,12 @@ focused expansion.
 
 ## Session and artifact contracts
 
-Feature sessions live at `.corezero/sessions/<slug>/session.md`.
+Feature sessions live at `.corezero/sessions/<slug>/session.md`. Auto-delta
+skips files already hashed there. That is safe only in the same uncompacted
+chat. After compact or on the first skill of a new chat for the same
+feature, the agent passes `--full`. `session-end` does not clear hashes.
+See [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat)
+and `kit/skills/_shared/context-loading.md`.
 
 ```bash
 python3 corebase-specharness/scripts/core/cli.py skill-enter \

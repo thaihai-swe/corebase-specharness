@@ -208,6 +208,19 @@ Budget rules:
 - Must sources always stay, even if they overflow. Overflow becomes a warning.
 - Non-Must sources drop when payload or channel caps are exceeded.
 - Retrieval has its own file count and excerpt-token caps.
+- When `--full` is omitted, session auto-delta runs **before** budget math.
+  `record_context_pack()` unions SHA-256 file and H2-section fingerprints into
+  `session.md`. A later skill injects only new or changed files and only new
+  or changed sections. Skipped sources do not consume channel caps, so a
+  later `Should` file is not crowded out by bootstrap already loaded earlier
+  in the session. Measured costs: [TOKEN-COST.md](TOKEN-COST.md).
+- Auto-delta assumes skipped sources are still in **this conversation**.
+  Hashes live in `session.md`; file bodies live in the chat. The compiler
+  cannot detect conversation compact or a new chat. `session-end` does not
+  clear fingerprints. After compact, or on the first skill of a new chat for
+  the same feature, the agent passes `--full`. The user only types the skill
+  and, when needed, says reload context. Full rules:
+  [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 
 `context-pack` / `context-explain` are the inspectable forms and omit file
 bodies. `context-load` returns the pack-selected text: declared H2 slices,
@@ -217,7 +230,8 @@ the pack already chose content.
 Intent never searches the whole world. Keyword scoring stays inside files
 already admitted to the candidate set, plus the retrieval walk.
 
-See [MEMORY.md](MEMORY.md) for budget math and retrieval policy.
+See [MEMORY.md](MEMORY.md) for budget math, retrieval policy, and compact /
+new-chat auto-delta rules.
 
 ---
 

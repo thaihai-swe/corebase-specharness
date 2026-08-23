@@ -54,9 +54,9 @@ task dependency graphs, and test evidence exist.
 1. **User Request & Entry**:
    When a user provides an intent or requests a skill, the agent calls `skill-enter --skill <name> --feature <slug> --intent "<intent>"`. This resolves route prerequisites, sets feature status in `status.md`, and creates/resumes `.corezero/sessions/<slug>/session.md`.
 2. **Context Compilation & Token Estimation**:
-   `context_engine.py` compiles the bounded context pack. Token estimates are calculated using `cl100k_base` BPE (via `tiktoken` when present) or `chars_per_token_estimate` (`len(text) / 4.0` in pure stdlib Python).
+   `context_engine.py` compiles the bounded context pack. Token estimates are calculated using `cl100k_base` BPE (via `tiktoken` when present) or `chars_per_token_estimate` (`len(text) / 4.0` in pure stdlib Python). When `--full` is omitted, the pack is auto-delta'd against the union of fingerprints already stored in this feature's `session.md`. Later skills in the **same uncompacted chat** inject only new or changed files and H2 sections; skipped sources do not consume budget. After a conversation compact, or on the first skill of a new chat for the same feature, the agent must pass `--full` because hashes survive on disk while file bodies often do not. Isolated vs sequential pack costs are in [TOKEN-COST.md](TOKEN-COST.md). Full compact / new-chat rules: [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 3. **Budget Enforcement**:
-   The payload is capped at `min(profile_payload or --budget, max_injected_tokens - reserve_tokens)`. Mandatory `Must` files are always preserved (universal bootstrap is only ~410 tokens: `caveman.md` + `core-policies.md` [Purpose, Normative Rules]); `Should` files and local search excerpts are dropped if payload or channel caps (`bootstrap`, `project`, `feature`, `task`, `retrieved`, `durable_memory`) are reached.
+   The payload is capped at `min(profile_payload or --budget, max_injected_tokens - reserve_tokens)`. Mandatory `Must` files are always preserved (universal bootstrap is only ~410 tokens: `caveman.md` + `core-policies.md` [Purpose, Normative Rules]); `Should` files and local search excerpts are dropped if payload or channel caps (`bootstrap`, `project`, `feature`, `task`, `retrieved`, `durable_memory`) are reached. Auto-delta skips are applied before this step.
 4. **Skill Execution & Exit**:
    The agent performs the tasks defined in `skills/<name>/SKILL.md`, writes feature artifacts under `artifacts/features/<slug>/`, and runs `skill-exit` to validate artifact completeness and transition to the next lifecycle skill.
 
@@ -68,6 +68,22 @@ task dependency graphs, and test evidence exist.
 | **Coding agent** | Skill execution, bounded code inspection, artifact authoring, task implementation, proof, and handoffs |
 | **CoreBase SpecHarness CLI** | Scaffolding, context assembly, session tracking, task state transitions, artifact schema checks, gate execution, and diagnostics |
 | **Kit maintainer** | Embedded runtime implementation, manifest ownership, route/skill consistency, and release hygiene |
+
+### Compact and new chat
+
+The user only types skills. Auto-delta skips files already hashed in
+`.corezero/sessions/<slug>/session.md`. That is correct only while this
+conversation still holds those files.
+
+| User action | What to type |
+| --- | --- |
+| Same chat, same feature, no compact | The next skill (`/spec-plan`, …) |
+| After compact, or first skill of a new chat on the same feature | The skill **and** reload context / reload everything |
+| New feature | The skill (full pack is automatic) |
+
+The agent passes `--full` only in the middle row. `/context-memory`
+compacting a memory file on disk is not conversation compact. Full rules:
+[MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 
 ---
 
@@ -334,8 +350,11 @@ task-check
 ```
 
 `--task` replaces full `tasks.md` with the active task plus direct
-dependencies. Session auto-delta then keeps unchanged files out of later
-loads unless `--full` is passed.
+dependencies. Session auto-delta then keeps unchanged files and already-loaded
+H2 sections out of later loads unless `--full` is passed. Pass `--full` after
+conversation compact, on the first skill of a new chat for the same feature,
+when the user asks to reload context, or when the pack is known stale.
+`session-end` does not clear fingerprints.
 
 Memory lifecycle after a passing `/harness-verify`:
 
@@ -815,7 +834,7 @@ CoreBase SpecHarness cuts token consumption by up to 50% compared to traditional
 
 1. **Mandatory Bootstrap Slicing**: Universal bootstrap (`caveman.md` + `core-policies.md` [Purpose, Normative Rules]) consumes only **~410 tokens**. Security policies are injected only on implement, verify, and ADR skills.
 2. **Task-Scoped Implementation (`--task T-NNN`)**: Context compilation loads only the active task and direct dependencies, omitting massive whole-feature `tasks.md` graphs.
-3. **Session Auto-Delta Caching**: The engine calculates a SHA-256 fingerprint of compiled payloads. Subsequent `context-load` calls within the same session omit unchanged files automatically unless `--full` is explicitly passed.
+3. **Session Auto-Delta Caching**: The engine calculates a SHA-256 fingerprint of compiled payloads and accumulates it across skills in the same session. Subsequent `context-load` calls omit unchanged files and already-loaded H2 sections unless `--full` is explicitly passed. `/spec-plan` therefore does not re-inject bootstrap or overlapping artifacts already loaded by `/spec-requirements` **in the same uncompacted chat**. After compact or a new chat on the same feature, pass `--full` once so skipped files return to the live window. The compiler cannot detect compact or a new chat; `session-end` does not clear hashes. See [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 4. **Bounded Retrieval & Secret Redaction**: Keyword-triggered local code searches and domain packs are capped at `max_retrieval_files: 4` and `max_source_excerpt_tokens: 400`. Profiles `bootstrap`, `verify`, and `compact` set `retrieval_files: 0` and skip automatic local retrieval. All excerpts pass through automatic regex secret redaction.
 
 ---
@@ -833,6 +852,8 @@ When an agent encounters an unresolvable blocker or ambiguity, it writes a stand
 | `[:HALT STALE — spec amended <date>]` | Specification was modified after plan or tasks were approved. | Re-enter `/spec-plan` to adjust architecture and regenerate tasks. |
 | `[:HALT SECURITY: <desc>]` | Security-sensitive path without evidence. | Add proof and re-enter `/harness-verify`. |
 | `[:HALT SYNC REQUIRED]` | `## Post-Ship Sync` heading is missing from `session-extracts.md`. | Add the heading, then invoke `/context-memory`. |
+
+After a conversation compact or a new chat on an existing feature, the next skill can under-inject (hashes in `session.md`, no file bodies in the window). That is not a HALT. The user says reload context; the agent passes `--full` on that enter. See [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 
 ### Diagnosing Quality Degradation with `/harness-maintain`
 
@@ -859,6 +880,7 @@ ightarrow$ Enforce public-seam proof requirement in `task-done --evidence`.
 - Design thesis: [DESIGN.md](DESIGN.md)
 - As-built requirements: [SPEC-REQUIREMENTS.md](SPEC-REQUIREMENTS.md)
 - Memory & context budgets: [MEMORY.md](MEMORY.md)
+- Compact / new-chat auto-delta: [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat)
 - Harness & verification: [HARNESS.md](HARNESS.md)
 - CLI & artifact reference: [REFERENCE.md](REFERENCE.md)
 - Install & upgrade: [INSTALL.md](INSTALL.md)

@@ -119,7 +119,7 @@ The kit keeps three kinds of state in three places. Do not mix them.
 | Class | Path | Lifetime | Owner |
 | --- | --- | --- | --- |
 | Durable feature evidence | `artifacts/features/<slug>/` | Lives with the feature | Adopter / delivery skills |
-| Ephemeral session continuity | `.corezero/sessions/<slug>/session.md` | Resumable working state; not archived on `session-end` | Envelope and session commands |
+| Ephemeral session continuity | `.corezero/sessions/<slug>/session.md` | Resumable working state; not archived on `session-end`; fingerprints survive compact and a new chat | Envelope and session commands |
 | Disposable runtime audit | `corebase-specharness/generated/` | Last 50 verification, closeout-override, gate, and provider runs | `verify`, `status-set`/`skill-exit`, `/harness-maintain` |
 
 `status.md` is the durable feature-state authority. Do not hand-edit
@@ -152,7 +152,7 @@ the field. Profiles do not skip planning, tasks, proof, or verification.
 | New adopter | [INSTALL.md](INSTALL.md) → [WORKFLOW.md](WORKFLOW.md) |
 | Platform engineer | [ARCHITECTURE.md](ARCHITECTURE.md) → [HARNESS.md](HARNESS.md) → [REFERENCE.md](REFERENCE.md) |
 | As-built reviewer | [SPEC-REQUIREMENTS.md](SPEC-REQUIREMENTS.md) → [DESIGN.md](DESIGN.md) → [ARCHITECTURE.md](ARCHITECTURE.md) |
-| Memory and token cost owner | [MEMORY.md](MEMORY.md) |
+| Memory and token cost owner | [MEMORY.md](MEMORY.md) → [TOKEN-COST.md](TOKEN-COST.md) |
 | Release maintainer | [RELEASING.md](RELEASING.md) |
 
 ## Related documents
@@ -161,6 +161,8 @@ the field. Profiles do not skip planning, tasks, proof, or verification.
 - Skill catalog: [SKILLS.md](SKILLS.md)
 - Install and upgrade: [INSTALL.md](INSTALL.md)
 - Memory and context: [MEMORY.md](MEMORY.md)
+- Token cost (isolated vs session auto-delta): [TOKEN-COST.md](TOKEN-COST.md)
+- Compact / new-chat reload: [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat)
 - Architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
 - Design thesis: [DESIGN.md](DESIGN.md)
 - As-built requirements: [SPEC-REQUIREMENTS.md](SPEC-REQUIREMENTS.md)

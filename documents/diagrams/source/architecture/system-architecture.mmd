@@ -21,7 +21,7 @@ flowchart TB
     subgraph L2["Layer 2 — Context Compiler and Budget Engine"]
         CONTEXT["context_engine.py<br/>named-route context compiler"]:::layer2
         BOOTSTRAP["Always-on Must bootstrap<br/>caveman.md · core-policies.md"]:::layer2
-        DELTA["Session auto-delta<br/>session.md last_context_fingerprint<br/>SHA-256 fingerprints · --full bypass"]:::layer2
+        DELTA["Session auto-delta<br/>session.md last_context_fingerprint<br/>SHA-256 fingerprints · --full bypass<br/>--full after compact or new chat"]:::layer2
         RETRIEVE["Bounded local retrieval<br/>Must retained · Should may drop<br/>secret redaction · task excerpt"]:::layer2
 
         CONTEXT --> BOOTSTRAP

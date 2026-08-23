@@ -50,7 +50,7 @@ Run `<command> --help` for the exact accepted options.
 | `init` | `--root`; optional `--dry-run` | Create missing CoreBase SpecHarness directories and seed files without overwriting existing adopter content |
 | `status` | optional `--feature`, `--next`, `--dry-run` | Read feature state; `--next` reports valid handoffs without choosing one |
 | `status-set` | `--feature`, `--phase`; optional `--next-step`, `--verification-override`, `--override-reason`, `--dry-run` | Validate a lifecycle token; `Done` requires named verification evidence or an explicit audited override |
-| `skill-enter` | `--skill`; feature when the route requires one; optional `--intent`, `--budget`, `--delta-from`, `--full`, `--add-source`, `--objective`, `--dry-run` | Load the named-skill pack, open or resume the session, and set the route `enter` state |
+| `skill-enter` | `--skill`; feature when the route requires one; optional `--intent`, `--budget`, `--delta-from`, `--full`, `--add-source`, `--objective`, `--dry-run` | Load the named-skill pack, open or resume the session, and set the route `enter` state. Pass `--full` after compact or on the first skill of a new chat for the same feature. |
 | `skill-exit` | `--skill`; feature when the route requires one; optional `--phase`, `--handoff`, `--progress`, `--handoff-file`, `--next-action`, `--blocker`, `--decision`, `--verification-override`, `--override-reason`, `--dry-run` | Checkpoint the session and set route exit; `Done` is reserved for `harness-verify` unless overridden |
 | `phase-check` | `--feature` and either `--skill` or `--phase`; optional `--dry-run` | Evaluate route prerequisites or coarse phase preconditions plus deterministic readiness checks |
 | `artifact-check` | `--feature` and either `--skill` or `--phase`; optional `--trace` | Validate feature artifact structure from `files_for`; optionally bidirectional AC/task traceability |
@@ -101,7 +101,14 @@ All context commands require `--skill`. They also accept `--feature`,
 `--add-source`, and `--dry-run`. They do not accept `--phase` or `--profile`.
 When `--task T-NNN` is set, `tasks.md` is replaced by a compact payload for
 that task plus its direct dependencies. When `--full` is omitted and a
-session `last_context_fingerprint` cache exists, later loads keep only changed sources.
+session `last_context_fingerprint` cache exists, later loads keep only new or
+changed sources and H2 sections, using the union of packs already loaded in
+that session. Pass `--full` after a conversation compact, on the first skill
+of a new chat for the same feature, when the user asks to reload context, or
+when the pack is known stale. The compiler cannot detect compact or a new
+chat. Measured isolated vs sequential pack tokens:
+[TOKEN-COST.md](TOKEN-COST.md). Compact / new-chat rules:
+[MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 
 A feature is required when the route declares `feature: required`. Retrieved
 excerpts redact detected secrets. When `retrieval.pinnable_sources` is
@@ -120,7 +127,9 @@ Checkpoint and end commands accept `--progress`, `--handoff-file`,
 `session-checkpoint` requires at least one of those inputs. `session-end`
 requires `--next-action`, `--blocker`, `--decision`, or `--handoff-file`,
 and also accepts repeatable `--candidate` and `--extract-file`. Ending a
-session does not archive, move, or delete `session.md`.
+session does not archive, move, or delete `session.md`, and does not clear
+`last_context_fingerprint` / `last_context_slices`. A new chat on the same
+feature still needs `--full` on the first skill.
 
 Session path: `.corezero/sessions/<slug>/session.md`. Frontmatter is JSON,
 not YAML. See [ARCHITECTURE.md](ARCHITECTURE.md).
@@ -549,6 +558,8 @@ Adding a new direct skill is a kit change, not an adopter-local extension.
 
 - Workflow guide: [WORKFLOW.md](WORKFLOW.md)
 - Memory and budgets: [MEMORY.md](MEMORY.md)
+- Compact / new-chat auto-delta: [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat)
+- Token cost (isolated vs session auto-delta): [TOKEN-COST.md](TOKEN-COST.md)
 - Kit structure: [ARCHITECTURE.md](ARCHITECTURE.md)
 - Harness and gates: [HARNESS.md](HARNESS.md)
 - Install and upgrade: [INSTALL.md](INSTALL.md)

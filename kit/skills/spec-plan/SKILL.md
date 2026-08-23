@@ -50,6 +50,7 @@ Defines module maps, component boundaries, dependency directions, complexity tra
 
 1. **Pre-flight**:
    - Run `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-plan --feature <slug> --intent "<request>"`.
+   - Omit `--full` unless this conversation was compacted, this is the first skill in a new chat on an existing feature, the user asked to reload context, or the pack is known stale. See `skills/_shared/context-loading.md`.
    - Do not hand-edit `- Phase:`.
 
 2. **Technical Solution Authoring**:

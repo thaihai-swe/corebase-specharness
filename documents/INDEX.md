@@ -46,7 +46,9 @@ Generated files and diagrams are derived output, never source authority.
 | `maintainer/WORKFLOW.md` | Usage guide, canonical 6-phase lifecycle, transition graph, and command map |
 | `maintainer/SKILLS.md` | Eleven routes, per-skill contracts, writes, and handoffs |
 | `maintainer/HARNESS.md` | Readiness algorithm, verify verdict, gates, doctor, and providers |
-| `maintainer/MEMORY.md` | Context compilation, budgets, retrieval policy, and memory audit |
+| `maintainer/MEMORY.md` | Context compilation, budgets, retrieval policy, memory audit, and compact / new-chat auto-delta rules |
+| `maintainer/SESSION-AUTO-DELTA.md` | Session auto-delta feature: union baseline, H2 slice diffs, skip-before-budget, and `--full` contract |
+| `maintainer/TOKEN-COST.md` | Isolated vs session-delta pack tokens, per-skill step costs, and compact / new-chat usage |
 | `maintainer/REFERENCE.md` | CLI options, envelope fields, artifacts, and runtime module map |
 | `maintainer/RELEASING.md` | Versioning, CI smoke, archive layout, and upgrade procedure |
 
