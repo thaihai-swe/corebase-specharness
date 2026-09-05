@@ -35,7 +35,7 @@ Execute `tasks.md` one locked task at a time. Prove each task without inventing 
 
 ## I/O & Artifact Protocol
 
-- **Reads**: `spec.md`, `plan.md`, `tasks.md`, `security.md`, `code-design.md`, `ponytail.md`.
+- **Reads**: `spec.md`, `plan.md`, `tasks.md`, `security.md`, `code-design.md`.
 - **Writes**: project source/tests; `status.md` (`Implementing`); `tasks.md` status/proofs; `session-extracts.md` `[CANDIDATE]` lessons.
 - **Session**: `.corebase-specharness/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`).
 
@@ -59,7 +59,7 @@ Execute `tasks.md` one locked task at a time. Prove each task without inventing 
    - Red-green: failing proof at the seam, then only enough code to pass.
    - Banned: implementation-coupled tests, tautological tests, horizontal slicing.
    - Missing seam → `[:HALT STALE — spec amended after plan approved]` or `/spec-plan`. Do not invent a mock seam.
-   - Stay inside the task boundary. Follow `code-design.md` and `ponytail.md`. Embed `REQ-*`/`AC-*`/`T-NNN`.
+   - Stay inside the task boundary. Follow `code-design.md`. Embed `REQ-*`/`AC-*`/`T-NNN`.
 
 4. **Review & Validation**:
    - Semantic check on the diff.

@@ -161,7 +161,7 @@ for `skill-exit`. ADR contradiction: `[:HALT ADR CONFLICT: ADR-NNN]`.
 | Prerequisites | `spec.md` |
 | Required write | `plan.md` |
 | Feature artifacts | `status.md`, `spec.md`, session `session.md` |
-| Route sources | `architecture.md` (`Must`, System Snapshot / Top-Level Components / Runtime Boundaries / Safe Change Guidance); `ponytail.md` (`Must`, Decision Matrix); `code-design.md` (`Should`, Abstraction Check & Deep Modules) |
+| Route sources | `architecture.md` (`Must`, System Snapshot / Top-Level Components / Runtime Boundaries / Safe Change Guidance); `code-design.md` (`Should`, Abstraction Check & Deep Modules) |
 | Handoffs | `spec-tasks`, `spec-research`, `spec-adr` |
 | Skill-local refs | `plan-template.md`, `definition-of-ready.md` |
 

@@ -54,7 +54,7 @@ Sole authority for AC completion and `Done`. Runs gates, AC-to-task traceability
 3. **Alignment & two-axis review**:
    - Map every `AC-*` to a completed `T-NNN` with fresh proof. Unmapped AC = `Fail`.
    - After `verify`, review the `git` diff on two isolated axes (parallel subagents if available):
-     1. **Standards**: `code-design.md`, `security.md`, `ponytail.md`, Fowler smells in `references/review-template.md`. Repo rules override. Smells are judgement, not hard fails. Skip tooling-enforced items.
+     1. **Standards**: `code-design.md`, `security.md`, Fowler smells in `references/review-template.md`. Repo rules override. Smells are judgement, not hard fails. Skip tooling-enforced items.
      2. **Spec**: missing/partial `AC-*`, unrequested behavior, wrong implementations. Cite the spec line.
      Present both reports side by side. Do not merge or rerank.
    - Check architecture vs `plan.md`.

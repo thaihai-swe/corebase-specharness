@@ -35,7 +35,7 @@ Convert `plan.md` into `tasks.md`: `T-NNN` nodes, `Covers: AC-*`, `Depends on: T
 
 ## I/O & Artifact Protocol
 
-- **Reads**: `spec.md`, `plan.md`, `status.md`, `code-design.md`, `ponytail.md`.
+- **Reads**: `spec.md`, `plan.md`, `status.md`, `code-design.md`.
 - **Writes**: `tasks.md`; `status.md` (`TaskPlanning` → `PlanApproved`).
 - **Session**: `.corebase-specharness/sessions/<slug>/session.md`.
 

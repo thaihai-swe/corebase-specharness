@@ -63,7 +63,7 @@ Session auto-delta does not change the *route*. It changes whether an already-lo
 | **`/starter-init`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `harness-config.yaml` (481)<br>• `tech-stack.md` [Languages & Runtimes, Frameworks, Dev Tools] (97)<br>• `project-constraints.md` [Performance, Tech, Operational] (182) | **1,282** | **1,149** |
 | **`/spec-research`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `architecture.md` [System Snapshot, Top-Level Components, Runtime Boundaries] (75) | **606** | **1,138** |
 | **`/spec-requirements`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `analysis.md` (10)<br>• `product-sense.md` [Vision, Problem Statement, Domain Rules, Metrics] (107)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193) | **841** | **1,227** |
-| **`/spec-plan`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `architecture.md` [Snapshot, Components, Boundaries, Safe Change] (89)<br>• `ponytail.md` [Decision Matrix: Abstractions] (163)<br>• `code-design.md` [Abstraction Check & Deep Modules, Clean Architecture & Layering, Domain-Driven Design (DDD)] (355) | **1,152** | **944** |
+| **`/spec-plan`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `architecture.md` [Snapshot, Components, Boundaries, Safe Change] (89)<br>• `code-design.md` [Abstraction Check & Deep Modules, Clean Architecture & Layering, Domain-Driven Design (DDD)] (355) | **989** | **944** |
 | **`/spec-tasks`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `code-design.md` [Read before you write] (101)<br>• `architecture.md` [Snapshot, Components] (59) | **714** | **1,067** |
 | **`/spec-implement`**<br>*(`--task T-001`)* | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (519)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `tasks.md` active-task excerpt (45)<br>• `security.md` [Core Rules, Shell Safety, Artifact Boundaries, Verification] (276)<br>• `code-design.md` [Read before you write, Abstraction Check, Layering, Failures, Verify the path] (461) | **1,489** | **1,412** |
 | **`/harness-verify`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (519)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `tasks.md` (30)<br>• `harness-config.yaml` (481)<br>• `security.md` [Verification] (82) | **1,300** | **1,355** |
@@ -80,7 +80,7 @@ Canonical order measured: `/spec-research` → `/spec-requirements` → `/spec-p
 | :--- | :--- | :--- | :---: |
 | **`/spec-research`** (first) | Full isolated research pack | — | **606** |
 | **`/spec-requirements`** | `analysis.md` (10), `product-sense.md` (107), `project-constraints.md` (193) | `caveman.md`, `core-policies.md`, `status.md` | **310** |
-| **`/spec-plan`** | `spec.md` (14), `session.md` (22), `architecture.md` **[Safe Change Guidance] only** (14), `ponytail.md` (163), `code-design.md` [Abstraction, Layering, DDD] (355) | `caveman.md`, `core-policies.md`, `status.md`; architecture H2s already loaded by research | **568** |
+| **`/spec-plan`** | `spec.md` (14), `session.md` (22), `architecture.md` **[Safe Change Guidance] only** (14), `code-design.md` [Abstraction, Layering, DDD] (355) | `caveman.md`, `core-policies.md`, `status.md`; architecture H2s already loaded by research | **405** |
 | **`/spec-adr`** | `plan.md` (9) | bootstrap, status, spec, architecture, overlapping `code-design.md` H2s | **9** |
 | **`/spec-tasks`** | `code-design.md` **[Read before you write] only** (101) | bootstrap, status, spec, plan, session, architecture | **101** |
 | **`/spec-implement`** (`T-001`) | `core-policies.md` **[Security Policy] only** (153), task excerpt (45), `security.md` (276), `code-design.md` [Failures, Verify the path] (130) | `caveman.md`, plan, status, spec, session | **604** |
@@ -151,9 +151,9 @@ Bootstrap (`caveman.md`, `core-policies.md`) and `status.md` are not re-injected
 ---
 
 ### 4. `/spec-plan` (Architecture & Technical Design)
-*Context Base: ~1,152 isolated / **~568 after `/spec-requirements`** | SKILL.md: 944 tokens*
+*Context Base: ~989 isolated / **~405 after `/spec-requirements`** | SKILL.md: 944 tokens*
 
-After requirements, plan skips bootstrap and `status.md`, injects only architecture **Safe Change Guidance**, and selects `ponytail.md` (163) and `code-design.md` (355).
+After requirements, plan skips bootstrap and `status.md`, injects only architecture **Safe Change Guidance**, and selects `code-design.md` (355).
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |

@@ -11,7 +11,7 @@ triggers: ['plan', 'design', 'architecture', 'technical design']
 
 | | |
 |---|---|
-| **Reads** | `architecture.md`, `ponytail.md`, `code-design.md`, `spec.md`, `status.md` |
+| **Reads** | `architecture.md`, `code-design.md`, `spec.md`, `status.md` |
 | **Writes** | Required: `plan.md`. Optional: `status.md` |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-plan --feature <slug> --intent "<request>"`, `python3 corebase-specharness/scripts/core/cli.py skill-exit --skill spec-plan --feature <slug> --handoff spec-tasks` |
 | **Entry** | Direct peer skill; handoff may suggest `/spec-tasks` |
@@ -35,7 +35,7 @@ Turn approved `spec.md` into `plan.md`: module map, seams, dependency direction,
 
 ## I/O & Artifact Protocol
 
-- **Reads**: `spec.md`, `status.md`, `architecture.md`, `code-design.md`, `ponytail.md`.
+- **Reads**: `spec.md`, `status.md`, `architecture.md`, `code-design.md`.
 - **Writes**: `plan.md`; `status.md` (`Planning`).
 - **Session**: `.corebase-specharness/sessions/<slug>/session.md`.
 
@@ -48,7 +48,7 @@ Turn approved `spec.md` into `plan.md`: module map, seams, dependency direction,
 
 2. **Author**:
    - Write `plan.md` via `references/plan-template.md`.
-   - Apply `code-design.md`, `ponytail.md`, `references/deep-modules.md`.
+   - Apply `code-design.md`, `references/deep-modules.md`.
    - Match depth to `Simple` / `Moderate` / `Complex`.
 
 3. **Module map & seams**:
@@ -57,7 +57,7 @@ Turn approved `spec.md` into `plan.md`: module map, seams, dependency direction,
    - Co-locate collaborators that change together; split independent responsibilities and UI/domain/infra.
 
 4. **Complexity & decisions**:
-   - Record Ponytail exceptions in `## Complexity Tracking`.
+   - Record YAGNI exceptions in `## Complexity Tracking`.
    - Complex, or Moderate with two viable interfaces: Design-it-Twice. Record rejected option in `## Alternatives Considered`.
    - Material trade-offs → `/spec-adr`. Design-it-twice is not an ADR.
 

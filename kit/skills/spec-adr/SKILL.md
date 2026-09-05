@@ -11,7 +11,7 @@ triggers: ['adr', 'decision', 'architecture decision']
 
 | | |
 |---|---|
-| **Reads** | Codebase, `ponytail.md`, `architecture.md`, `spec.md`, `plan.md` |
+| **Reads** | Codebase, `architecture.md`, `spec.md`, `plan.md` |
 | **Writes** | Optional: `corebase-specharness/project/adr/`, `corebase-specharness/memories/repo/adr-log.md` |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py adr-generate --title "<title>"`, `python3 corebase-specharness/scripts/core/cli.py context-load --skill spec-adr` |
 | **Entry** | Direct peer skill; return to caller after the bounded procedure |
@@ -35,7 +35,7 @@ Create, update, or evaluate ADRs. Evaluates structural patterns and technology c
 
 ## I/O & Artifact Protocol
 
-- **Reads**: `architecture.md`, `ponytail.md`, `spec.md`, `plan.md`.
+- **Reads**: `architecture.md`, `spec.md`, `plan.md`.
 - **Writes**: `corebase-specharness/project/adr/[number]-[slug].md`; `corebase-specharness/memories/repo/adr-log.md`.
 - **Session**: note decision in `.corebase-specharness/sessions/<slug>/session.md`.
 
@@ -46,7 +46,7 @@ Create, update, or evaluate ADRs. Evaluates structural patterns and technology c
 
 2. **Comparative Evaluation**:
    - Compare ≥2 options across complexity, maintenance, performance, familiarity.
-   - Apply `ponytail.md` (native > stdlib > installed > custom) and `references/deep-modules.md`.
+   - Apply native > stdlib > installed > custom, and `references/deep-modules.md`.
    - Deletion test + Design-it-Twice: compare interface depth, seam placement, blast radius, test surface.
    - Classify reversibility (`Easy | Moderate | Hard`). Prefer easy-to-reverse options under uncertainty.
 

@@ -59,7 +59,6 @@ skills:
     handoff: [spec-tasks, spec-research, spec-adr]
     sources:
       - {path: corebase-specharness/project/architecture.md, tier: Must, sections: [System Snapshot, Top-Level Components, Runtime Boundaries, Safe Change Guidance]}
-      - {path: corebase-specharness/rules/ponytail.md, tier: Must, sections: [Decision Matrix: Should You Create an Abstraction?]}
       - {path: corebase-specharness/rules/code-design.md, tier: Should, sections: [Abstraction Check & Deep Modules, Clean Architecture & Layering, Domain-Driven Design (DDD)]}
   - skill: spec-tasks
     phase: Plan

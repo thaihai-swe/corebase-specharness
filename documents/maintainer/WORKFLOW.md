@@ -35,7 +35,7 @@ your-repo/
     ├── scripts/core/cli.py            embedded Python runtime & harness
     ├── project/                       adopter project config & architecture
     ├── memories/                      durable project memory (repo & domain)
-    └── rules/                         shipped policy snippets (code-design, security, ponytail, caveman)
+    └── rules/                         shipped policy snippets (code-design, security, caveman)
 ```
 
 You do not call Python modules directly from application code. The operating pattern is:

@@ -148,13 +148,13 @@ Measured on kit seed with standard `cl100k_base` BPE tokenizer across the canoni
 |---|---|---|:---:|
 | **1. `/spec-research`** | Full research pack (Bootstrap + Status + Architecture) | None (initial baseline) | **653** |
 | **2. `/spec-requirements`** | `analysis.md`, `product-sense.md`, `project-constraints.md` | `caveman.md`, `core-policies.md`, `status.md` | **310** |
-| **3. `/spec-plan`** | `spec.md`, `ponytail.md`, `code-design.md`, **only** `Safe Change Guidance` | Bootstrap rules, status, prior architecture H2s | **769** |
+| **3. `/spec-plan`** | `spec.md`, `code-design.md`, **only** `Safe Change Guidance` | Bootstrap rules, status, prior architecture H2s | **606** |
 | **4. `/spec-tasks`** | `plan.md`, `code-design.md` [Read before you write] | All bootstrap, status, spec, architecture | **108** |
 | **5. `/spec-implement` (`T-001`)** | `core-policies.md` [Security Policy], task excerpt, `security.md` | General bootstrap, status, spec, plan | **696** |
 | **6. `/spec-implement` (`T-002`)** | Active task `T-002` excerpt only | All general files and rules | **78** |
 
-- **Sequential lifecycle pack cost:** **2,536 tokens**
-- **Isolated per-turn pack cost:** **4,946 tokens**
+- **Sequential lifecycle pack cost:** **2,373 tokens**
+- **Isolated per-turn pack cost:** **4,783 tokens**
 - **Lifecycle token savings:** **~49% net reduction**
 
 ---

@@ -169,7 +169,7 @@ upward. If the hint is a file, it starts from that file's parent.
       repo/                  policies, heuristics, PKB, ADR log
       domain/<name>/         glossary + patterns
       archive/
-    rules/                   caveman, security, ponytail, ...
+    rules/                   caveman, security, code-design, ...
 .corebase-specharness/
   sessions/<slug>/           session.md
 ```
