@@ -32,7 +32,7 @@ Author `spec.md` with binary `AC-*` IDs. What/why only — no implementation lea
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-requirements --feature <slug> --intent "<request>"`.
-   - Pass `--full` only when reloading. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-protocol.md`.
    - Do not hand-edit `- Phase:`. Envelope creates `status.md` and sets `Specifying`.
 
 2. **Intake**:

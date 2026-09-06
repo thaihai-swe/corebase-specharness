@@ -34,7 +34,7 @@ Sole authority for AC completion and `Done`. Runs gates, AC-to-task traceability
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill harness-verify --feature <slug> --intent "<request>"`.
-   - Pass `--full` only when reloading. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-protocol.md`.
    - `python3 corebase-specharness/scripts/core/cli.py phase-check --feature <slug> --skill harness-verify`.
 
 2. **Mechanical gates**:

@@ -33,7 +33,7 @@ Produce `analysis.md` from repository evidence. Use for bugs, failure tracing, a
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-research --feature <slug> --intent "<request>"`.
-   - Pass `--full` only when reloading. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-protocol.md`.
    - Do not hand-edit `- Phase:`.
 
 2. **Context**:

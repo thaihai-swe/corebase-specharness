@@ -164,4 +164,4 @@ Measured on kit seed with standard `cl100k_base` BPE tokenizer across the canoni
 - Memory architecture & budget configuration: [MEMORY.md](MEMORY.md)
 - Complete per-skill step and token breakdown: [TOKEN-COST.md](TOKEN-COST.md)
 - Context compiler architecture: [ARCHITECTURE.md](ARCHITECTURE.md)
-- Agent context loading procedure: `kit/skills/_shared/context-loading.md`
+- Agent context loading procedure: `kit/skills/_shared/context-protocol.md`

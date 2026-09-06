@@ -8,11 +8,11 @@
 
 ## 1. Executive Summary & Purpose
 
-CoreBase SpecHarness is a **deterministic orchestration and governance runtime for AI-assisted software engineering**.
+CoreBase SpecHarness is a **deterministic governance runtime for AI-assisted software engineering**. The CLI checks files, tokens, and transitions; it does not choose or run the next skill.
 
 Unlike standard agent tooling that relies on conversational memory, implicit prompting, or broad workspace dumping, CoreBase SpecHarness enforces an **executable specification harness**:
 1. **Contract-First Delivery:** Work proceeds through explicit artifacts (`spec.md` $\to$ `plan.md` $\to$ `tasks.md` $\to$ `review.md`).
-2. **Deterministic State Machine:** Transitions between phases (`SpecPending`, `RequirementsApproved`, `PlanApproved`, `Implementing`, `Verifying`, `Done`) are guarded by an embedded Python engine rather than LLM self-reporting.
+2. **Deterministic State Machine:** Transitions between phases (`Specifying`, `SpecApproved`, `PlanApproved`, `Implementing`, `Verifying`, `Done`) are guarded by an embedded Python engine rather than LLM self-reporting.
 3. **Budget-Bounded Context Packs:** Compiles targeted token payloads based on explicit routing declarations in `references/context-routes.yaml`, preventing model context bloat and degradation over extended sessions.
 
 ---
@@ -22,9 +22,9 @@ Unlike standard agent tooling that relies on conversational memory, implicit pro
 ### 2.1 Skill Catalog (`kit/skills/`)
 The catalog ships **11 peer-level direct entrypoint skills** structured around strict role boundaries:
 - `/spec-research`: Root-cause investigation, spikes, and public-seam freeze tests. Prohibited from writing production code.
-- `/spec-requirements`: Synthesizes user stories with verifiable `REQ-NNN` requirements and `AC-NNN` acceptance criteria.
+- `/spec-requirements`: Synthesizes user stories with verifiable requirements and `AC-*` acceptance criteria.
 - `/spec-plan`: High-level technical design, module map seams, dependency direction, and Design-it-Twice evaluation.
-- `/spec-tasks`: Compiles technical designs into an acyclic task DAG (`T-NNN`) where each node maps to $\ge 1$ `AC-NNN` and defines concrete entry/exit commands.
+- `/spec-tasks`: Compiles technical designs into an acyclic task DAG (`T-NNN`) where each node maps to $\ge 1$ `AC-*` and defines concrete entry/exit commands.
 - `/spec-implement`: Tracer-bullet execution under a strict Red/Green/Refactor loop. Enforces "fix the code, not the test" on bug fixes.
 - `/harness-verify`: Two-axis verification across code implementation and test coverage. Executes verification gates and regression eval suites.
 - `/context-memory`: Evidence-based memory promotion, triage of `[CANDIDATE]` items, and 30–50% prose compaction preserving stable IDs.

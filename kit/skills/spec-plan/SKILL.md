@@ -33,7 +33,7 @@ Turn approved `spec.md` into `plan.md`: module map, seams, dependency direction,
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-plan --feature <slug> --intent "<request>"`.
-   - Pass `--full` only when reloading. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-protocol.md`.
    - Do not hand-edit `- Phase:`.
 
 2. **Author**:

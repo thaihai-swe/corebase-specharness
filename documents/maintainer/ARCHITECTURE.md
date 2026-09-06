@@ -137,7 +137,7 @@ upward. If the hint is a file, it starts from that file's parent.
   AGENTS.md
   EXTERNAL_SKILLS.md
   skills/
-    _shared/                 status template, handoff/artifact rules
+    _shared/                 3 contracts + status-template.md
     <skill>/SKILL.md         11 peer skills
     <skill>/references/      skill-local templates (overwrite-owned)
   references/

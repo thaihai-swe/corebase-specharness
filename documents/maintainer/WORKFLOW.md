@@ -23,7 +23,7 @@ your-repo/
 ├── AGENTS.md                          portable agent router
 ├── manifest.json                      kit ownership and version identity
 ├── skills/
-│   ├── _shared/                       shared status/artifact/handoff rules
+│   ├── _shared/                       lifecycle, artifact, context contracts + status template
 │   └── <name>/SKILL.md                11 direct peer skill procedures
 ├── references/
 │   ├── context-routes.yaml            skill routing authority
@@ -234,7 +234,7 @@ The `<slug>` must be lowercase hyphenated alphanumeric (1–63 chars, matching `
    │  • Researching → ResearchComplete
    ▼
 [2. Specification]
-   │  • /spec-requirements: Problem statement, 3-wave grilling, AC-NNN contracts
+   │  • /spec-requirements: Problem statement, 3-wave grilling, AC-* contracts
    │  • writes spec.md (optional proposal.md, requirements-review.md)
    │  • Specifying → SpecApproved
    ▼
@@ -690,7 +690,7 @@ python3 corebase-specharness/scripts/core/cli.py skill-enter   --skill spec-requ
 ```
 
 - **Execute**: Review `analysis.md` and `product-sense.md`. Conduct frontier grilling wave to resolve ambiguity (retry count, backoff multiplier, idempotency window).
-- **Write**: `artifacts/features/checkout-retry-queue/spec.md` with `REQ-01`, `REQ-02`, and verifiable `AC-01`, `AC-02`.
+- **Write**: `artifacts/features/checkout-retry-queue/spec.md` with verifiable acceptance criteria `AC-01`, `AC-02`.
 - **Check & Exit**:
   ```bash
   python3 corebase-specharness/scripts/core/cli.py phase-check --feature checkout-retry-queue --skill spec-requirements --json

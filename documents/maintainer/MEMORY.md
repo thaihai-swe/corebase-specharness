@@ -363,7 +363,7 @@ summary, guess, or miss a rule that was supposed to stay in context.
 Auto-delta is safe only while this conversation still holds what was
 skipped.
 
-Agent procedure: `kit/skills/_shared/context-loading.md`.
+Agent procedure: `kit/skills/_shared/context-protocol.md`.
 
 ## Bounded local evidence retrieval
 

@@ -33,7 +33,7 @@ Execute `tasks.md` one locked task at a time. Prove each task without inventing 
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-implement --feature <slug> --intent "<request>"`.
-   - Pass `--full` only when reloading. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-protocol.md`.
    - `python3 corebase-specharness/scripts/core/cli.py phase-check --feature <slug> --skill spec-implement`.
    - If `spec.md` is newer than `plan.md` approval, stamp `[:HALT STALE — spec amended after plan approved]` and route to `/spec-plan`.
 

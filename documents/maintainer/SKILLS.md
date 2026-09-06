@@ -25,8 +25,8 @@ ADR operations.
 exactly one route for each shipped skill.
 
 `corebase-specharness/project/state-machine.yaml` owns lifecycle tokens.
-`skills/_shared/status-phases.md` is human guidance and must stay subordinate
-to that YAML.
+Canonical human contracts live in `skills/_shared/lifecycle-contracts.md`,
+`artifact-contracts.md`, and `context-protocol.md`.
 
 ## Selecting a skill
 
@@ -343,7 +343,7 @@ conditions decide the actual next action.
 `skill-exit --handoff` must name a declared handoff, or a shipped CoreBase SpecHarness
 skill when the route declares none. Before switching skills, record decisions,
 risks, unresolved questions, omitted context, and the next action in the
-active session. See `skills/_shared/handoff-rules.md`.
+active session. See `skills/_shared/lifecycle-contracts.md`.
 
 ## Context loading
 
@@ -378,7 +378,7 @@ skips files already hashed there. That is safe only in the same uncompacted
 chat. After compact or on the first skill of a new chat for the same
 feature, the agent passes `--full`. `session-end` does not clear hashes.
 See [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat)
-and `kit/skills/_shared/context-loading.md`.
+and `kit/skills/_shared/context-protocol.md`.
 
 ```bash
 python3 corebase-specharness/scripts/core/cli.py skill-enter \
@@ -413,16 +413,12 @@ invokable skill.
 
 | File | Contract |
 | --- | --- |
-| `status-phases.md` | Human lifecycle vocabulary; subordinate to `state-machine.yaml` |
+| `lifecycle-contracts.md` | Phase tokens, exception states, HALT, handoff, decision points |
+| `artifact-contracts.md` | Feature artifacts, AC/task linkage, verification evidence |
+| `context-protocol.md` | Named-route loading, `--full` / auto-delta, token-cost rules |
 | `status-template.md` | Baseline `status.md` structure |
-| `artifact-rules.md` | Artifact ownership, tracer-bullet slices, expand-contract sequencing, and AC/task linkage |
-| `context-loading.md` | Named-route loading, source tiers, intent-matched domain packs, and explicit expansion |
-| `decision-points.md` | Choices that require two options, depth/seam comparison, reversibility, and an explicit record |
-| `halt-rules.md` | Standard `[:HALT ...]` markers, owning skills, and stop conditions |
-| `handoff-rules.md` | Session handoff content and required closeout checks |
-| `verification-rules.md` | Public-seam proofs, two-axis review, and evidence requirements before task or phase completion |
 
-Named HALT vocabulary from `halt-rules.md` (`NEEDS CLARIFICATION`,
+Named HALT vocabulary from `lifecycle-contracts.md` (`NEEDS CLARIFICATION`,
 `UNRESOLVED`, `ADR CONFLICT`, `SECURITY`, `INCONCLUSIVE`, `STALE`,
 `SYNC REQUIRED`) is procedure. The runtime only looks for the substring
 `[:HALT` when mutating tasks, and for `contains_stale` only if an adopter

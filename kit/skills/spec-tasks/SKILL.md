@@ -33,7 +33,7 @@ Convert `plan.md` into `tasks.md`: `T-NNN` nodes, `Covers: AC-*`, `Depends on: T
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-tasks --feature <slug> --intent "<request>"`.
-   - Pass `--full` only when reloading. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-protocol.md`.
    - Confirm `plan.md` exists. Do not hand-edit `- Phase:`.
 
 2. **Breakdown**:
