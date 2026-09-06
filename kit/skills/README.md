@@ -40,5 +40,5 @@ This is a suggested handoff path, not a hierarchy. `/spec-adr`, `/spec-testing-s
 - Sessions: `session-start`, `session-checkpoint`, `session-end`
 - Tasks: `task-check`, `task-start`, `task-done`, `task-block`
 - Delivery checks: `phase-check`, `artifact-check`, `verify`
-- Diagnostics: `doctor`, `gate-check`, `gate-list`, `provider-list`, `provider-check`, `provider-run`, `memory-audit`, `memory-gate`
+- Diagnostics: `doctor`, `gate-check`, `gate-list`, `provider-list`, `provider-check`, `provider-run`, `memory-audit`, `memory-gate`, `eval-run`
 - Decisions: `adr-generate`

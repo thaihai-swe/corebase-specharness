@@ -40,6 +40,7 @@ Generated files and diagrams are derived output, never source authority.
 | `maintainer/OVERVIEW.md` | Product promise, package facts, and boundaries |
 | `maintainer/INSTALL.md` | Install, ownership lists, backup, upgrade, and `init` vs installer |
 | `maintainer/ARCHITECTURE.md` | Installed topology, subsystem design, control flows, and technical roadmap |
+| `maintainer/DEEP-DIVE-REVIEW.md` | Solution-architecture deep dive of skills, memory, context, and workflow, plus evolutionary suggestions |
 | `maintainer/DESIGN.md` | Why the kit is shaped this way; as-built design thesis |
 | `maintainer/SPEC-REQUIREMENTS.md` | Normative as-built requirements implied by the runtime |
 | `maintainer/WORKFLOW.md` | Usage guide, canonical 6-phase lifecycle, transition graph, and command map |
@@ -61,14 +62,12 @@ Generated files and diagrams are derived output, never source authority.
 - Prefer `--skill`. Document `--phase` only as compatibility on `phase-check`, `artifact-check`, and `verify`.
 - Keep public, PRD, SAD, kit, and page changes separate unless the requested scope includes them.
 - Commercial package files live at the source-repo root: `LICENSE`, `SECURITY.md`, `SUPPORT.md`, `CHANGELOG.md`.
-- Worked examples live in `examples/` and are not part of the installed payload.
 
 ## Maintainer validation
 
 ```bash
 python3 kit/corebase-specharness/scripts/core/cli.py doctor --root kit --json
 python3 kit/corebase-specharness/scripts/validate-static-audit.py --root kit
-python3 -m unittest discover -s tests -v
 bash kit/corebase-specharness/scripts/install.sh /tmp/corebase-specharness-docs-index-check --dry-run
 python3 -m compileall -q kit/corebase-specharness/scripts/core
 ```

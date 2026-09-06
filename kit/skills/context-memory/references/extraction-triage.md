@@ -12,7 +12,7 @@ When processing extracted or auto-tier memory entries:
 3. Promote only durable, evidence-backed items:
    - Heuristic / hard safety rule → `learned-heuristics.md`
    - Pattern or boundary → `project-knowledge-base.md` or `architecture.md`
-   - Normative rule with agreement → `core-policies.md` (`CC-*`)
+   - Normative rule with agreement → `core-policies.md` (`## Normative Rules`)
    - Permission / trust / sandbox → `core-policies.md` `## Security Policy`
    - Domain term → `glossary.md` or matching domain pack
    - Harness gap → `harness-maintain` Improve Mode
@@ -31,8 +31,8 @@ Anti-patterns:
 - Promoting every candidate. Defer/discard is often correct.
 - Editing candidate text instead of moving it. Candidates are append-only.
 - Promoting on one session unless it is a hard safety/data-loss rule.
-- Creating a new `LH-*`/`CC-*` that restates an existing rule.
+- Creating a new `LH-*` or policy bullet that restates an existing rule.
 
 ## Mechanical Audit Fields
 
-Run `python3 corebase-specharness/scripts/core/cli.py memory-audit --json` before promotion. If a file is `warning-level` or `hard-cap`, compact first: snapshot `.bak` and `.ids_before`, cut prose 30–50% to bullets, keep every `##` heading and stable ID, confirm `.ids_after` matches. Do not promote a new `LH-*`/`CC-*` into a hard-capped file.
+Run `python3 corebase-specharness/scripts/core/cli.py memory-audit --json` before promotion. If a file is `warning-level` or `hard-cap`, compact first: snapshot `.bak` and `.ids_before`, cut prose 30–50% to bullets, keep every `##` heading and stable ID, confirm `.ids_after` matches. Do not promote a new `LH-*` or policy bullet into a hard-capped file.

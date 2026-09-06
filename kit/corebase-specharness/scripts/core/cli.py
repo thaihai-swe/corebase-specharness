@@ -40,6 +40,7 @@ COMMANDS = {
     "memory-audit": ("audit durable memory files", "core.handlers.diagnostics", "memory_audit"),
     "memory-gate": ("check memory thresholds", "core.handlers.diagnostics", "memory_gate"),
     "adr-generate": ("generate an ADR from recorded decisions", "core.handlers.diagnostics", "adr_generate"),
+    "eval-run": ("run continuous evals against skill and policy fixtures", "core.handlers.diagnostics", "eval_run"),
 }
 
 
@@ -156,6 +157,11 @@ def _parser():
             )
         elif command == "doctor":
             _common(sub)
+            sub.add_argument(
+                "--full",
+                action="store_true",
+                help="Also run memory-audit and eval-run smoke after package health",
+            )
         elif command in {"gate-check", "gate-list"}:
             _common(sub)
             if command == "gate-check":
@@ -186,6 +192,22 @@ def _parser():
                 default="Moderate",
                 choices=("Easy", "Moderate", "Hard"),
                 help="Reversibility recorded on the ADR log entry",
+            )
+        elif command == "eval-run":
+            _common(sub, dry_run=True)
+            sub.add_argument("--case", default="", help="Run a single eval case by id")
+            sub.add_argument("--suite", default="", help="Run a named eval suite from eval-config.yaml")
+            sub.add_argument(
+                "--from-feature",
+                default="",
+                help="Snapshot a feature directory into corebase-specharness/evals/cases/",
+            )
+            sub.add_argument("--live", action="store_true", help="Spawn a headless agent against isolated fixtures")
+            sub.add_argument(
+                "--agent-cmd",
+                action="append",
+                default=[],
+                help="Live agent argv token; repeatable. Overrides eval-config.yaml live_runner.command",
             )
     return parser
 
@@ -219,6 +241,9 @@ def main(argv=None):
     if args.json:
         print(json.dumps(result, indent=2))
     else:
+        text = (result.get("details") or {}).get("text")
+        if text:
+            print(text)
         for warning in result["warnings"]:
             print(f"WARN: {warning}", file=sys.stderr)
         for error in result["errors"]:

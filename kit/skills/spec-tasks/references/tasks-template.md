@@ -12,7 +12,7 @@
 
 ## Task Contract
 
-Each task must include an ID, target, linked `REQ-*`/`AC-*`, action, and proof. Use `[P]` only for genuinely independent work. For story phases, include `[US1]`, `[US2]`, and so on after the optional `[P]` marker. Tasks are the single executable checklist and source of machine-controlled status.
+Each task must include an ID, target, linked `AC-*`, action, and proof. Use `[P]` only for genuinely independent work. Tasks are the single executable checklist and source of machine-controlled status.
 
 ## Tasks
 
@@ -24,19 +24,19 @@ Group every `T-NNN` under this heading. Milestone subsections below remain proce
 - Entry proof:
 - Exit proof:
 
-- [ ] T-001 [P?] [US1?] Target — action
+- [ ] T-001 [P?] Target — action
   - Covers: `AC-001`
   - Depends on:
   - Proof: exact command/observation
   - Evidence:
 
-## Phase 2: User Story 1 — <name> (Priority: P1) 🎯 MVP
+## Phase 2: User Story 1 — <name> (Priority: P1) MVP
 
 - Goal:
 - Entry proof:
 - Exit proof:
 
-- [ ] T-002 [P?] [US2?] Target — action
+- [ ] T-002 [P?] Target — action
   - Covers: `AC-002`
   - Depends on: `T-001`
   - Proof: exact command/observation

@@ -32,4 +32,4 @@ Apply when work touches secrets, auth, shell, external input, or cross-boundary 
 
 ### Principle
 
-More rules → more freedom. Constraints increase autonomy by making incorrect paths fail fast. When an agent hits a boundary, widen it (if the action was correct) or keep it (if wrong). See CC-008.
+More rules → more freedom. Constraints increase autonomy by making incorrect paths fail fast. When an agent hits a boundary, widen it (if the action was correct) or keep it (if wrong). See **One Rule Per Mistake** in `corebase-specharness/memories/repo/core-policies.md`.

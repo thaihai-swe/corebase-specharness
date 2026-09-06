@@ -12,18 +12,14 @@ triggers: ['task', 'breakdown', 'estimate', 'milestone']
 | | |
 |---|---|
 | **Reads** | `code-design.md`, `spec.md`, `plan.md`, `status.md` |
-| **Writes** | Required: `tasks.md`. Optional: `status.md` |
+| **Writes** | Required: `tasks.md`. Optional: `status.md` (`TaskPlanning` → `PlanApproved`) |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-tasks --feature <slug>`, `python3 corebase-specharness/scripts/core/cli.py task-check --feature <slug>`, `python3 corebase-specharness/scripts/core/cli.py skill-exit --skill spec-tasks --feature <slug> --handoff spec-implement` |
-| **Entry** | Direct peer skill; handoff may suggest `/spec-implement` |
+| **Handoff** | `/spec-implement` |
+| **Session** | `.corebase-specharness/sessions/<slug>/session.md` |
 
 ## Overview
 
-Convert `plan.md` into `tasks.md`: `T-NNN` nodes, `Covers: AC-*`, `Depends on: T-NNN`, then lock `PlanApproved`. Each task is a tracer bullet — a narrow complete path, not a layer-only slice.
-
-## When to Use & Invocation Triggers
-
-- **When to Use**: executable breakdown from approved `plan.md`; re-sequence after design change.
-- **Triggers**: `task`, `breakdown`, `estimate`, `milestone`
+Convert `plan.md` into `tasks.md`: `T-NNN` nodes, `Covers: AC-*`, `Depends on: T-NNN`, then lock `PlanApproved`. Each task is a tracer bullet — a narrow complete path, not a layer-only slice. Use for executable breakdown from approved `plan.md`, or to re-sequence after a design change.
 
 ## Execution Modes & Profiles
 
@@ -33,17 +29,11 @@ Convert `plan.md` into `tasks.md`: `T-NNN` nodes, `Covers: AC-*`, `Depends on: T
 | `incremental` | Sequential / coupled slices | P1 → P2 → P3 → Polish |
 | `parallel-team` | Clean subsystem boundaries | Setup first, then concurrent story tasks |
 
-## I/O & Artifact Protocol
-
-- **Reads**: `spec.md`, `plan.md`, `status.md`, `code-design.md`.
-- **Writes**: `tasks.md`; `status.md` (`TaskPlanning` → `PlanApproved`).
-- **Session**: `.corebase-specharness/sessions/<slug>/session.md`.
-
 ## Step-by-Step Execution Workflow
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-tasks --feature <slug> --intent "<request>"`.
-   - Omit `--full` unless compacted, new chat on existing feature, reload requested, or pack stale. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-loading.md`.
    - Confirm `plan.md` exists. Do not hand-edit `- Phase:`.
 
 2. **Breakdown**:
@@ -54,7 +44,7 @@ Convert `plan.md` into `tasks.md`: `T-NNN` nodes, `Covers: AC-*`, `Depends on: T
    - Each task: `T-001` IDs (never `TASK-*`); goal; module-map paths; entry proof (failing command); exit proof; `Covers: AC-*`; `Depends on: T-NNN`; 2–4 hour target.
 
 3. **Traceability**:
-   - Every `REQ-*` and `AC-*` maps to ≥1 task.
+   - Every `AC-*` maps to ≥1 task.
    - Check granularity: one vertical slice per task; blocking edges only when necessary.
 
 4. **Graph validation**:

@@ -17,4 +17,6 @@ def resolve_root(hint=None):
     for candidate in (start, *start.parents):
         if _is_embedded_root(candidate):
             return str(candidate)
+        if _is_embedded_root(candidate / "kit"):
+            return str((candidate / "kit").resolve())
     return None

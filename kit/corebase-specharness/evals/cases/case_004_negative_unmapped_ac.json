@@ -1,0 +1,20 @@
+{
+  "id": "case_004_negative_unmapped_ac",
+  "skill": "spec-tasks",
+  "description": "Negative benchmark: unmapped AC-002 intentionally triggers rubric failure.",
+  "intent": "verify rubric detects unmapped acceptance criteria",
+  "artifacts": {
+    "status.md": "# Feature Status: eval-negative-test\n\n- Phase: `PlanApproved`\n- Delivery profile: `Simple`\n- Status: `Active`\n- Active task: `None`\n- Next step: `/spec-implement`\n",
+    "spec.md": "# Feature Specification\n\n## Metadata\n- Feature: `eval-negative-test`\n- Profile: `Simple`\n- Status: `Approved`\n\n## Problem Statement\n- Test rubric failure detection.\n\n## Acceptance Criteria\n- `AC-001`: Covered criterion.\n- `AC-002`: Intentionally orphan criterion with no task link.\n",
+    "plan.md": "# Implementation Plan\n\n## Metadata\n- Feature/profile: eval-negative-test / Simple\n- Status: Approved\n\n## Approach\n- Public seams: none.\n",
+    "tasks.md": "# Tasks\n\n## Metadata\n- Feature/profile: eval-negative-test / Simple\n- Plan approved date: 2026-09-06\n\n## Tasks\n\n- [ ] T-001 Target — implement only AC-001\n  - Covers: `AC-001`\n  - Depends on:\n  - Proof: echo proof\n  - Evidence:\n"
+  },
+  "rubric": {
+    "required_files": ["status.md", "spec.md", "plan.md", "tasks.md"],
+    "required_headings": {
+      "tasks.md": ["## Metadata", "## Tasks"]
+    },
+    "require_traceability": true,
+    "expect_fail": true
+  }
+}

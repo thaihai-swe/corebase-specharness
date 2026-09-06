@@ -51,25 +51,17 @@ To bypass auto-release, use `[skip release]` or a non-release prefix.
 python3 -m compileall -q kit/corebase-specharness/scripts/core
 python3 kit/corebase-specharness/scripts/validate-static-audit.py --root kit
 python3 kit/corebase-specharness/scripts/core/cli.py doctor --root kit --json
-python3 -m unittest discover -s tests -v
 bash kit/corebase-specharness/scripts/install.sh /tmp/corebase-specharness-release-check --dry-run
 bash kit/corebase-specharness/scripts/install.sh /tmp/corebase-specharness-release-live
 cd /tmp/corebase-specharness-release-live && python3 corebase-specharness/scripts/core/cli.py doctor --json
 ```
 
-Source-repo `tests/` is stdlib `unittest` only. It is not part of the
-installed payload. The installer skips `test_*` basenames. There is no
-pytest step.
-
 `.github/workflows/ci.yml` `validate` job, in order:
 
 1. `python3 -m compileall -q kit/corebase-specharness/scripts/core`
-2. `python3 -m unittest discover -s tests -v`
-3. `validate-static-audit.py --root kit`
-4. `cli.py doctor --root kit --json`
-5. `scripts/validate-product-page.py --root .` (source-repo only; not part
-   of the installed payload)
-6. Live install smoke into `mktemp -d`:
+2. `validate-static-audit.py --root kit`
+3. `cli.py doctor --root kit --json`
+4. Live install smoke into `mktemp -d`:
    - installer `--dry-run` then live install
    - installed `doctor`
    - installed `context-load --skill starter-init --intent bootstrap`

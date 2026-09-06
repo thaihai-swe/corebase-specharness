@@ -16,7 +16,8 @@ The problem is almost always the harness, not the model.
 | Forgets the discussion | Memory | Cross-session context not persisted | Write decisions to `session.md` | `session-end` → session-extracts |
 | Declares done too early | Verification | No verification step | AC with proof; run `/harness-verify` | `/harness-verify` |
 | Uses wrong patterns | Context | Competing patterns, no guidance | Document which pattern when | `/context-memory` → domain pack |
-| Inconsistent quality | Feedback | No eval loop | Add rubric; multi-pass eval | `/harness-maintain eval` |
+| Inconsistent quality | Feedback | No eval loop | Add rubric; run `eval-run` benchmarks | `/harness-maintain eval` |
+| Same agent failure repeats after a heuristic | Feedback | Incident never became an eval | Snapshot via `eval-run --from-feature` or add `evals/cases/` fixture; then `/harness-maintain eval` | `/harness-maintain improve` |
 | Too slow / too costly | Architecture | Over-engineered harness | Remove components that add no value | `## When to Simplify` |
 
 ## Diagnosis Process
@@ -52,7 +53,7 @@ One rule per mistake. Do not over-engineer.
 3. Yes → add lint, test, type, or convention
 4. No → add context (docs, examples, domain pack)
 
-See CC-008 in `corebase-specharness/memories/repo/core-policies.md`.
+See **One Rule Per Mistake** in `corebase-specharness/memories/repo/core-policies.md`.
 
 ## When to Simplify
 

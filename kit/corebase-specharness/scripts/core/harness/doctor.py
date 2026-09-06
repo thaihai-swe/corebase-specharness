@@ -41,6 +41,44 @@ def run_doctor(root_path):
 
 def doctor(args):
     outcome = run_doctor(args.root)
+    if getattr(args, "full", False) and outcome.get("ok"):
+        from types import SimpleNamespace
+        try:
+            from core.handlers.diagnostics.memory import memory_audit
+            mem_res = memory_audit(SimpleNamespace(root=args.root, feature="", dry_run=False))
+            mem_ok = mem_res.get("status") == "ok"
+            outcome["checks"].append({
+                "name": "memory_audit",
+                "status": "pass" if mem_ok else "fail",
+                "message": "ok" if mem_ok else "; ".join(mem_res.get("errors") or ["hard cap breached"]),
+            })
+            if not mem_ok:
+                outcome["failed"] = outcome.get("failed", 0) + 1
+                outcome["ok"] = False
+        except Exception as exc:
+            outcome["checks"].append({"name": "memory_audit", "status": "fail", "message": str(exc)})
+            outcome["failed"] = outcome.get("failed", 0) + 1
+            outcome["ok"] = False
+
+        try:
+            from core.handlers.diagnostics.evals import eval_run
+            eval_res = eval_run(SimpleNamespace(
+                root=args.root, case="", suite="smoke", live=False, agent_cmd=[], dry_run=False, from_feature="",
+            ))
+            eval_ok = eval_res.get("status") == "ok"
+            outcome["checks"].append({
+                "name": "eval_smoke",
+                "status": "pass" if eval_ok else "fail",
+                "message": "ok" if eval_ok else "; ".join(eval_res.get("errors") or ["eval smoke failed"]),
+            })
+            if not eval_ok:
+                outcome["failed"] = outcome.get("failed", 0) + 1
+                outcome["ok"] = False
+        except Exception as exc:
+            outcome["checks"].append({"name": "eval_smoke", "status": "fail", "message": str(exc)})
+            outcome["failed"] = outcome.get("failed", 0) + 1
+            outcome["ok"] = False
+
     errors = [
         f"{check['name']}: {check['message']}"
         for check in outcome.get("checks", [])

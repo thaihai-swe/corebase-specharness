@@ -247,7 +247,7 @@ slug lives there. Sessions are the only ephemeral sibling
 
 Traceability is string IDs, not a graph database:
 
-- `REQ-*` and `AC-*` in `spec.md`
+- `AC-*` in `spec.md`
 - `T-NNN` in `tasks.md`, with AC mentions and `Depends on:`
 - `Validation evidence:` / `Proof:` on done tasks
 - `review.md` for the closeout verdict

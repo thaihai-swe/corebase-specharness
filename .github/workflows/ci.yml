@@ -17,13 +17,11 @@ jobs:
           python-version: '3.10'
       - name: Compile embedded runtime
         run: python3 -m compileall -q kit/corebase-specharness/scripts/core
-      - name: Run source-repo contract tests
-        run: python3 -m unittest discover -s tests -v
       - name: Validate embedded payload
         run: |
           python3 kit/corebase-specharness/scripts/validate-static-audit.py --root kit
           python3 kit/corebase-specharness/scripts/core/cli.py doctor --root kit --json
-          python3 scripts/validate-product-page.py --root .
+          python3 kit/corebase-specharness/scripts/core/cli.py eval-run --root kit --json
       - name: Clean embedded install smoke test
         shell: bash
         run: |

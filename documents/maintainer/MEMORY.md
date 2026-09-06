@@ -11,7 +11,7 @@
 
 | Tier | Primary paths | Load trigger | Role |
 | --- | --- | --- | --- |
-| Instruction | `corebase-specharness/rules/caveman.md`, `corebase-specharness/memories/repo/core-policies.md` | Every context load | Mandatory communication and policy bootstrap |
+| Instruction | `corebase-specharness/memories/repo/core-policies.md` | Every context load | Mandatory policy bootstrap |
 | Domain | `corebase-specharness/memories/domain/<name>/` (`glossary.md`, `patterns.md`, `anti-patterns.md`, `boundaries.md`, optional `spec.md`) | Intent match on `glossary.md` `triggers`, or an explicit route source | Adopter-owned domain language and invariants |
 | Session and extracts | `.corebase-specharness/sessions/<slug>/session.md`, `artifacts/features/<slug>/session-extracts.md` | Session commands and route-declared feature artifacts | Working state and candidate observations |
 | Durable repo memory | `learned-heuristics.md`, `project-knowledge-base.md`, `core-policies.md`, `adr-log.md` | Explicit skill route declarations | Compacted, evidence-backed repository knowledge |
@@ -34,7 +34,7 @@ context index and no phase-only fallback.
 
 Compilation order in `build_context_pack`:
 
-1. Universal bootstrap (`caveman.md`, `core-policies.md`).
+1. Universal bootstrap (`core-policies.md`).
 2. Route-declared `sources`.
 3. Route `feature_artifacts`, plus `status.md` as `Must` for every skill
    except `starter-init` when a feature is supplied. Missing feature
@@ -283,7 +283,7 @@ Same chat, same feature. The window was compacted.
 
 | Still true after compact | Usually no longer true |
 | --- | --- |
-| Fingerprints in `session.md` | Full bodies of `caveman.md`, `core-policies.md`, architecture H2s |
+| Fingerprints in `session.md` | Full bodies of `core-policies.md`, architecture H2s |
 | Feature files on disk (`spec.md`, `plan.md`) | Those files sitting in the live prompt |
 | Feature slug | |
 
@@ -294,7 +294,7 @@ Typical sequence:
 3. User compact. Product replaces a long prefix with a summary. File bodies are often gone.
 4. User types `/spec-plan` with no reload phrase.
 
-At step 4 the compiler still skips `caveman.md`, `core-policies.md`,
+At step 4 the compiler still skips `core-policies.md`,
 `status.md`, and architecture H2s research already loaded. Plan only gets
 what is new. The agent has a summary plus that small delta — **not** the
 skipped rule files.
@@ -357,8 +357,8 @@ Compact/new-chat rules from the previous feature do not apply.
 
 ### Failure if nobody reloads
 
-The agent still runs the skill. It is not given `caveman.md` /
-`core-policies.md` / overlapping architecture again. It may follow a
+The agent still runs the skill. It is not given `core-policies.md` /
+overlapping architecture again. It may follow a
 summary, guess, or miss a rule that was supposed to stay in context.
 Auto-delta is safe only while this conversation still holds what was
 skipped.
@@ -407,7 +407,7 @@ and token thresholds.
        ▼
 3. Post-Ship Sync: /context-memory triages candidates:
    • Recurring heuristic? ──► Append/Merge into learned-heuristics.md (LH-NNN)
-   • Normative rule?      ──► Amend core-policies.md (CC-NNN)
+   • Normative rule?      ──► Amend core-policies.md (## Normative Rules)
    • Domain concept?      ──► Add to memories/domain/<name>/ or glossary.md
    • One-off / noise?     ──► Discard with reason in session-extracts.md
        │
@@ -415,7 +415,7 @@ and token thresholds.
 4. Compaction Mode (when memory-audit warns):
    • Create snapshot backup (.bak and .ids_before)
    • Compress prose by 30–50% (convert prose paragraphs to bullets)
-   • Mandatory rule: preserve every ## heading and every stable ID (LH-*, CC-*, ADR-*, REQ-*, AC-*)
+   • Mandatory rule: preserve every ## heading and every stable ID (LH-*, ADR-*, AC-*)
    • Validate .ids_after matches .ids_before exactly
        │
        ▼
@@ -528,17 +528,17 @@ compact and does not reset auto-delta hashes.
 | --- | --- | --- |
 | Session extracts | `learned-heuristics.md` (`LH-*`) | Recurring or hard safety lesson; merge duplicates |
 | Feature or architecture facts | `project-knowledge-base.md` | Facts that outlive the feature |
-| Core normative rules | `core-policies.md` (`CC-*`) | Repo-wide rule that prevents recurring failure |
+| Core normative rules | `core-policies.md` | Repo-wide rule that prevents recurring failure |
 | Domain language or patterns | `corebase-specharness/memories/domain/<name>/` | Terminology, patterns, anti-patterns, or boundaries |
 | Resolved domain terms | `corebase-specharness/project/glossary.md` | Terms crystallized during grilling or research |
 
 Only verified, evidence-backed lessons are promoted. One-off feature noise
 stays in feature artifacts. Merge a semantic duplicate instead of appending
-a second `LH-*` or `CC-*`.
+a second `LH-*` or duplicate rule.
 
 Compaction reduces prose volume while preserving:
 
-- stable identifiers (`LH-*`, `CC-*`, `ADR-*`, `REQ-*`, `AC-*`)
+- stable identifiers (`LH-*`, `ADR-*`, `AC-*`)
 - Markdown `##` section headings
 
 Superseded heuristics are archived in
@@ -548,7 +548,7 @@ Superseded heuristics are archived in
 
 | File | Purpose | Edit policy |
 | --- | --- | --- |
-| `corebase-specharness/memories/repo/core-policies.md` | Adopter constitution: `CC-*` rules, `## Known Broken Tests`, `## Security Policy` | Stable — edit when global repository rules change |
+| `corebase-specharness/memories/repo/core-policies.md` | Adopter constitution: normative rules, `## Known Broken Tests`, `## Security Policy` | Stable — edit when global repository rules change |
 | `corebase-specharness/memories/repo/project-knowledge-base.md` | Adopter system facts and `## Preserved Behavior Baseline` | As system design evolves |
 | `corebase-specharness/memories/repo/learned-heuristics.md` | Operational lessons (`LH-*`) | Append via `/context-memory` |
 | `corebase-specharness/memories/repo/adr-log.md` | ADR summaries (`ADR-*`) | Appended via `/spec-adr` and `adr-generate` |

@@ -11,19 +11,15 @@ triggers: ['init', 'start', 'setup', 'install']
 
 | | |
 |---|---|
-| **Reads** | Target repo structure, `harness-config.yaml` (seed template) |
-| **Writes** | Optional directories: `corebase-specharness/project`, `corebase-specharness/memories/repo` (adopter seeds only) |
+| **Reads** | Target repo structure, stack markers (`package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`), `harness-config.yaml` |
+| **Writes** | Optional: `corebase-specharness/project`, `corebase-specharness/memories/repo` (adopter seeds: `core-policies.md`, `project-knowledge-base.md`, `learned-heuristics.md`, `architecture.md`, `tech-stack.md`, `harness-config.yaml`) |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py init --json`, `python3 corebase-specharness/scripts/core/cli.py doctor --json`, `python3 corebase-specharness/scripts/core/cli.py memory-audit --json` |
-| **Entry** | Direct peer skill; choose `/spec-research` or `/spec-requirements` after bootstrap |
+| **Handoff** | `/spec-research` (brownfield) or `/spec-requirements` (greenfield) |
+| **Session** | N/A for bootstrap |
 
 ## Overview
 
-Bootstrap `corebase-specharness/` directories and customize memory seeds for the project. Detects repo type, guides read-only archaeology for brownfields, and establishes verification gates.
-
-## When to Use & Invocation Triggers
-
-- **When to Use**: newly installed repo; setup memory/policies/gates; resync stack drift.
-- **Triggers**: `init`, `start`, `setup`, `install`
+Bootstrap `corebase-specharness/` directories and customize memory seeds. Detects repo type, guides read-only archaeology for brownfields, and establishes verification gates. Use on a newly installed repo, when setting up memory/policies/gates, or to resync stack drift.
 
 ## Execution Modes & Profiles
 
@@ -31,12 +27,6 @@ Bootstrap `corebase-specharness/` directories and customize memory seeds for the
 |---|---|---|
 | `fresh-init` | Empty / uninitialized workspace | 4-step bootstrap: scaffold, Phase A sweep, Phase B memory, gates |
 | `resync-drift` | `harness-config.yaml` exists | Read-only diff pass vs `tech-stack.md` |
-
-## I/O & Artifact Protocol
-
-- **Reads**: Target repo codebase, stack markers (`package.json`, `pyproject.toml`, `go.mod`, `Cargo.toml`, etc.).
-- **Writes**: `core-policies.md`, `project-knowledge-base.md`, `learned-heuristics.md`, `architecture.md`, `tech-stack.md`, `harness-config.yaml`.
-- **Session**: N/A for bootstrap phase.
 
 ## Step-by-Step Execution Workflow
 
@@ -78,8 +68,8 @@ Bootstrap `corebase-specharness/` directories and customize memory seeds for the
 ## Core Rules
 
 - Phase B customization MUST be completed or explicitly marked `[DEFERRED]`.
-- Mark missing facts `[UNKNOWN]` per CC-002; never guess.
+- Mark missing facts `[UNKNOWN]`; never guess.
 - Look up facts; ask only decisions.
-- Preserve headings and IDs (`CC-*`, `LH-*`).
+- Preserve headings and stable IDs (`LH-*`).
 - Summarize subagent listings before merging into context.
 - `AGENTS.md` is the canonical shipped router.

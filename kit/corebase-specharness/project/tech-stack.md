@@ -1,10 +1,8 @@
 # Project Tech Stack
 
 > Note: This is a seeded placeholder for your project's technical stack.
-> The `/starter-init` skill will attempt to automatically pre-fill this document by scanning your package and configuration files (e.g., `package.json`, `pyproject.toml`, etc.).
-> You and the kit's skills should collaboratively maintain this document as your dependencies and conventions evolve.
-
-<!-- LLM-friendly reference of your project's dependencies, APIs, tools, and conventions. Designed for agent consumption — agents read this to understand what's available without searching the codebase. /spec-research, /spec-plan, and /spec-implement use this for context. -->
+> `/starter-init` pre-fills this from package and configuration files.
+> Maintain it as dependencies and conventions evolve.
 
 ## Languages & Runtimes
 
@@ -26,8 +24,6 @@
 
 ## Internal Libraries & Utilities
 
-<!-- Project-specific utilities that agents should reuse rather than reinvent. -->
-
 | Module | Path | Purpose | Key Exports |
 | - | - | - | - |
 |        |      |         |             |
@@ -46,17 +42,19 @@
 
 ## Infrastructure & Services
 
+| Service | Type | Purpose | Notes |
 | - | - | - | - |
-|         |          |         |                 |
+|         |      |         |       |
 
 ## Development Tools
 
-| Tool                  | Purpose                                                                                                                  | Config File                                                      | Key Commands               |
+| Tool | Purpose | Config File | Key Commands |
 | - | - | - | - |
+|      |         |             |              |
 
 ## Environment Variables
 
-<!-- List required env vars without values. Reference .env.example if it exists. -->
+List required env vars without values. Reference `.env.example` if it exists.
 
 | Variable | Purpose | Required | Default |
 | - | - | - | - |

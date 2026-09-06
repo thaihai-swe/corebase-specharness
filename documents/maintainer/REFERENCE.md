@@ -24,7 +24,7 @@ From this repository:
 python3 kit/corebase-specharness/scripts/core/cli.py <command> --root kit
 ```
 
-The CLI has one flat command registry of 27 commands. Skills are Markdown
+The CLI has one flat command registry of 28 commands. Skills are Markdown
 procedures, not Python plugins.
 
 ## Common options
@@ -252,6 +252,23 @@ to `corebase-specharness/project/adr/index.md` when that file exists. Requires
 `--decision`, `--title`, or session `metadata.decisions`. Optional
 `--reversibility Easy|Moderate|Hard` defaults to `Moderate`.
 
+### Continuous evaluations
+
+| Command | Required or notable options | Purpose |
+| --- | --- | --- |
+| `eval-run` | optional `--case`, `--suite`, `--from-feature`, `--live`, repeatable `--agent-cmd`, `--dry-run` | Run continuous evaluation benchmarks against skill and policy fixtures |
+
+`eval-run` executes non-interactive regression checks against benchmark fixtures stored
+under `corebase-specharness/evals/cases/`. By default, it operates in deterministic
+offline mode, verifying artifact presence, required headings, must-contain/forbidden
+regex patterns, and bidirectional traceability without requiring live LLM calls. When
+`--live` is provided, it invokes the configured or passed `--agent-cmd` in an isolated
+temporary workspace and grades the generated output with the exact same rubric.
+`--from-feature <slug>` snapshots a completed feature directory into a new eval case.
+Negative fixtures set `expect_fail: true` so a known-bad artifact is counted as a pass
+when the rubric rejects it. Omit `--json` for a PASS/FAIL table. `doctor --full` also
+runs `memory-audit` and the `smoke` eval suite.
+
 ## JSON result contract
 
 Every command is normalized to this top-level response:
@@ -458,9 +475,10 @@ and converts `ok` and `deferred` statuses to exit code `0`.
 | `handlers/diagnostics/providers.py` | `provider-list`, `provider-check`, `provider-run` | Optional review and code-intelligence providers |
 | `handlers/diagnostics/memory.py` | `memory-audit`, `memory-gate` | Read-only durable-memory size and threshold diagnostics |
 | `handlers/diagnostics/governance.py` | `adr-generate` | ADR draft generation from explicit input or recorded session decisions |
+| `handlers/diagnostics/evals.py` | `eval-run` | Continuous evaluation benchmarks across skills, rubrics, and fixtures |
 
 `core.handlers.diagnostics` is the public aggregate for gate, provider,
-memory, and ADR handlers.
+memory, ADR, and eval handlers.
 
 ### Engines and state
 
@@ -495,8 +513,7 @@ unless an adopter adds that check via `lifecycle_overrides`.
 | `_lib/ansi.py` | Optional ANSI styling and terminal rendering |
 | `_lib/artifact_schema.py` | Heading and structure validation, AC/task ID extraction, bidirectional traceability, `files_for` |
 | `_lib/artifacts.py` | Feature slug validation, path containment, status parsing, feature listing |
-| `_lib/contracts.py` | Validate `manifest.json` structure and ownership |
-| `_lib/doctor_checks.py` | Manifest, surfaces, routes, commands, providers, reachability |
+| `_lib/doctor_checks.py` | Manifest structure/ownership, surfaces, routes, commands, providers, reachability |
 | `_lib/locking.py` | Advisory lock on the target file for mutating operations |
 | `_lib/root.py` | Resolve an initialized kit or adopter repository root |
 | `_lib/routing_metadata.py` | Parse `context-routes.yaml`, normalize writes, resolve source paths |

@@ -84,14 +84,14 @@ with `status: deferred` and `details.verified: false`.
 | I-08 | The installer must not install dependencies, infer gates, write Git hooks, or create vendor-specific instruction files. |
 | I-09 | `--dry-run` reports planned copies without mutating the target. |
 | I-10 | `init` may create missing directories and seed files in an uninitialized tree. It must not overwrite existing adopter files. |
-| I-11 | An initialized root is a directory that contains both `manifest.json` and `corebase-specharness/scripts/core/cli.py`. Resolution walks upward from `--root` or cwd. |
+| I-11 | An initialized root is a directory that contains both `manifest.json` and `corebase-specharness/scripts/core/cli.py`. Resolution walks upward from `--root` or cwd. If a candidate itself is not initialized, a nested `kit/` directory that is initialized is accepted (source-checkout maintainer usage). |
 
 Kit-owned (`overwrite`) includes runtime, skills, shared skill references,
 routes, provider registry, rules, `state-machine.yaml`, and validators.
 
-Adopter-owned (`copyIfMissing`) includes project constraints, architecture,
-product sense, glossary, harness config, tool-provider selection, memory
-seeds, and `artifacts/features/README.md`.
+Adopter-owned (`copyIfMissing`) includes `README.md`, project constraints,
+architecture, product sense, glossary, harness config, tool-provider
+selection, memory seeds, and `artifacts/features/README.md`.
 
 ---
 
@@ -149,7 +149,7 @@ Shipped commands: `init`, `status`, `status-set`, `skill-enter`, `skill-exit`,
 `session-checkpoint`, `session-end`, `task-check`, `task-start`, `task-done`,
 `task-block`, `phase-check`, `artifact-check`, `verify`, `doctor`,
 `gate-check`, `gate-list`, `provider-list`, `provider-check`, `provider-run`,
-`memory-audit`, `memory-gate`, `adr-generate`.
+`memory-audit`, `memory-gate`, `adr-generate`, `eval-run`.
 
 ---
 
@@ -208,7 +208,7 @@ Coarse phase preconditions in the shipped state machine:
 | A-01 | Feature artifacts live in `artifacts/features/<slug>/`. |
 | A-02 | Canonical files: `status.md`, `analysis.md`, `spec.md`, `proposal.md`, `requirements-review.md`, `plan.md`, `tasks.md`, `tasks.json`, `review.md`, `session-extracts.md`, `testing-scenarios.md`. |
 | A-03 | `status.md` is created from `skills/_shared/status-template.md`. Agents must not hand-edit `- Phase:`. |
-| A-04 | `spec.md` is the requirements authority. Functional requirements use `REQ-*`. Acceptance criteria use `AC-*` / `AC_*`. |
+| A-04 | `spec.md` is the requirements authority. Acceptance criteria use `AC-*` / `AC_*`. |
 | A-05 | `tasks.md` is canonical task state. `tasks.json` is a generated sidecar and read-only fallback. |
 | A-06 | Task IDs are `T-NNN`. Older `TASK-*` IDs are not parsed. |
 | A-07 | Task statuses are `{Not Started, In Progress, Blocked, Done, Deferred}` with the implemented transition table. |
@@ -241,7 +241,7 @@ Coarse `artifact-check --phase` file sets (`PHASE_FILES` fallback):
 | X-01 | Context commands require `--skill`. Unknown skills fail. |
 | X-02 | Required-feature skills fail context commands without `--feature`. |
 | X-03 | Context load fails if route `prerequisites` are missing. |
-| X-04 | Every pack includes always-on bootstrap sources: `corebase-specharness/rules/caveman.md` and `core-policies.md` sections `Purpose` and `Normative Rules` (plus `Security Policy` for implement/verify/ADR skills). |
+| X-04 | Every pack includes always-on bootstrap sources: `core-policies.md` sections `Purpose` and `Normative Rules` (plus `Security Policy` for implement/verify/ADR skills). |
 | X-05 | Packs then add route sources, declared feature artifacts (with bounded `session.md` summary: `Objective`, latest progress/handoff, and recent decisions), `status.md` (except `starter-init`), optional compact `--task` payload (active task + direct dependencies; full `tasks.md` omitted), `--add-source` pins, intent-matched domain packs, and bounded local retrieval. |
 | X-06 | Domain packs match `--intent` words against `triggers:` in `corebase-specharness/memories/domain/<name>/glossary.md`. |
 | X-07 | Local retrieval redacts detected secrets, skips excluded/sensitive/binary/oversize files, and respects `.gitignore` plus configured excludes. |
@@ -317,8 +317,8 @@ Coarse `artifact-check --phase` file sets (`PHASE_FILES` fallback):
 | D-02 | `core/readiness.py` is a forbidden leftover. The evaluator is `core/harness/readiness.py` and must remain imported from lifecycle/envelope so static audit marks it reachable. |
 | D-03 | Runtime commands and doctor do not read `skills/*/SKILL.md`. Skill procedure text is agent-owned. |
 | D-04 | `validate-static-audit.py` fails on unreachable shipped modules and unresolvable `core.*` imports. Paths containing `tests` are skipped. |
-| D-05 | CI compiles the runtime, runs source-repo `unittest` under `tests/`, runs the static-audit validator, runs `doctor --root kit`, validates page docs, and smoke-tests a clean install. `tests/` is not part of the installed payload. There is no pytest step. See [RELEASING.md](RELEASING.md). |
-| D-06 | Installer and static audit must keep skipping `test_*` basenames so repo-root tests are not copied into adopter trees. |
+| D-05 | CI compiles the runtime, runs the static-audit validator, runs `doctor --root kit`, and smoke-tests a clean install. See [RELEASING.md](RELEASING.md). |
+| D-06 | Installer and static audit skip `test_*` basenames so adopter trees do not receive test files from the payload. |
 
 ---
 

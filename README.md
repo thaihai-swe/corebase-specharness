@@ -13,6 +13,8 @@
 
 **CoreBase SpecHarness** transforms AI coding agents from unconstrained code generators into disciplined, spec-driven engineering partners. It embeds a deterministic Python CLI, 11 peer-level agent skills, a bounded context compiler, and a robust verification harness directly into your repository.
 
+This GitHub repository is the **kit source**, not an installed adopter project. `kit/` is the install payload; `documents/` explains it; `product-page/` is presentation only. Installed paths drop the `kit/` prefix. Maintainer CLI calls use `--root kit`; adopter examples omit it.
+
 Unlike monolithic frameworks or hosted daemons, CoreBase SpecHarness:
 - **Lives in your repository:** Zero background servers, daemons, or remote dependencies.
 - **Works with any agent:** Compatible with Claude Desktop, Cursor, Windsurf, Roo Code, GitHub Copilot, DeepSeek Harness, or any tool supporting Markdown skills and terminal execution.
@@ -55,12 +57,12 @@ Unlike monolithic frameworks or hosted daemons, CoreBase SpecHarness:
 Install the embedded payload into your target project:
 
 ```bash
-# Preview changes (dry run)
-bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh /path/to/your-repo --dry-run
-
-# Live install
-bash https://github.com/thaihai-swe/CoreBase-SpecHarness/kit/corebase-specharness/scripts/install.sh /path/to/your-repo
+# From this checkout (preview, then live)
+bash kit/corebase-specharness/scripts/install.sh /path/to/your-repo --dry-run
+bash kit/corebase-specharness/scripts/install.sh /path/to/your-repo
 ```
+
+`overwrite` paths are kit-owned (backed up under `.corezero-backup-<random>/`). `copyIfMissing` paths are adopter-owned seeds.
 
 The installer:
 1. Copies the embedded runtime (`corebase-specharness/scripts/core/`).
@@ -165,20 +167,43 @@ python3 corebase-specharness/scripts/core/cli.py verify \
 
 ### CLI Command Catalog
 
-The embedded CLI provides 27 deterministic subcommands across 8 functional groups:
+The embedded CLI provides 28 deterministic subcommands across 8 functional groups:
 
-- **Lifecycle & Envelope:** `skill-enter`, `skill-exit`, `status-set`, `status`
+- **Lifecycle & Envelope:** `init`, `skill-enter`, `skill-exit`, `status-set`, `status`
 - **Context Engine:** `context-load`, `context-pack`, `context-explain`
 - **Session Tracking:** `session-start`, `session-checkpoint`, `session-end`
 - **Task Management:** `task-start`, `task-done`, `task-block`, `task-check`
 - **Verification & Gates:** `verify`, `phase-check`, `artifact-check`, `gate-check`, `gate-list`
-- **Diagnostics & Health:** `doctor`, `memory-audit`, `memory-gate`
+- **Diagnostics & Health:** `doctor`, `memory-audit`, `memory-gate`, `eval-run`
 - **Architecture Decisions:** `adr-generate`
 - **Tool Providers:** `provider-list`, `provider-check`, `provider-run`
 
 ---
 
+Prefer `--skill`. `--phase` is compatibility-only on `phase-check`, `artifact-check`, and `verify`. External names in `EXTERNAL_SKILLS.md` are not valid `--skill` values. Removed subcommands (CI asserts they fail): `context-index`, `task-next`.
+
+`--json` prints the stable envelope: `command`, `status`, `feature`, `artifacts`, `findings`, `warnings`, `errors`, `next_action`, `details`. Exit `0` when `status` is `ok` or `deferred`.
+
+---
+
 ## Architecture & System Design
+
+Source checkout:
+
+```text
+.
+├── kit/                          # Install payload (canonical)
+│   ├── manifest.json             # Version + overwrite / copyIfMissing
+│   ├── AGENTS.md
+│   ├── skills/                   # 11 peer skills + _shared
+│   ├── references/context-routes.yaml
+│   └── corebase-specharness/     # Embedded CLI, installer, seeded project/memory
+├── documents/                    # Maintainer docs (subordinate to kit)
+├── product-page/                 # Public site
+└── .github/workflows/
+```
+
+After install, paths are adopter-relative (no `kit/` prefix):
 
 ```
 corebase-specharness/
@@ -223,6 +248,24 @@ The Context Compiler enforces strict token limits to protect agent attention:
 
 ---
 
+## Authority Order & Boundaries
+
+When sources disagree, resolve in this order:
+
+1. Executable behavior in `kit/corebase-specharness/scripts/core/`
+2. `kit/manifest.json` (ownership and path membership)
+3. `kit/corebase-specharness/project/state-machine.yaml` and project configuration
+4. `kit/references/context-routes.yaml` (named-skill routes)
+5. `kit/skills/*/SKILL.md` (agent procedure)
+6. Maintainer documentation (`documents/`), then `product-page/`
+
+Three non-negotiable layers:
+1. **Agent procedures (Markdown):** `skills/<name>/SKILL.md` and `_shared/`.
+2. **System contracts (YAML/JSON):** `context-routes.yaml`, `state-machine.yaml`, `manifest.json`.
+3. **Deterministic mechanics (Python stdlib):** `scripts/core/`. No daemons, plugins, or launchers.
+
+---
+
 ## Requirements
 
 - **Runtime:** Python 3.10+ (standard library only; no pip dependencies required)
@@ -250,18 +293,29 @@ Comprehensive maintainer documentation and architectural deep-dives are located 
 
 ## Development & Verification
 
-To run tests and validate this repository locally:
+### Local Maintainer Checks
+
+Run from this repository root:
 
 ```bash
-# Run unit and integration tests
-pytest
+# Compile embedded runtime
+python3 -m compileall -q kit/corebase-specharness/scripts/core
 
-# Audit embedded runtime reachability
+# Static audit of embedded runtime
 python3 kit/corebase-specharness/scripts/validate-static-audit.py --root kit
 
-# Run harness health check
+# Harness diagnostics
 python3 kit/corebase-specharness/scripts/core/cli.py doctor --root kit --json
 
-# Validate product page assets and diagrams
-python3 scripts/validate-product-page.py --root .
+# Test installer in preview mode
+bash kit/corebase-specharness/scripts/install.sh /tmp/corebase-specharness-check --dry-run
 ```
+
+### Continuous Integration
+
+CI (`.github/workflows/ci.yml`) runs on Python 3.10 and tests:
+1. `compileall` on `kit/corebase-specharness/scripts/core`
+2. `validate-static-audit.py --root kit` and `cli.py doctor --root kit --json`
+3. Clean embedded install smoke test in `mktemp -d` (including negative checks that `context-index` and `task-next` fail)
+4. Release archive packaging and installation smoke test
+

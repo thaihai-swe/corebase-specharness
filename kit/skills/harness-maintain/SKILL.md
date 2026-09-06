@@ -12,18 +12,14 @@ triggers: ['maintain harness', 'harness health', 'diagnose harness', 'improve ha
 | | |
 |---|---|
 | **Reads** | `manifest.json`, `harness-config.yaml`, `core-policies.md` |
-| **Writes** | Optional: `learned-heuristics.md` drafts, user-approved fixes |
+| **Writes** | Optional: `learned-heuristics.md` `[DRAFT]` entries; user-approved config/policy edits |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py doctor --json`, `python3 corebase-specharness/scripts/core/cli.py gate-check --json`, `python3 corebase-specharness/scripts/core/cli.py verify --feature <slug>` |
-| **Entry** | Direct peer skill; return to caller after the bounded procedure |
+| **Handoff** | Return to caller after the bounded procedure |
+| **Session** | N/A (repo-level) |
 
 ## Overview
 
-Interpret harness diagnostics, check manifest drift, validate gates, draft heuristics from failures, diagnose agent quality. CLI owns mechanical inspection; this skill owns prioritization and user-approved actions.
-
-## When to Use & Invocation Triggers
-
-- **When to Use**: harness health / drift / orphans; scaffold missing dirs; process `verify`/`gate-check` findings; diagnose agent quality.
-- **Triggers**: `maintain harness`, `harness health`, `diagnose harness`, `improve harness`
+Interpret harness diagnostics, check manifest drift, validate gates, draft heuristics from failures, diagnose agent quality. CLI owns mechanical inspection; this skill owns prioritization and user-approved actions. Use for harness health, orphans, scaffolding, `verify`/`gate-check` findings, or agent-quality diagnosis.
 
 ## Execution Modes & Profiles
 
@@ -32,15 +28,9 @@ Interpret harness diagnostics, check manifest drift, validate gates, draft heuri
 | `assess` | Periodic / post-install | Manifest drift, orphans, config health |
 | `create` | Missing infrastructure | Scaffold `memories/domain/` and placeholders |
 | `improve` | Diagnostic failures | Draft `[DRAFT]` heuristics from findings |
-| `eval` | Release candidate | `CC-*` sequentiality, manifest, gates |
+| `eval` | Release candidate | `core-policies.md` headings, manifest, gates, `eval-run` |
 | `doctor` | Fix mode | Assess + Markdown links + clean `doctor` |
 | `diagnose` | Quality degradation | Symptom → fix via `references/diagnosis-map.md` |
-
-## I/O & Artifact Protocol
-
-- **Reads**: `manifest.json`, `harness-config.yaml`, `core-policies.md`.
-- **Writes**: `learned-heuristics.md` `[DRAFT]` entries; user-approved config/policy edits.
-- **Session**: N/A (repo-level).
 
 ## Step-by-Step Execution Workflow
 
@@ -49,8 +39,8 @@ Interpret harness diagnostics, check manifest drift, validate gates, draft heuri
 2. **Execute**:
    - *Assess*: `python3 corebase-specharness/scripts/core/cli.py doctor --json`. Diff `manifest.json` vs tree. Validate `harness-config.yaml`. Detect feature dirs lacking `status.md`.
    - *Create*: scaffold missing standard dirs or placeholders.
-   - *Improve*: review `verify` / `gate-check`. Draft `[DRAFT]` entries; do not promote automatically.
-   - *Eval*: audit `CC-*` sequentiality. Run `python3 corebase-specharness/scripts/core/cli.py verify --feature <slug>` or `python3 corebase-specharness/scripts/core/cli.py doctor`. Compare manifest vs tree.
+   - *Improve*: review `verify` / `gate-check`. Draft `[DRAFT]` entries; do not promote automatically. For a repeated agent failure, also add or snapshot an eval fixture (`eval-run --from-feature <slug>` or a new `evals/cases/` case) so the same defect fails the next `eval-run`.
+   - *Eval*: audit `core-policies.md` headings (`## Purpose`, `## Normative Rules`, `## Known Broken Tests`, `## Memory Promotion Thresholds`, `## Security Policy`). Run continuous evaluation benchmarks: `python3 corebase-specharness/scripts/core/cli.py eval-run --json`. Run `python3 corebase-specharness/scripts/core/cli.py verify --feature <slug>` or `python3 corebase-specharness/scripts/core/cli.py doctor`. Compare manifest vs tree.
    - *Doctor*: Assess + check links in `skills/*/*.md` + re-run `python3 corebase-specharness/scripts/core/cli.py doctor --json`.
    - *Diagnose*: match symptom to `references/diagnosis-map.md`; propose targeted policy/heuristic fixes.
 
@@ -63,6 +53,7 @@ Interpret harness diagnostics, check manifest drift, validate gates, draft heuri
 - Promoting `[DRAFT]` or editing `core-policies.md` without review.
 - Editing Python engine files instead of manifest/config.
 - Shipping without `eval` manifest consistency.
+- Drafting a heuristic for a repeated agent failure without adding an eval fixture that would catch it.
 
 ## Core Rules
 

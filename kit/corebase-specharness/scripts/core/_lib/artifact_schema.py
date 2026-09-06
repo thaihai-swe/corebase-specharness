@@ -209,21 +209,18 @@ def traceability_report(feature_dir: Path) -> tuple[list[str], list[str], list[s
             errors.append("orphan ACs: " + failure.split(":", 1)[1].strip())
         else:
             errors.append(failure)
-    reqs = set(re.findall(r"\bREQ-\d+\b", texts["spec.md"]))
     acs_spec = extract_ac_ids(texts["spec.md"])
     task_ids = extract_task_ids(texts["tasks.md"])
     acs_tasks = extract_ac_ids(texts["tasks.md"])
     lines = [
         "# Traceability Report", "", "| Kind | Count |", "| --- | --- |",
-        f"| REQ | {len(reqs)} |", f"| AC (spec) | {len(acs_spec)} |",
+        f"| AC (spec) | {len(acs_spec)} |",
         f"| AC (tasks) | {len(acs_tasks)} |", f"| TASK | {len(task_ids)} |", "",
     ]
     if errors:
         lines.append("**Issues Detected:**")
         lines.extend(f"- {error}" for error in errors)
     else:
-        if not reqs and texts["spec.md"]:
-            lines.append("**Note:** no REQ-* IDs found in spec.md")
         lines.append("**OK:** no orphan AC/TASK linkage issues detected.")
     lines.append("")
     return lines, errors, []

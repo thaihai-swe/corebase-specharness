@@ -8,6 +8,4 @@ in recent feature work and may be revived if the pattern recurs.
 
 ## Archived Entries
 
-<!-- Entries appended by /context-memory decay action. -->
-<!-- Each entry retains: LH-NNN, Trigger, Working heuristic, Evidence, -->
-<!-- Confidence, Last reviewed, Original status, Archive date, Archive reason. -->
+<!-- Appended by /context-memory decay. Keep LH-NNN, Trigger, Rule, Evidence, Archive date, Archive reason. -->

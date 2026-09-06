@@ -17,13 +17,13 @@ In CoreBase SpecHarness, delivering a feature walks a multi-phase skill lifecycl
 `/spec-research` → `/spec-requirements` → `/spec-plan` → `/spec-tasks` → `/spec-implement` → `/harness-verify`.
 
 Each skill requires context:
-- Mandatory instruction bootstrap (`caveman.md`, `core-policies.md`).
+- Mandatory instruction bootstrap (`core-policies.md`).
 - Project architecture, constraints, and coding rules.
 - Upstream feature deliverables (`status.md`, `spec.md`, `plan.md`, `tasks.md`).
 
 Without intelligent delta loading:
 1. **Redundant token spend:** Over 60%–80% of prompt payload on later turns re-injects identical files already present in the active chat window.
-2. **Channel budget starvation:** Mandatory bootstrap (~570 tokens) loaded before budget checks fills channel caps (e.g. `max_bootstrap_tokens: 1200`), crowding out optional `Should` files (such as `code-design.md`).
+2. **Channel budget starvation:** Mandatory bootstrap (~366 tokens) loaded before budget checks fills channel caps (e.g. `max_bootstrap_tokens: 1200`), crowding out optional `Should` files (such as `code-design.md`).
 3. **Single-turn amnesia:** Naive delta mechanisms only compare against the immediate predecessor skill, forgetting context loaded two skills prior.
 4. **All-or-nothing file re-injection:** Needing one additional section from a 1,000-token architecture doc forced reloading the full document.
 
@@ -78,7 +78,7 @@ Instead of overwriting previous pack manifests, `record_context_pack()` merges S
   "last_context_tokens": 769,
   "token_usage_estimate": 1732,
   "last_context_fingerprint": {
-    "corebase-specharness/rules/caveman.md": "a1b2c3...",
+    "corebase-specharness/memories/repo/core-policies.md": "a1b2c3...",
     "corebase-specharness/project/architecture.md": "d4e5f6..."
   },
   "last_context_slices": {
@@ -146,8 +146,8 @@ Measured on kit seed with standard `cl100k_base` BPE tokenizer across the canoni
 
 | Skill / Step | Injected Content | Delta Omissions | Pack Tokens |
 |---|---|---|:---:|
-| **1. `/spec-research`** | Full research pack (Bootstrap + Status + Architecture) | None (initial baseline) | **653** |
-| **2. `/spec-requirements`** | `analysis.md`, `product-sense.md`, `project-constraints.md` | `caveman.md`, `core-policies.md`, `status.md` | **310** |
+| **1. `/spec-research`** | Full research pack (Bootstrap + Status + Architecture) | None (initial baseline) | **497** |
+| **2. `/spec-requirements`** | `analysis.md`, `product-sense.md`, `project-constraints.md` | `core-policies.md`, `status.md` | **310** |
 | **3. `/spec-plan`** | `spec.md`, `code-design.md`, **only** `Safe Change Guidance` | Bootstrap rules, status, prior architecture H2s | **606** |
 | **4. `/spec-tasks`** | `plan.md`, `code-design.md` [Read before you write] | All bootstrap, status, spec, architecture | **108** |
 | **5. `/spec-implement` (`T-001`)** | `core-policies.md` [Security Policy], task excerpt, `security.md` | General bootstrap, status, spec, plan | **696** |

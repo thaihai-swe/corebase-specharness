@@ -12,18 +12,14 @@ triggers: ['adr', 'decision', 'architecture decision']
 | | |
 |---|---|
 | **Reads** | Codebase, `architecture.md`, `spec.md`, `plan.md` |
-| **Writes** | Optional: `corebase-specharness/project/adr/`, `corebase-specharness/memories/repo/adr-log.md` |
+| **Writes** | Optional: `corebase-specharness/project/adr/[number]-[slug].md`, `corebase-specharness/memories/repo/adr-log.md` |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py adr-generate --title "<title>"`, `python3 corebase-specharness/scripts/core/cli.py context-load --skill spec-adr` |
-| **Entry** | Direct peer skill; return to caller after the bounded procedure |
+| **Handoff** | Return to caller after the bounded procedure |
+| **Session** | Note decision in `.corebase-specharness/sessions/<slug>/session.md` |
 
 ## Overview
 
-Create, update, or evaluate ADRs. Evaluates structural patterns and technology choices against alternatives, documents rationale, and appends to `adr-log.md`.
-
-## When to Use & Invocation Triggers
-
-- **When to Use**: technology/library choices; structural trade-offs / major refactors; contested design options.
-- **Triggers**: `adr`, `decision`, `architecture decision`
+Create, update, or evaluate ADRs. Evaluates structural patterns and technology choices against alternatives, documents rationale, and appends to `adr-log.md`. Use for technology/library choices, structural trade-offs, major refactors, or contested design options.
 
 ## Execution Modes & Profiles
 
@@ -32,12 +28,6 @@ Create, update, or evaluate ADRs. Evaluates structural patterns and technology c
 | `adr-major` | High-impact architectural / tech choice | Full ADR in `corebase-specharness/project/adr/` |
 | `adr-lightweight` | Minor choice or localized trade-off | Lightweight ADR |
 | `adr-review` | Evaluate ADR or check conflicts | Assess status (`Proposed`/`Accepted`/`Deprecated`/`Superseded`) |
-
-## I/O & Artifact Protocol
-
-- **Reads**: `architecture.md`, `spec.md`, `plan.md`.
-- **Writes**: `corebase-specharness/project/adr/[number]-[slug].md`; `corebase-specharness/memories/repo/adr-log.md`.
-- **Session**: note decision in `.corebase-specharness/sessions/<slug>/session.md`.
 
 ## Step-by-Step Execution Workflow
 

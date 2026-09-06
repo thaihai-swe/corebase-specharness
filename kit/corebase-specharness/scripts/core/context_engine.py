@@ -42,6 +42,14 @@ SECRET_PATTERNS = (
 
 
 H2_RE = re.compile(r"^##\s+(.+?)\s*$", re.MULTILINE)
+HTML_COMMENT_RE = re.compile(r"<!--.*?-->", re.DOTALL)
+
+
+def strip_html_comments(text):
+    """Drop HTML comments so prompt packs do not pay for seed guidance."""
+    if not text or "<!--" not in text:
+        return text
+    return HTML_COMMENT_RE.sub("", text)
 
 class Scorer:
     """Small keyword scorer used only inside the current repository."""
@@ -66,6 +74,7 @@ class Scorer:
 
 def extract_section(text, title):
     """Return one H2 section, including its child content."""
+    text = strip_html_comments(text)
     target = (clean_section_name(title) or "").lower()
     lines = text.splitlines()
     result = []
@@ -107,9 +116,12 @@ def _content_fingerprint(root, item):
         return ""
     raw = path.read_bytes()
     sections = item.get("sections") or []
+    text = raw.decode("utf-8", errors="replace")
+    text = strip_html_comments(text)
     if sections:
-        text = raw.decode("utf-8", errors="replace")
         raw = "\n\n".join(extract_section(text, name) or "" for name in sections).encode()
+    else:
+        raw = text.encode("utf-8")
     return hashlib.sha256(raw).hexdigest()
 
 
@@ -186,7 +198,10 @@ def _delta_selected_item(root, item, previous_fingerprints, previous_slices):
         updated["sections"] = kept
         if updated.get("runtime_summary") is None:
             source = Path(root) / updated.get("content_path", path)
-            text = source.read_text(encoding="utf-8", errors="replace") if source.is_file() else ""
+            text = (
+                strip_html_comments(source.read_text(encoding="utf-8", errors="replace"))
+                if source.is_file() else ""
+            )
             updated["content"] = "\n\n".join(
                 extract_section(text, name) or "" for name in kept
             )
@@ -606,7 +621,7 @@ def _retrieve_local_evidence(root, intent, feature, task, entries, settings):
             ):
                 continue
             try:
-                text = path.read_text(encoding="utf-8", errors="replace")
+                text = strip_html_comments(path.read_text(encoding="utf-8", errors="replace"))
             except OSError:
                 continue
             base_score = scorer.score_text(text)
@@ -701,7 +716,6 @@ def build_context_pack(
     elif skill_name == "context-memory":
         policy_sections = ["Purpose", "Normative Rules", "Memory Promotion Thresholds", "Security Policy"]
     always = [
-        ("corebase-specharness/rules/caveman.md", "Must", None, "communication rule"),
         ("corebase-specharness/memories/repo/core-policies.md", "Must", policy_sections, "runtime policy"),
     ]
     for relative, tier, sections, reason in always:
@@ -806,7 +820,9 @@ def build_context_pack(
                 "content": "",
             })
             continue
-        text = item.get("runtime_summary") or path.read_text(encoding="utf-8", errors="replace")
+        text = item.get("runtime_summary") or strip_html_comments(
+            path.read_text(encoding="utf-8", errors="replace")
+        )
         sections = list(item["sections"] or [])
         is_always = str(path.resolve()) in always_paths
         if not is_always and intent and not sections and not item.get("runtime_summary"):

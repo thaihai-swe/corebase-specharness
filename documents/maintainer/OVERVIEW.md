@@ -104,7 +104,7 @@ Otherwise tell it to read `skills/<name>/SKILL.md` and follow that procedure.
 | --- | --- |
 | Installable package | Manifest ownership with `overwrite` and `copyIfMissing` rules |
 | Skill catalog | 11 direct peer skills plus `_shared` guidance |
-| Deterministic CLI | 27 commands covering session, context, status, task, artifact, verification, gate, provider, memory, and ADR |
+| Deterministic CLI | 28 commands covering session, context, status, task, artifact, verification, gate, provider, memory, ADR, and evals |
 | Lifecycle state | Feature tokens in `status.md`; kit-owned `state-machine.yaml` |
 | Context routing | `references/context-routes.yaml`, profile payloads, and inspectable packs |
 | Memory | Repository memory, domain packs, session state, and line-audit thresholds |

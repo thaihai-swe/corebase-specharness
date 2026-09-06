@@ -12,18 +12,14 @@ triggers: ['implement', 'code', 'build', 'deliver']
 | | |
 |---|---|
 | **Reads** | `security.md`, `code-design.md`, `spec.md`, `plan.md`, `tasks.md` |
-| **Writes** | Optional: project source, `tasks.md`, `status.md`, `session-extracts.md`. Session: `.corebase-specharness/sessions/<slug>/session.md` |
+| **Writes** | Optional: project source/tests, `tasks.md`, `status.md` (`Implementing`), `session-extracts.md` `[CANDIDATE]` |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-implement --feature <slug>`, `python3 corebase-specharness/scripts/core/cli.py task-start --feature <slug> --task <T-NNN>`, `python3 corebase-specharness/scripts/core/cli.py context-load --skill spec-implement --feature <slug> --task <T-NNN>`, `python3 corebase-specharness/scripts/core/cli.py skill-exit --skill spec-implement --feature <slug> --handoff harness-verify` |
-| **Entry** | Direct peer skill; handoff may suggest `/harness-verify` |
+| **Handoff** | `/harness-verify` |
+| **Session** | `.corebase-specharness/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`) |
 
 ## Overview
 
-Execute `tasks.md` one locked task at a time. Prove each task without inventing scope. Enforces `task-start`, TDD at public seams, `verify`, and `task-done` with evidence.
-
-## When to Use & Invocation Triggers
-
-- **When to Use**: coding an approved `tasks.md`; resuming an in-progress task.
-- **Triggers**: `implement`, `code`, `build`, `deliver`
+Execute `tasks.md` one locked task at a time. Prove each task without inventing scope. Enforces `task-start`, TDD at public seams, `verify`, and `task-done` with evidence. Use when coding an approved `tasks.md` or resuming an in-progress task.
 
 ## Execution Modes & Profiles
 
@@ -33,17 +29,11 @@ Execute `tasks.md` one locked task at a time. Prove each task without inventing 
 | `mid-task-resumption` | `In Progress` | Re-run proof; restart if baseline fails |
 | `task-blocked` | `Blocked` | `task-block`, note, escalate or `/spec-plan` |
 
-## I/O & Artifact Protocol
-
-- **Reads**: `spec.md`, `plan.md`, `tasks.md`, `security.md`, `code-design.md`.
-- **Writes**: project source/tests; `status.md` (`Implementing`); `tasks.md` status/proofs; `session-extracts.md` `[CANDIDATE]` lessons.
-- **Session**: `.corebase-specharness/sessions/<slug>/session.md` (`## Objective`, `## Progress`, `## Handoff`).
-
 ## Step-by-Step Execution Workflow
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-implement --feature <slug> --intent "<request>"`.
-   - Omit `--full` unless compacted, new chat on existing feature, user asked to reload, or pack is stale. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-loading.md`.
    - `python3 corebase-specharness/scripts/core/cli.py phase-check --feature <slug> --skill spec-implement`.
    - If `spec.md` is newer than `plan.md` approval, stamp `[:HALT STALE — spec amended after plan approved]` and route to `/spec-plan`.
 
@@ -56,13 +46,15 @@ Execute `tasks.md` one locked task at a time. Prove each task without inventing 
 3. **Baseline & TDD**:
    - Run the task proof command once before editing.
    - Confirm public seam from `plan.md` / proof command. Read `references/tdd-loop.md`.
+   - **Bug Fixes ("Fix the code, not the test")**: If fixing a bug or regression, the failing reproduction test from research/plan MUST be run red first. **Freeze the test file**. Do NOT weaken assertions, delete tests, or edit the test to fit the implementation. Modify only the production/application code until the reproduction test turns green.
    - Red-green: failing proof at the seam, then only enough code to pass.
    - Banned: implementation-coupled tests, tautological tests, horizontal slicing.
    - Missing seam → `[:HALT STALE — spec amended after plan approved]` or `/spec-plan`. Do not invent a mock seam.
-   - Stay inside the task boundary. Follow `code-design.md`. Embed `REQ-*`/`AC-*`/`T-NNN`.
+   - Stay inside the task boundary. Follow `code-design.md`. Embed `AC-*`/`T-NNN`.
 
-4. **Review & Validation**:
+4. **Review, Simplification & Validation**:
    - Semantic check on the diff.
+   - **Code Simplification**: Delegate a focused pass (or invoke a code-simplifier subagent) to inspect the diff for unrequested abstractions: remove single-implementation interfaces, redundant helpers, speculative wrappers, or dead imports. Keep only what the locked task demanded.
    - Re-run local proof.
    - `python3 corebase-specharness/scripts/core/cli.py verify --feature <slug> --skill spec-implement`.
 
@@ -75,6 +67,7 @@ Execute `tasks.md` one locked task at a time. Prove each task without inventing 
 ## Anti-Patterns & Red Flags
 
 - Coding without `task-start` on a `T-NNN`.
+- Modifying or weakening the test file during a bug fix ("fixing the test instead of the code").
 - Refactoring unrelated files.
 - Editing before the baseline proof.
 - `task-done` with empty or unverified `--evidence`.

@@ -148,7 +148,7 @@ headings in `analysis.md`: `## Metadata`, `## Findings`, `## High Risk Paths`,
 | Handoffs | `spec-plan`, `spec-research` |
 | Skill-local refs | `intake.md`, `grilling-waves.md`, `proposal-template.md`, `spec-template.md`, `requirements-review-template.md` |
 
-Modes: `full-intake`, `clarify-reentry`. Write `REQ-*` and `AC-*`.
+Modes: `full-intake`, `clarify-reentry`. Write `AC-*` binary criteria.
 `proposal.md` is procedure-required for Moderate and Complex, route-optional
 for `skill-exit`. ADR contradiction: `[:HALT ADR CONFLICT: ADR-NNN]`.
 
@@ -250,8 +250,8 @@ stable IDs during compaction. The runtime does not auto-promote. CLI:
 | Skill-local refs | `diagnosis-map.md` |
 
 Modes: `assess`, `create`, `improve`, `eval`, `doctor`, `diagnose`. Policy or config changes
-require user review. Diagnose maps shallow wrappers and vibe-debugging to
-deletion-test and tight-loop fixes.
+require user review. `eval` runs `eval-run` against `corebase-specharness/evals/` fixtures.
+Diagnose maps shallow wrappers and vibe-debugging to deletion-test and tight-loop fixes.
 
 ### `/spec-adr`
 
@@ -399,7 +399,7 @@ Shared artifact rules:
 
 - feature artifacts live under `artifacts/features/<slug>/`
 - `status.md` records lifecycle state and delivery profile
-- `spec.md` defines `REQ-*` and `AC-*`
+- `spec.md` defines `AC-*` acceptance criteria
 - `plan.md` defines the technical approach and proof surfaces
 - `tasks.md` uses canonical `T-NNN` IDs and maps tasks to acceptance criteria
 - completed tasks require fresh proof evidence
@@ -435,7 +435,7 @@ adds that check via `lifecycle_overrides`.
 - Sessions: `session-start`, `session-checkpoint`, `session-end`
 - Tasks: `task-check`, `task-start`, `task-done`, `task-block`
 - Delivery checks: `phase-check`, `artifact-check`, `verify`
-- Harness diagnostics: `doctor`, `gate-check`, `gate-list`
+- Harness diagnostics: `doctor`, `gate-check`, `gate-list`, `eval-run`
 - Providers: `provider-list`, `provider-check`, `provider-run`
 - Memory: `memory-audit`, `memory-gate`
 - Decisions: `adr-generate`
