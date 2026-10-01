@@ -343,9 +343,11 @@ actions for code-intelligence are `refresh`.
 
 ```bash
 python3 corebase-specharness/scripts/core/cli.py doctor --json
+python3 corebase-specharness/scripts/core/cli.py doctor --full --json
 ```
 
 `doctor` runs eleven named package-health checks from `harness/doctor.py`.
+`--full` then appends `memory_audit` and `eval_smoke` (the `smoke` eval suite).
 The first ten fail the command when they fail. `project_setup` is advisory
 and never fails package health:
 
@@ -406,6 +408,21 @@ only when any inspected file reaches the hard cap.
 - `block`: fail if any file reaches the hard limit
 
 These commands are explicit diagnostics. `session-end` does not run them.
+
+### Continuous evaluations
+
+```bash
+python3 corebase-specharness/scripts/core/cli.py eval-run --json
+python3 corebase-specharness/scripts/core/cli.py eval-run --suite smoke --json
+python3 corebase-specharness/scripts/core/cli.py eval-run --case case_001_spec_requirements --json
+python3 corebase-specharness/scripts/core/cli.py eval-run --from-feature <slug> --dry-run --json
+```
+
+`eval-run` evaluates agent skills, prompt regressions, and policy compliance
+against deterministic golden fixtures and rubrics in `corebase-specharness/evals/cases/`.
+It checks artifact existence, required sections, forbidden/required patterns,
+and traceability linkage. When `--live` is supplied, it executes an external
+agent command in an isolated temporary directory before applying the rubric.
 
 ### `/harness-maintain`
 

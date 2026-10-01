@@ -1,0 +1,23 @@
+{
+  "id": "case_002_spec_plan",
+  "skill": "spec-plan",
+  "description": "Valid plan.md with deep-module seams, approach, and safe change guidance.",
+  "intent": "design oauth2 login architecture",
+  "artifacts": {
+    "status.md": "# Feature Status: eval-oauth-login\n\n- Phase: `Planning`\n- Delivery profile: `Simple`\n- Status: `Active`\n- Active task: `None`\n- Next step: `/spec-tasks`\n",
+    "spec.md": "# Feature Specification\n\n## Metadata\n- Feature: `eval-oauth-login`\n- Profile: `Simple`\n- Status: `Approved`\n\n## Problem Statement\n- Users cannot sign in with an existing identity provider.\n\n## Acceptance Criteria\n- `AC-001`: Completing Google OAuth2 creates an authenticated session.\n- `AC-002`: Cancelling consent leaves the user unauthenticated.\n",
+    "plan.md": "# Implementation Plan\n\n## Metadata\n- Feature/profile: eval-oauth-login / Simple\n- Spec approved date: 2026-09-06\n- Status: Draft\n\n## Lightweight Design\n- Approach and affected modules: add an OAuth callback adapter behind the existing session facade.\n- Explicit module map and responsibilities: `auth/oauth.py` owns provider exchange; `auth/session.py` owns cookie issuance.\n- First useful slice and proof: callback exchanges a code and sets the session cookie.\n- Key constraints or risks: do not store refresh tokens in cookies.\n\n## Approach\n- Interfaces/data flow: browser -> `/auth/google/callback` -> `OAuthClient.exchange` -> `SessionStore.put`.\n- Public seams and what tests observe through them: `OAuthClient.exchange(code)` and `SessionStore.put(user_id)`.\n- Key decisions and trade-offs: reuse the session facade instead of a new auth service.\n- Files/components and dependency direction: `auth/oauth.py` depends on `auth/session.py`; UI depends on neither provider SDK details.\n- Non-functional considerations: callback must reject missing state.\n\n## Constraints\n- Non-goals: multi-provider federation.\n- Security/trust boundaries: provider tokens never leave the server process.\n- Preserved behavior: local password login remains.\n- Explicit out of scope: social profile sync.\n"
+  },
+  "rubric": {
+    "required_files": ["status.md", "spec.md", "plan.md"],
+    "required_headings": {
+      "plan.md": ["## Metadata", "## Approach"]
+    },
+    "must_contain": {
+      "plan.md": ["Public seams", "OAuthClient.exchange", "SessionStore.put", "auth/oauth.py"]
+    },
+    "forbidden": {
+      "plan.md": ["new auth microservice", "rewrite the session store"]
+    }
+  }
+}

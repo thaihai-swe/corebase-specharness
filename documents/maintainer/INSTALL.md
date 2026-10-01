@@ -3,7 +3,7 @@
 > **Audience:** adopter maintainers, platform engineers
 > **Status:** matches `kit/` as of this edit
 > **Authority:** `kit/corebase-specharness/scripts/install.sh`, `kit/manifest.json`,
-> `kit/corebase-specharness/scripts/core/_lib/contracts.py`,
+> `kit/corebase-specharness/scripts/core/_lib/doctor_checks.py`,
 > `kit/corebase-specharness/scripts/core/handlers/lifecycle.py` (`init`)
 
 ## Requirements
@@ -105,7 +105,6 @@ Back up an existing target file, then replace it with the kit copy:
 
 ```text
 manifest.json
-README.md
 AGENTS.md
 EXTERNAL_SKILLS.md
 skills/README.md
@@ -139,7 +138,7 @@ root `AGENTS.md`.
 Copy a matching source file only when the target path does not exist:
 
 ```text
-corebase-specharness/MASTER_INDEX.md
+README.md
 corebase-specharness/memories/repo/core-policies.md
 corebase-specharness/memories/repo/learned-heuristics.md
 corebase-specharness/memories/repo/project-knowledge-base.md

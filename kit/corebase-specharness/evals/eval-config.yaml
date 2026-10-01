@@ -1,0 +1,24 @@
+# CoreBase SpecHarness Continuous Evals Configuration
+# Evaluates skills, prompts, and policy compliance non-interactively
+version: "1.0.0"
+default_suite: "smoke"
+suites:
+  smoke:
+    description: "Fast regression verification on core skill artifacts and contracts"
+    cases:
+      - "case_001_spec_requirements"
+      - "case_002_spec_plan"
+      - "case_003_traceability_contract"
+  regression:
+    description: "Full suite verifying spec adherence, deep module boundaries, and traceability"
+    cases:
+      - "case_001_spec_requirements"
+      - "case_002_spec_plan"
+      - "case_003_traceability_contract"
+      - "case_004_negative_unmapped_ac"
+
+live_runner:
+  # Command template when running in live mode (--live)
+  # Tokens {root}, {skill}, {intent}, {feature_dir} will be substituted
+  command: []
+  timeout_seconds: 180

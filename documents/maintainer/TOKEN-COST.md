@@ -47,7 +47,7 @@ Session auto-delta does not change the *route*. It changes whether an already-lo
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        WHAT IS SENT TO THE AGENT                       │
 ├────────────────────────────────┬───────────────────────────────────────┤
-│ 1. Mandatory Bootstrap         │ caveman.md (156) + core-policies.md   │
+│ 1. Mandatory Bootstrap         │ core-policies.md [Purpose, Normative] │
 │ 2. Route Sources (Sliced)      │ architecture.md, constraints, etc.    │
 │ 3. Feature Artifacts           │ spec.md, plan.md, tasks.md, status.md │
 │ 4. Domain & Local Retrieval    │ glossary.md triggers + code excerpts  │
@@ -60,17 +60,17 @@ Session auto-delta does not change the *route*. It changes whether an already-lo
 
 | Skill | Injected Context Files & Sliced Sections | Isolated Pack | `SKILL.md` |
 | :--- | :--- | :---: | :---: |
-| **`/starter-init`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `harness-config.yaml` (481)<br>• `tech-stack.md` [Languages & Runtimes, Frameworks, Dev Tools] (97)<br>• `project-constraints.md` [Performance, Tech, Operational] (182) | **1,282** | **1,149** |
-| **`/spec-research`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `architecture.md` [System Snapshot, Top-Level Components, Runtime Boundaries] (75) | **606** | **1,138** |
-| **`/spec-requirements`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `analysis.md` (10)<br>• `product-sense.md` [Vision, Problem Statement, Domain Rules, Metrics] (107)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193) | **841** | **1,227** |
-| **`/spec-plan`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `architecture.md` [Snapshot, Components, Boundaries, Safe Change] (89)<br>• `code-design.md` [Abstraction Check & Deep Modules, Clean Architecture & Layering, Domain-Driven Design (DDD)] (355) | **989** | **944** |
-| **`/spec-tasks`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `code-design.md` [Read before you write] (101)<br>• `architecture.md` [Snapshot, Components] (59) | **714** | **1,067** |
-| **`/spec-implement`**<br>*(`--task T-001`)* | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (519)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `tasks.md` active-task excerpt (45)<br>• `security.md` [Core Rules, Shell Safety, Artifact Boundaries, Verification] (276)<br>• `code-design.md` [Read before you write, Abstraction Check, Layering, Failures, Verify the path] (461) | **1,489** | **1,412** |
-| **`/harness-verify`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Security Policy] (519)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `tasks.md` (30)<br>• `harness-config.yaml` (481)<br>• `security.md` [Verification] (82) | **1,300** | **1,355** |
-| **`/context-memory`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative, Promotion Thresholds, Security] (574)<br>• `status.md` (9)<br>• `session-extracts.md` (15)<br>• `learned-heuristics.md` [Heuristics] (227) | **981** | **1,002** |
-| **`/harness-maintain`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `harness-config.yaml` (481) | **1,012** | **906** |
-| **`/spec-adr`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `architecture.md` [Snapshot, Boundaries, Safe Change] (59)<br>• `code-design.md` [Clean Architecture & Layering, Domain-Driven Design (DDD)] (246) | **859** | **894** |
-| **`/spec-testing-scenario`** | • `caveman.md` (156)<br>• `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `tasks.md` (30)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193) | **777** | **776** |
+| **`/starter-init`** | • `core-policies.md` [Purpose, Normative Rules] (366)<br>• `harness-config.yaml` (481)<br>• `tech-stack.md` [Languages & Runtimes, Frameworks, Dev Tools] (97)<br>• `project-constraints.md` [Performance, Tech, Operational] (182) | **1,126** | **1,149** |
+| **`/spec-research`** | • `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `architecture.md` [System Snapshot, Top-Level Components, Runtime Boundaries] (75) | **450** | **1,138** |
+| **`/spec-requirements`** | • `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `analysis.md` (10)<br>• `product-sense.md` [Vision, Problem Statement, Domain Rules, Metrics] (107)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193) | **685** | **1,227** |
+| **`/spec-plan`** | • `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `architecture.md` [Snapshot, Components, Boundaries, Safe Change] (89)<br>• `code-design.md` [Abstraction Check & Deep Modules, Clean Architecture & Layering, Domain-Driven Design (DDD)] (355) | **833** | **944** |
+| **`/spec-tasks`** | • `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `code-design.md` [Read before you write] (101)<br>• `architecture.md` [Snapshot, Components] (59) | **558** | **1,067** |
+| **`/spec-implement`**<br>*(`--task T-001`)* | • `core-policies.md` [Purpose, Normative, Security Policy] (519)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `tasks.md` active-task excerpt (45)<br>• `security.md` [Core Rules, Shell Safety, Artifact Boundaries, Verification] (276)<br>• `code-design.md` [Read before you write, Abstraction Check, Layering, Failures, Verify the path] (461) | **1,333** | **1,412** |
+| **`/harness-verify`** | • `core-policies.md` [Purpose, Normative, Security Policy] (519)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `tasks.md` (30)<br>• `harness-config.yaml` (481)<br>• `security.md` [Verification] (82) | **1,144** | **1,355** |
+| **`/context-memory`** | • `core-policies.md` [Purpose, Normative, Promotion Thresholds, Security] (574)<br>• `status.md` (9)<br>• `session-extracts.md` (15)<br>• `learned-heuristics.md` [Heuristics] (227) | **825** | **1,002** |
+| **`/harness-maintain`** | • `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `harness-config.yaml` (481) | **856** | **906** |
+| **`/spec-adr`** | • `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `architecture.md` [Snapshot, Boundaries, Safe Change] (59)<br>• `code-design.md` [Clean Architecture & Layering, Domain-Driven Design (DDD)] (246) | **703** | **894** |
+| **`/spec-testing-scenario`** | • `core-policies.md` [Purpose, Normative Rules] (366)<br>• `status.md` (9)<br>• `spec.md` (14)<br>• `plan.md` (9)<br>• `tasks.md` (30)<br>• `project-constraints.md` [Performance, Compliance, Security, Operational] (193) | **621** | **776** |
 
 ### Sequential session auto-delta (same feature, same uncompacted chat, omit `--full`)
 
@@ -78,25 +78,25 @@ Canonical order measured: `/spec-research` → `/spec-requirements` → `/spec-p
 
 | Skill (after prior in session) | What is actually injected | Skipped as unchanged | Sequential pack |
 | :--- | :--- | :--- | :---: |
-| **`/spec-research`** (first) | Full isolated research pack | — | **606** |
-| **`/spec-requirements`** | `analysis.md` (10), `product-sense.md` (107), `project-constraints.md` (193) | `caveman.md`, `core-policies.md`, `status.md` | **310** |
-| **`/spec-plan`** | `spec.md` (14), `session.md` (22), `architecture.md` **[Safe Change Guidance] only** (14), `code-design.md` [Abstraction, Layering, DDD] (355) | `caveman.md`, `core-policies.md`, `status.md`; architecture H2s already loaded by research | **405** |
+| **`/spec-research`** (first) | Full isolated research pack | — | **450** |
+| **`/spec-requirements`** | `analysis.md` (10), `product-sense.md` (107), `project-constraints.md` (193) | `core-policies.md`, `status.md` | **310** |
+| **`/spec-plan`** | `spec.md` (14), `session.md` (22), `architecture.md` **[Safe Change Guidance] only** (14), `code-design.md` [Abstraction, Layering, DDD] (355) | `core-policies.md`, `status.md`; architecture H2s already loaded by research | **405** |
 | **`/spec-adr`** | `plan.md` (9) | bootstrap, status, spec, architecture, overlapping `code-design.md` H2s | **9** |
 | **`/spec-tasks`** | `code-design.md` **[Read before you write] only** (101) | bootstrap, status, spec, plan, session, architecture | **101** |
-| **`/spec-implement`** (`T-001`) | `core-policies.md` **[Security Policy] only** (153), task excerpt (45), `security.md` (276), `code-design.md` [Failures, Verify the path] (130) | `caveman.md`, plan, status, spec, session | **604** |
+| **`/spec-implement`** (`T-001`) | `core-policies.md` **[Security Policy] only** (153), task excerpt (45), `security.md` (276), `code-design.md` [Failures, Verify the path] (130) | plan, status, spec, session | **604** |
 | **`/spec-implement`** (`T-002`) | changed task excerpt only (45) | all other implement sources | **45** |
 | **`/harness-verify`** | `tasks.md` (30), `harness-config.yaml` (481) | bootstrap, status, spec, plan, session, `security.md` [Verification] | **511** |
 | **`/spec-testing-scenario`** | nothing new on this probe (constraints already loaded by requirements) | entire isolated pack | **0** |
-| **`/context-memory`** | `core-policies.md` **[Memory Promotion Thresholds] only** (54), `session-extracts.md` (15), `learned-heuristics.md` (227) | `caveman.md`, status, session | **296** |
+| **`/context-memory`** | `core-policies.md` **[Memory Promotion Thresholds] only** (54), `session-extracts.md` (15), `learned-heuristics.md` (227) | status, session | **296** |
 | **`/harness-maintain`** | nothing new (`harness-config.yaml` already loaded by verify) | entire isolated pack | **0** |
 
 Delivery-path pack total (`research` → `requirements` → `plan` → `tasks` → `implement T-001`):
 
 | Mode | Pack tokens |
 | :--- | ---: |
-| Isolated (each skill `--full`) | **4,802** |
-| Sequential session auto-delta | **2,189** |
-| Second implement turn (`T-002`) | **45** vs isolated **1,489** |
+| Isolated (each skill `--full`) | **4,022** |
+| Sequential session auto-delta | **2,033** |
+| Second implement turn (`T-002`) | **45** vs isolated **1,333** |
 
 Pass `--full` when the session cache is stale (files edited on disk after they were loaded), after a conversation compact, on the first skill of a new chat for the same feature, when the user asks to reload everything, or when you need the complete pack for inspection. `session-end` does not clear fingerprints. Inspect skips with `context-explain --json` (`delta`, `delta_omitted`, `unchanged_selected`). Skips are not warnings.
 
@@ -107,7 +107,7 @@ Pass `--full` when the session cache is stale (files edited on disk after they w
 Context-base figures below show **isolated pack + `SKILL.md`**. When the skill runs later in the same session, replace the isolated pack with the sequential pack from Part 1.
 
 ### 1. `/starter-init` (Bootstrap Repository)
-*Context Base: ~1,282 tokens isolated | SKILL.md: 1,149 tokens. Not part of a feature session, so auto-delta does not apply.*
+*Context Base: ~1,126 tokens isolated | SKILL.md: 1,149 tokens. Not part of a feature session, so auto-delta does not apply.*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -120,7 +120,7 @@ Context-base figures below show **isolated pack + `SKILL.md`**. When the skill r
 ---
 
 ### 2. `/spec-research` (Investigation & Brownfield Mapping)
-*Context Base: ~606 tokens isolated (first session load) | SKILL.md: 1,138 tokens*
+*Context Base: ~450 tokens isolated (first session load) | SKILL.md: 1,138 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -134,9 +134,9 @@ Context-base figures below show **isolated pack + `SKILL.md`**. When the skill r
 ---
 
 ### 3. `/spec-requirements` (What & Why Specification)
-*Context Base: ~841 isolated / **~310 after `/spec-research`** | SKILL.md: 1,227 tokens*
+*Context Base: ~685 isolated / **~310 after `/spec-research`** | SKILL.md: 1,227 tokens*
 
-Bootstrap (`caveman.md`, `core-policies.md`) and `status.md` are not re-injected after research.
+Bootstrap (`core-policies.md`) and `status.md` are not re-injected after research.
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -144,14 +144,14 @@ Bootstrap (`caveman.md`, `core-policies.md`) and `status.md` are not re-injected
 | **Step 2: Intake Alignment** | Classify intake scope (`new_spec`, `maintenance`, etc.) | `references/intake.md` (219) | ~1,250 | ~250 |
 | **Step 3: Frontier Grilling** | Ask all unblocked questions in one numbered batch | `references/grilling-waves.md` (487) | ~1,500 | ~800 |
 | **Step 4: Classification & Proposal** | Draft `proposal.md` for Moderate/Complex scopes | `references/proposal-template.md` (135) | ~1,180 | ~500 |
-| **Step 5: Spec Authoring (`spec.md`)** | Write `spec.md` (`REQ-*`, `AC-*`, `US-*`, NFR bindings) | `references/spec-template.md` (502) | ~1,550 | ~1,800 |
+| **Step 5: Spec Authoring (`spec.md`)** | Write `spec.md` (`AC-*` criteria, NFR bindings) | `references/spec-template.md` (502) | ~1,550 | ~1,800 |
 | **Step 6: Review & Gate Handoff** | Run `phase-check`, `skill-exit --handoff spec-plan` | `requirements-review-template.md` (132) | ~1,180 | ~350 |
 | **Total Skill Run** | | | **~7,710** isolated; pack is **~531 cheaper** after research | **~3,850** |
 
 ---
 
 ### 4. `/spec-plan` (Architecture & Technical Design)
-*Context Base: ~989 isolated / **~405 after `/spec-requirements`** | SKILL.md: 944 tokens*
+*Context Base: ~833 isolated / **~405 after `/spec-requirements`** | SKILL.md: 944 tokens*
 
 After requirements, plan skips bootstrap and `status.md`, injects only architecture **Safe Change Guidance**, and selects `code-design.md` (355).
 
@@ -167,7 +167,7 @@ After requirements, plan skips bootstrap and `status.md`, injects only architect
 ---
 
 ### 5. `/spec-tasks` (Work Breakdown & Sequencing)
-*Context Base: ~714 isolated / **~101 after `/spec-plan`** | SKILL.md: 1,067 tokens*
+*Context Base: ~558 isolated / **~101 after `/spec-plan`** | SKILL.md: 1,067 tokens*
 
 After plan, tasks injects only the new `code-design.md` H2 **Read before you write** (and `plan.md` if `/spec-adr` did not already load it).
 
@@ -183,7 +183,7 @@ After plan, tasks injects only the new `code-design.md` H2 **Read before you wri
 ---
 
 ### 6. `/spec-implement` (TDD Implementation Loop)
-*Context Base: ~1,489 isolated (`--task T-001`) / **~604 after `/spec-tasks`** / **~45 on the next task** | SKILL.md: 1,412 tokens*
+*Context Base: ~1,333 isolated (`--task T-001`) / **~604 after `/spec-tasks`** / **~45 on the next task** | SKILL.md: 1,412 tokens*
 *Cost is per task iteration ($N \times \text{tasks}$):*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
@@ -198,7 +198,7 @@ After plan, tasks injects only the new `code-design.md` H2 **Read before you wri
 ---
 
 ### 7. `/harness-verify` (Mechanical & Two-Axis Review Gate)
-*Context Base: ~1,300 isolated / **~511 after implement** | SKILL.md: 1,355 tokens*
+*Context Base: ~1,144 isolated / **~511 after implement** | SKILL.md: 1,355 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -212,7 +212,7 @@ After plan, tasks injects only the new `code-design.md` H2 **Read before you wri
 ---
 
 ### 8. `/context-memory` (Durable Memory Promotion & Triage)
-*Context Base: ~981 isolated / **~296 after verify** | SKILL.md: 1,002 tokens*
+*Context Base: ~825 isolated / **~296 after verify** | SKILL.md: 1,002 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -224,7 +224,7 @@ After plan, tasks injects only the new `code-design.md` H2 **Read before you wri
 ---
 
 ### 9. `/spec-adr` (Architectural Decision Record)
-*Context Base: ~859 isolated / **~9 after `/spec-plan`** | SKILL.md: 894 tokens*
+*Context Base: ~703 isolated / **~9 after `/spec-plan`** | SKILL.md: 894 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -236,7 +236,7 @@ After plan, tasks injects only the new `code-design.md` H2 **Read before you wri
 ---
 
 ### 10. `/spec-testing-scenario` (Edge Case & Manual QA Matrix)
-*Context Base: ~777 isolated / **~0 after verify** on this probe (constraints already loaded) | SKILL.md: 776 tokens*
+*Context Base: ~621 isolated / **~0 after verify** on this probe (constraints already loaded) | SKILL.md: 776 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |
@@ -247,7 +247,7 @@ After plan, tasks injects only the new `code-design.md` H2 **Read before you wri
 ---
 
 ### 11. `/harness-maintain` (Harness & Gate Drift Maintenance)
-*Context Base: ~1,012 isolated / **~0 after verify** when `harness-config.yaml` is already in the session | SKILL.md: 906 tokens*
+*Context Base: ~856 isolated / **~0 after verify** when `harness-config.yaml` is already in the session | SKILL.md: 906 tokens*
 
 | Step | What happens | Extra Templates / Files Loaded | Step Input | Typical Output |
 | :--- | :--- | :--- | :---: | :---: |

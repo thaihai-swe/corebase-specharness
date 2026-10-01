@@ -1,0 +1,23 @@
+{
+  "id": "case_001_spec_requirements",
+  "skill": "spec-requirements",
+  "description": "Valid spec.md with AC IDs, problem statement, constraints, and no scope creep.",
+  "intent": "capture oauth2 login requirements",
+  "artifacts": {
+    "status.md": "# Feature Status: eval-oauth-login\n\n- Phase: `SpecApproved`\n- Delivery profile: `Simple`\n- Status: `Active`\n- Active task: `None`\n- Next step: `/spec-plan`\n\n## Progress\n- [x] Research/spec complete\n- [x] Spec approved\n- [ ] Plan/tasks complete (Moderate/Complex only)\n- [ ] Plan approved\n- [ ] Implementation complete\n- [ ] Validation complete\n",
+    "spec.md": "# Feature Specification\n\n## Metadata\n- Feature: `eval-oauth-login`\n- Profile: `Simple`\n- Status: `Approved`\n- Owner: eval-harness\n\n## Problem Statement\n- Who is affected, what fails, and why now: Users cannot sign in with an existing identity provider, so every session requires a local password.\n\n## Outcome\n- Observable result: A user can complete Google OAuth2 login and land on the authenticated home page.\n- Minimum useful release: Google OAuth2 only.\n\n## Scope\n- In scope: Google OAuth2 authorization code flow for web login.\n- Out of scope / non-goals: social profile sync, multi-provider federation.\n- Preserved behavior: existing local password login remains available.\n\n## Acceptance Criteria\n- `AC-001`: Given an unauthenticated user, When they complete Google OAuth2, Then they receive an authenticated session.\n- `AC-002`: Given a cancelled OAuth2 consent, When they return to the app, Then they remain unauthenticated and see a non-blocking error.\n\n## Constraints and Risk\n- Constraints: do not store provider refresh tokens in cookies.\n- Dependencies/touchpoints: identity provider callback route.\n- Risks and mitigations: callback CSRF via state parameter.\n- Open questions (blocking only): none.\n"
+  },
+  "rubric": {
+    "required_files": ["status.md", "spec.md"],
+    "required_headings": {
+      "spec.md": ["## Metadata", "## Problem Statement", "## Acceptance Criteria"]
+    },
+    "must_contain": {
+      "spec.md": ["AC-001", "AC-002", "Out of scope", "Problem Statement"]
+    },
+    "forbidden": {
+      "spec.md": ["TODO: invent extra providers", "scope creep: rewrite auth stack"]
+    },
+    "min_ac_count": 2
+  }
+}

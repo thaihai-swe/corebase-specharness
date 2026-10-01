@@ -7,7 +7,7 @@ All 11 CoreBase SpecHarness skills are peer-level direct entrypoints. `/starter-
 1. Select a skill such as `/spec-plan` and read its `SKILL.md`.
 2. Feature-bound delivery skills (`spec-research` through `harness-verify`) enter with `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill <name> [--feature <slug>] [--task <T-NNN>] --intent "<request>"`.
    That loads the route, opens or resumes the session, and writes the enter state to `status.md` when the route declares one.
-   Omit `--full` on that enter in the same uncompacted chat. Pass `--full` after the user compacted the conversation, on the first skill of a new chat for an existing feature, when the user asks to reload context, or when the pack is known stale. See `_shared/context-loading.md`.
+   Omit `--full` on that enter in the same uncompacted chat. Pass `--full` after the user compacted the conversation, on the first skill of a new chat for an existing feature, when the user asks to reload context, or when the pack is known stale. See `_shared/context-protocol.md`.
    `starter-init`, `context-memory`, `harness-maintain`, `spec-adr`, and `spec-testing-scenario` have no enter/exit tokens; follow their `SKILL.md` and use context or session commands as documented.
    Inspect selection and omissions with `context-explain`; use
    `--add-source <repo-relative-path>` only for a focused expansion.
@@ -30,7 +30,7 @@ All 11 CoreBase SpecHarness skills are peer-level direct entrypoints. `/starter-
   → /context-memory (when durable lessons need promotion)
 ```
 
-This is a suggested handoff path, not a hierarchy. `/spec-adr`, `/spec-testing-scenario`, and `/harness-maintain` are also direct CoreBase SpecHarness entrypoints. Shared contracts live in `_shared/` (artifact, halt, handoff, verification, and decision rules). For optional repository documentation, technical contracts, diagrams, architecture surveys, and pattern analysis, see [`../EXTERNAL_SKILLS.md`](../EXTERNAL_SKILLS.md).
+This is a suggested handoff path, not a hierarchy. `/spec-adr`, `/spec-testing-scenario`, and `/harness-maintain` are also direct CoreBase SpecHarness entrypoints. Shared contracts live in `_shared/` (`lifecycle-contracts.md`, `artifact-contracts.md`, `context-protocol.md`). For optional repository documentation, technical contracts, diagrams, architecture surveys, and pattern analysis, see [`../EXTERNAL_SKILLS.md`](../EXTERNAL_SKILLS.md).
 
 ## Runtime commands
 
@@ -40,5 +40,5 @@ This is a suggested handoff path, not a hierarchy. `/spec-adr`, `/spec-testing-s
 - Sessions: `session-start`, `session-checkpoint`, `session-end`
 - Tasks: `task-check`, `task-start`, `task-done`, `task-block`
 - Delivery checks: `phase-check`, `artifact-check`, `verify`
-- Diagnostics: `doctor`, `gate-check`, `gate-list`, `provider-list`, `provider-check`, `provider-run`, `memory-audit`, `memory-gate`
+- Diagnostics: `doctor`, `gate-check`, `gate-list`, `provider-list`, `provider-check`, `provider-run`, `memory-audit`, `memory-gate`, `eval-run`
 - Decisions: `adr-generate`

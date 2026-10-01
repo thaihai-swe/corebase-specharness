@@ -16,7 +16,7 @@ flowchart TD
     MODE -->|improve| IMPROVE["Improve<br/>inspect verify / gate-check findings<br/>and test outcomes"]:::decision
     IMPROVE --> DRAFT["Draft evidence-backed [DRAFT] heuristics<br/>in learned-heuristics.md<br/>never silently promote policy"]:::decision
 
-    MODE -->|eval| EVAL["Eval<br/>doctor package contracts · inspect CC-* rules<br/>validate confirmed gate configuration<br/>optionally verify a selected feature"]:::core
+    MODE -->|eval| EVAL["Eval<br/>doctor package contracts · inspect core-policies.md<br/>validate confirmed gate configuration<br/>optionally verify a selected feature"]:::core
     EVAL --> EVAL_OUT["Record findings and comparative evidence<br/>without inventing gate results"]:::optional
 
     MODE -->|doctor| DOCTOR["Doctor<br/>run deterministic package-health checks"]:::core

@@ -5,7 +5,7 @@
 .idea/
 .vscode/
  temp/
-
+.qwen/
 # Logs
 *.log
 

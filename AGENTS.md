@@ -20,20 +20,16 @@ These rules override all other instructions when they conflict.
 - **Preserve behavior:** Existing observable behavior and contracts **MUST NOT** change unless explicitly requested (Hyrum's Law).
 - **Prefer small, reversible changes:** Match existing architecture and idioms. Never introduce new layers or dependencies without demonstrable necessity.
 
-
-
 ## 1. Operating Loop
 
 Follow this loop for every task until completion is proven:
 
 1. **Understand:** Identify the concrete success condition in project-specific terms. If unclear, identify the blocker and clarify.
-2. **Inspect:** Read relevant code, docs, tests, configurations, and established patterns before writing new ones.
+2. **Inspect:** Read relevant code, docs, configurations, and established patterns before writing new ones.
 3. **Plan:** Devise the smallest safe change. For multi-step tasks: `[step] → verify: [check]`.
 4. **Implement:** Write minimal, surgical code that matches local conventions and style.
 5. **Verify:** Run the strongest practical checks and inspect the output. Diff against expectations.
 6. **Report:** Provide a direct summary: what changed, what was verified, what was skipped/failed, and the next useful step.
-
-
 
 ## 2. Planning and Alignment
 
@@ -47,10 +43,8 @@ Before modifying code, articulate the intended outcome, constraints, and verific
 
 ### When to proceed autonomously:
 - The task is local, trivial, or easily reversible.
-- Ambiguity can be settled by reading repository code, configs, or tests.
+- Ambiguity can be settled by reading repository code, configs
 - The question was already answered earlier in the session.
-
-
 
 ## 3. Engineering Standards
 
@@ -86,21 +80,16 @@ The ladder runs *after* you understand the problem, not instead of it: read the 
 | One-off formatting / mapping | Inline |
 | Unknown future variant | Do not build it |
 
-
-
 ## 4. Verification Contract
 
 Define success in verifiable terms before editing. Use the strongest practical evidence available:
 
-- **Automated tests:** Run or add focused unit, integration, or regression tests for changed behavior.
 - **Static analysis:** Run linters, type checks, formatters, and builds where available.
 - **UI/Visual checks:** Inspect generated markup, components, or screenshots when browser/rendering tools exist.
 - **Performance:** Provide measurable before/after metrics when optimizing.
 - **Bug reproduction:** Reproduce the defect first with a failing check or test before applying the fix, then verify it passes.
 
 **Rule of proof:** Always read command output. Never declare success based solely on a plausible diff. If a check is skipped or unavailable, explicitly state why.
-
-
 
 ## 5. Safety Boundaries
 
@@ -111,8 +100,6 @@ You **MUST** obtain explicit approval before taking destructive or hard-to-rever
 - Exposing, logging, or committing secrets, tokens, private keys, or credentials.
 - Running irreversible database migrations without a rollback path.
 - Modifying authentication, permission boundaries, billing logic, or public contract semantics without review.
-
-
 
 ## 6. Communication Style
 
@@ -130,8 +117,6 @@ You **MUST** obtain explicit approval before taking destructive or hard-to-rever
   1. Stop immediately.
   2. Summarize the evidence, what failed, and remaining uncertainties.
   3. Propose a reset or an alternative approach before attempting further edits.
-
-
 
 ## 8. Final Response Checklist
 

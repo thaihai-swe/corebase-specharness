@@ -1,5 +1,25 @@
 # Context, Memory, and Providers
 
+CoreBase SpecHarness is skills-first: invoke any of the 11 skills directly.
+`/starter-init` is recommended only when the installed repository has not
+been tailored. Featureless skills omit `--feature`. Sessions live at
+`.corebase-specharness/sessions/<slug>/session.md`.
+
+```bash
+python3 corebase-specharness/scripts/core/cli.py skill-enter --skill <name> --feature <slug> --task <T-NNN> --intent "<request>"
+python3 corebase-specharness/scripts/core/cli.py skill-exit --skill <name> --feature <slug> --handoff <next>
+```
+
+The runtime does not select skills, infer project gates, install providers, or
+promote memory. A user request becomes a named-skill `skill-enter`: route
+lookup, session open, then a budgeted context pack. Shared procedure
+contracts live in `skills/_shared/`.
+
+Authorities: `skills/<name>/SKILL.md`, `references/context-routes.yaml`,
+`corebase-specharness/project/state-machine.yaml` (extended via
+`lifecycle_overrides`), `artifacts/features/<slug>/` (`tasks.md` canonical;
+`tasks.json` generated sidecar).
+
 CoreBase SpecHarness compiles bounded project context from one explicit named-skill route,
 then performs budgeted local evidence retrieval for the active intent and task.
 It does not fall back to a phase matrix or dump the repository into the model.
@@ -14,7 +34,7 @@ When a user submits a prompt or invokes a skill (e.g. `/spec-plan`):
    Resolves the skill route from `references/context-routes.yaml`, verifies required preconditions, updates `status.md`, and initializes or resumes `.corebase-specharness/sessions/<slug>/session.md`.
 
 2. **Context Compilation (`context_engine.py`)**:
-   Gathers mandatory bootstrap policies (`caveman.md`, `core-policies.md`), route-declared files, active feature artifacts, task-specific excerpts, matching domain packs, and bounded local search excerpts.
+   Gathers mandatory bootstrap policies (`core-policies.md`), route-declared files, active feature artifacts, task-specific excerpts, matching domain packs, and bounded local search excerpts.
 
 3. **Token Estimation (`_lib/token_counter.py`)**:
    - **Exact Mode (`cl100k_base`)**: Uses `tiktoken` BPE encoding (`cl100k_base`) when installed.

@@ -1,14 +1,12 @@
 # Shared skill references
 
-Cross-skill references that more than one skill loads on demand. This directory is exempt from the rule that every `skills/<name>/` must contain a `SKILL.md`.
+Cross-skill contracts that more than one skill loads on demand. This directory is exempt from the rule that every `skills/<name>/` must contain a `SKILL.md`.
 
-## Index
+Machine authority remains `state-machine.yaml` and `context-routes.yaml`. These files are the human twin.
 
-- [`status-phases.md`](status-phases.md) — Canonical phase vocabulary for `artifacts/features/<slug>/status.md`.
-- [`decision-points.md`](decision-points.md) — Decision-point catalog: two options, depth/seam/blast radius, reversibility, and ADR routing.
-- [`status-template.md`](status-template.md) — Template for `artifacts/features/<slug>/status.md`.
-- [`artifact-rules.md`](artifact-rules.md) — Cross-skill artifact ownership, tracer-bullet slicing, and expand-contract sequencing.
-- [`context-loading.md`](context-loading.md) — Named-route loading, `Must`/`Should` tiers, session auto-delta, and `--full` after compact or a new chat.
-- [`halt-rules.md`](halt-rules.md) — Halt markers, owning skills, and stop conditions.
-- [`handoff-rules.md`](handoff-rules.md) — Session handoff field contract.
-- [`verification-rules.md`](verification-rules.md) — Shared verification evidence, public-seam proofs, and two-axis review.
+| File | Contract |
+| --- | --- |
+| [`lifecycle-contracts.md`](lifecycle-contracts.md) | Phase tokens, exception states, HALT, handoff, decision points |
+| [`artifact-contracts.md`](artifact-contracts.md) | Feature artifacts, AC/task linkage, verification evidence |
+| [`context-protocol.md`](context-protocol.md) | Named-route loading, `--full` / auto-delta, token-cost rules |
+| [`status-template.md`](status-template.md) | Seed template for `artifacts/features/<slug>/status.md` |

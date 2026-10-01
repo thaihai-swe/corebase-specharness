@@ -4,14 +4,12 @@ Durable descriptive knowledge for this repository. Managed via `/starter-init` a
 
 ## Preserved Behavior Baseline
 
-<!-- Identify at least 3 critical behaviors that must never break during feature delivery or refactoring. Pre-filled during /starter-init archaeology. -->
 - Baseline 1: `[UNKNOWN]`
 - Baseline 2: `[UNKNOWN]`
 - Baseline 3: `[UNKNOWN]`
 
 ## Operational Watchouts & Gotchas
 
-<!-- Document known race conditions, tricky environment quirks, flaky external services, or performance hotspots discovered over time. -->
 - None recorded yet.
 
 ## System Pointers

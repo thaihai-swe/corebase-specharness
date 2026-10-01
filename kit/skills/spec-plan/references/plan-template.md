@@ -43,14 +43,14 @@ Use for Moderate and Complex features.
 
 ## Alternatives Considered
 
-Use for Complex features, and for Moderate features where two interface shapes were viable. Procedure-only; not a runtime heading.
+Use for Complex features, and for Moderate features where two interface shapes were viable. Omit this heading when unused.
 
 | Option | Depth / seam / blast radius | Chosen? | Why rejected or kept |
 | --- | --- | --- | --- |
 
 ## Complexity Tracking
 
-Record only deliberate exceptions to the Ponytail ladder or architectural gates.
+Record only deliberate exceptions to the architectural gates. Omit this heading when unused.
 
 | Violation / Shortcut | Why Needed | Simpler Alternative Rejected Because |
 | --- | --- | --- |

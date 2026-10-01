@@ -11,19 +11,15 @@ triggers: ['requirement', 'spec', 'feature']
 
 | | |
 |---|---|
-| **Reads** | `product-sense.md`, `project-constraints.md`, optional `analysis.md` |
-| **Writes** | Required: `spec.md`. Optional: `proposal.md`, `requirements-review.md`, `status.md` |
+| **Reads** | `product-sense.md`, `project-constraints.md`, optional `analysis.md`, `adr-log.md` |
+| **Writes** | Required: `spec.md`. Optional: `proposal.md`, `requirements-review.md`, `status.md` (`Specifying` → `SpecApproved`) |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-requirements --feature <slug> --intent "<request>"`, `python3 corebase-specharness/scripts/core/cli.py skill-exit --skill spec-requirements --feature <slug> --handoff spec-plan` |
-| **Entry** | Direct peer skill; handoff may suggest `/spec-plan` |
+| **Handoff** | `/spec-plan` |
+| **Session** | `.corebase-specharness/sessions/<slug>/session.md` |
 
 ## Overview
 
-Author `spec.md` with `REQ-*`, binary `AC-*`, `US-*`, and `SC-*`. What/why only — no implementation leakage.
-
-## When to Use & Invocation Triggers
-
-- **When to Use**: new feature; refine spec/ACs; resolve ambiguity; re-grill mid-plan/implement questions.
-- **Triggers**: `requirement`, `spec`, `feature`
+Author `spec.md` with binary `AC-*` IDs. What/why only — no implementation leakage. Use for new features, refining specs/ACs, resolving ambiguity, or re-grilling mid-plan questions.
 
 ## Execution Modes & Profiles
 
@@ -32,17 +28,11 @@ Author `spec.md` with `REQ-*`, binary `AC-*`, `US-*`, and `SC-*`. What/why only 
 | `full-intake` | No `spec.md` | Alignment, grilling, profile, proposal, `spec.md` |
 | `clarify-reentry` | Spec exists with open questions or `[:HALT ...]` | Patch spec; stamp `[:HALT STALE]` if plan exists |
 
-## I/O & Artifact Protocol
-
-- **Reads**: `analysis.md` if present, `status.md`, `product-sense.md`, `project-constraints.md`, `adr-log.md`.
-- **Writes**: `spec.md`; `status.md` (`Specifying` → `SpecApproved`); `proposal.md` (Moderate/Complex); optional `requirements-review.md`.
-- **Session**: `.corebase-specharness/sessions/<slug>/session.md`.
-
 ## Step-by-Step Execution Workflow
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-requirements --feature <slug> --intent "<request>"`.
-   - Omit `--full` unless compacted, new chat on existing feature, reload requested, or pack stale. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-protocol.md`.
    - Do not hand-edit `- Phase:`. Envelope creates `status.md` and sets `Specifying`.
 
 2. **Intake**:
@@ -63,8 +53,8 @@ Author `spec.md` with `REQ-*`, binary `AC-*`, `US-*`, and `SC-*`. What/why only 
    - Draft `proposal.md` via `references/proposal-template.md` (skip for `Simple`).
 
 5. **Author `spec.md`**:
-   - Use `references/spec-template.md`. Define `REQ-*` and binary `AC-*`.
-   - Moderate/Complex: prioritize `US1`/P1 MVP, `US2`/P2, …
+   - Use `references/spec-template.md`. Define binary `AC-*` IDs.
+   - Moderate/Complex: group ACs under P1 MVP journeys, then P2+.
    - Bind every NFR to ≥1 `AC-*` via `Linked ACs:`.
    - Every `AC-*` needs an observable assertion and verification mechanism.
 

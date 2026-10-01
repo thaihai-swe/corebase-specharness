@@ -7,7 +7,6 @@
   "files": {
     "overwrite": [
       "manifest.json",
-      "README.md",
       "AGENTS.md",
       "EXTERNAL_SKILLS.md",
       "skills/README.md",
@@ -30,10 +29,11 @@
       "corebase-specharness/rules/**",
       "corebase-specharness/CONTEXT_AND_MEMORY.md",
       "corebase-specharness/project/state-machine.yaml",
-      "corebase-specharness/scripts/validate-static-audit.py"
+      "corebase-specharness/scripts/validate-static-audit.py",
+      "corebase-specharness/evals/cases/**"
     ],
     "copyIfMissing": [
-      "corebase-specharness/MASTER_INDEX.md",
+      "README.md",
       "corebase-specharness/memories/repo/core-policies.md",
       "corebase-specharness/memories/repo/learned-heuristics.md",
       "corebase-specharness/memories/repo/project-knowledge-base.md",
@@ -48,7 +48,8 @@
       "corebase-specharness/project/providers/**",
       "artifacts/features/README.md",
       "corebase-specharness/memories/domain/**",
-      "corebase-specharness/memories/archive/deprecated-heuristics.md"
+      "corebase-specharness/memories/archive/deprecated-heuristics.md",
+      "corebase-specharness/evals/eval-config.yaml"
     ]
   }
 }

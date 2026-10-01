@@ -15,7 +15,7 @@ flowchart TD
     PREREQ -->|No| PREREQ_ERROR["Fail: list missing prerequisites"]:::fail
     PREREQ -->|Yes| ASSEMBLE["Assemble candidate sources"]:::core
 
-    BASE["Always-required bootstrap<br/>corebase-specharness/rules/caveman.md<br/>corebase-specharness/memories/repo/core-policies.md Must sections"]:::gate --> ASSEMBLE
+    BASE["Always-required bootstrap<br/>corebase-specharness/memories/repo/core-policies.md Must sections"]:::gate --> ASSEMBLE
     DECLARED["Route-declared Must / Should sources<br/>and requested H2 sections"]:::core --> ASSEMBLE
     ARTIFACTS["Route-declared feature artifacts<br/>artifacts/features/&lt;slug&gt;/...<br/>.corebase-specharness/sessions/&lt;slug&gt;/session.md"]:::memory --> ASSEMBLE
     TASK["--task &lt;T-NNN&gt;<br/>bounded tasks.md excerpt"]:::memory -.-> ASSEMBLE

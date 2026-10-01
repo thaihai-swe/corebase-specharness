@@ -23,7 +23,7 @@ your-repo/
 ├── AGENTS.md                          portable agent router
 ├── manifest.json                      kit ownership and version identity
 ├── skills/
-│   ├── _shared/                       shared status/artifact/handoff rules
+│   ├── _shared/                       lifecycle, artifact, context contracts + status template
 │   └── <name>/SKILL.md                11 direct peer skill procedures
 ├── references/
 │   ├── context-routes.yaml            skill routing authority
@@ -35,7 +35,7 @@ your-repo/
     ├── scripts/core/cli.py            embedded Python runtime & harness
     ├── project/                       adopter project config & architecture
     ├── memories/                      durable project memory (repo & domain)
-    └── rules/                         shipped policy snippets (code-design, security, caveman)
+    └── rules/                         shipped policy snippets (code-design, security)
 ```
 
 You do not call Python modules directly from application code. The operating pattern is:
@@ -56,7 +56,7 @@ task dependency graphs, and test evidence exist.
 2. **Context Compilation & Token Estimation**:
    `context_engine.py` compiles the bounded context pack. Token estimates are calculated using `cl100k_base` BPE (via `tiktoken` when present) or `chars_per_token_estimate` (`len(text) / 4.0` in pure stdlib Python). When `--full` is omitted, the pack is auto-delta'd against the union of fingerprints already stored in this feature's `session.md`. Later skills in the **same uncompacted chat** inject only new or changed files and H2 sections; skipped sources do not consume budget. After a conversation compact, or on the first skill of a new chat for the same feature, the agent must pass `--full` because hashes survive on disk while file bodies often do not. Isolated vs sequential pack costs are in [TOKEN-COST.md](TOKEN-COST.md). Full compact / new-chat rules: [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 3. **Budget Enforcement**:
-   The payload is capped at `min(profile_payload or --budget, max_injected_tokens - reserve_tokens)`. Mandatory `Must` files are always preserved (universal bootstrap is only ~410 tokens: `caveman.md` + `core-policies.md` [Purpose, Normative Rules]); `Should` files and local search excerpts are dropped if payload or channel caps (`bootstrap`, `project`, `feature`, `task`, `retrieved`, `durable_memory`) are reached. Auto-delta skips are applied before this step.
+   The payload is capped at `min(profile_payload or --budget, max_injected_tokens - reserve_tokens)`. Mandatory `Must` files are always preserved (universal bootstrap is ~366 tokens: `core-policies.md` [Purpose, Normative Rules]); `Should` files and local search excerpts are dropped if payload or channel caps (`bootstrap`, `project`, `feature`, `task`, `retrieved`, `durable_memory`) are reached. Auto-delta skips are applied before this step.
 4. **Skill Execution & Exit**:
    The agent performs the tasks defined in `skills/<name>/SKILL.md`, writes feature artifacts under `artifacts/features/<slug>/`, and runs `skill-exit` to validate artifact completeness and transition to the next lifecycle skill.
 
@@ -234,7 +234,7 @@ The `<slug>` must be lowercase hyphenated alphanumeric (1–63 chars, matching `
    │  • Researching → ResearchComplete
    ▼
 [2. Specification]
-   │  • /spec-requirements: Problem statement, 3-wave grilling, AC-NNN contracts
+   │  • /spec-requirements: Problem statement, 3-wave grilling, AC-* contracts
    │  • writes spec.md (optional proposal.md, requirements-review.md)
    │  • Specifying → SpecApproved
    ▼
@@ -295,7 +295,7 @@ ightarrow$ `task-done`).
 | --- | --- |
 | `/spec-adr` | A lasting architectural decision with trade-offs must be recorded |
 | `/spec-testing-scenario` | QA or human reviewers need a manual testing and regression script |
-| `/harness-maintain` | Doctor, gates, or harness configuration are drifting |
+| `/harness-maintain` | Doctor, gates, eval fixtures, or harness configuration are drifting |
 
 Do not pass external skill names to `context-load` or `skill-enter`. External skills (such as UI/UX or design helpers) are auxiliary tools, not CoreBase SpecHarness lifecycle routes.
 
@@ -427,7 +427,7 @@ These five skills have **no enter/exit tokens**:
 ### Skill details
 
 - **`/spec-research`**: Modes: `bug-diagnosis`, `brownfield-map`, `ambiguity-resolution`. Output: `analysis.md`. If evidence is inconclusive, write `[:HALT INCONCLUSIVE]` and do not exit as complete.
-- **`/spec-requirements`**: Modes: `full-intake`, `clarify-reentry`. Output: `spec.md` with `REQ-*` and `AC-*` identifiers. Runtime requires headings: `## Metadata`, `## Problem Statement`, `## Acceptance Criteria`.
+- **`/spec-requirements`**: Modes: `full-intake`, `clarify-reentry`. Output: `spec.md` with `AC-*` identifiers. Runtime requires headings: `## Metadata`, `## Problem Statement`, `## Acceptance Criteria`.
 - **`/spec-plan`**: Designs module boundaries, public seams, and DoR. Applies Clean Architecture and DDD principles from `corebase-specharness/rules/code-design.md`. Output: `plan.md`. Runtime requires headings: `## Metadata`, `## Approach`.
 - **`/spec-tasks`**: Strategies: `mvp-first`, `incremental`, `parallel-team`. Output: `tasks.md` with `T-NNN` identifiers and `Covers: AC-*`. Runtime requires headings: `## Metadata`, `## Tasks`.
 - **`/spec-implement`**: Single active task loop. After `task-start`, reloads `context-load --task T-NNN` so coding turns omit full `tasks.md`. Mutates code, records proof, and updates task evidence via CLI.
@@ -443,7 +443,7 @@ These five skills have **no enter/exit tokens**:
 artifacts/features/checkout-retry/
 ├── status.md                durable feature state & profile
 ├── analysis.md              optional, from research
-├── spec.md                  REQ-*, AC-* requirements
+├── spec.md                  AC-* requirements
 ├── plan.md                  technical architecture & approach
 ├── tasks.md                 canonical T-NNN task graph
 ├── tasks.json               generated machine sidecar
@@ -638,6 +638,7 @@ AGENTS.md
 ### Adopter-owned (`copyIfMissing`)
 Preserved on upgrade. Customize freely:
 ```text
+README.md
 corebase-specharness/project/harness-config.yaml
 corebase-specharness/project/architecture.md
 corebase-specharness/project/*.md
@@ -689,7 +690,7 @@ python3 corebase-specharness/scripts/core/cli.py skill-enter   --skill spec-requ
 ```
 
 - **Execute**: Review `analysis.md` and `product-sense.md`. Conduct frontier grilling wave to resolve ambiguity (retry count, backoff multiplier, idempotency window).
-- **Write**: `artifacts/features/checkout-retry-queue/spec.md` with `REQ-01`, `REQ-02`, and verifiable `AC-01`, `AC-02`.
+- **Write**: `artifacts/features/checkout-retry-queue/spec.md` with verifiable acceptance criteria `AC-01`, `AC-02`.
 - **Check & Exit**:
   ```bash
   python3 corebase-specharness/scripts/core/cli.py phase-check --feature checkout-retry-queue --skill spec-requirements --json
@@ -825,14 +826,14 @@ CoreBase SpecHarness cuts token consumption by up to 50% compared to traditional
 ┌────────────────────────────────────────────────────────────────────────┐
 │                        HOW CONTEXT IS OPTIMIZED                        │
 ├─────────────────────────┬──────────────────────────────────────────────┤
-│ 1. Mandatory Bootstrap  │ Sliced to ~410 tokens (caveman + policies)   │
+│ 1. Mandatory Bootstrap  │ Sliced to ~366 tokens (core-policies.md)     │
 │ 2. Task-Scoped Slicing  │ context-load --task T-NNN (drops tasks.md)   │
 │ 3. Session Auto-Delta   │ Drops unchanged files via SHA-256 fingerprint│
 │ 4. Bounded Retrieval    │ Capped at 6 files, 600 tokens, redacts secret│
 └─────────────────────────┴──────────────────────────────────────────────┘
 ```
 
-1. **Mandatory Bootstrap Slicing**: Universal bootstrap (`caveman.md` + `core-policies.md` [Purpose, Normative Rules]) consumes only **~410 tokens**. Security policies are injected only on implement, verify, and ADR skills.
+1. **Mandatory Bootstrap Slicing**: Universal bootstrap (`core-policies.md` [Purpose, Normative Rules]) consumes only **~366 tokens**. Security policies are injected only on implement, verify, and ADR skills.
 2. **Task-Scoped Implementation (`--task T-NNN`)**: Context compilation loads only the active task and direct dependencies, omitting massive whole-feature `tasks.md` graphs.
 3. **Session Auto-Delta Caching**: The engine calculates a SHA-256 fingerprint of compiled payloads and accumulates it across skills in the same session. Subsequent `context-load` calls omit unchanged files and already-loaded H2 sections unless `--full` is explicitly passed. `/spec-plan` therefore does not re-inject bootstrap or overlapping artifacts already loaded by `/spec-requirements` **in the same uncompacted chat**. After compact or a new chat on the same feature, pass `--full` once so skipped files return to the live window. The compiler cannot detect compact or a new chat; `session-end` does not clear hashes. See [MEMORY.md](MEMORY.md#conversation-vs-feature-session-compact-and-new-chat).
 4. **Bounded Retrieval & Secret Redaction**: Keyword-triggered local code searches and domain packs are capped at `max_retrieval_files: 4` and `max_source_excerpt_tokens: 400`. Profiles `bootstrap`, `verify`, and `compact` set `retrieval_files: 0` and skip automatic local retrieval. All excerpts pass through automatic regex secret redaction.

@@ -18,11 +18,18 @@ done
 source_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 manifest="$source_dir/manifest.json"
 [[ -f "$manifest" ]] || err "manifest.json not found"
-command -v python3 >/dev/null || err "python3 is required"
-python3 -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 10) else 1)' || err "python3.10 or newer is required"
+PYTHON=""
+for candidate in python3.12 python3.11 python3.10 python3; do
+  command -v "$candidate" >/dev/null 2>&1 || continue
+  if "$candidate" -c 'import sys; raise SystemExit(0 if sys.version_info >= (3, 10) else 1)'; then
+    PYTHON="$candidate"
+    break
+  fi
+done
+[[ -n "$PYTHON" ]] || err "python3.10 or newer is required"
 
 # Preflight: validate manifest shape and path safety before any target mutation.
-python3 - "$manifest" "$source_dir" <<'PY' || err "manifest preflight failed"
+"$PYTHON" - "$manifest" "$source_dir" <<'PY' || err "manifest preflight failed"
 import glob, json, sys
 from pathlib import Path
 
@@ -64,7 +71,7 @@ if errors:
 PY
 
 if $dry_run; then
-  target="$(python3 - "$target" <<'PY'
+  target="$("$PYTHON" - "$target" <<'PY'
 from pathlib import Path
 import sys
 print(Path(sys.argv[1]).expanduser().resolve())
@@ -101,7 +108,7 @@ copy_file() {
 
 copy_group() {
   local group="$1" mode="$2"
-  python3 - "$manifest" "$group" "$source_dir" <<'PY' | while IFS= read -r rel; do
+  "$PYTHON" - "$manifest" "$group" "$source_dir" <<'PY' | while IFS= read -r rel; do
 import glob, json, sys
 from pathlib import Path
 manifest, group, source = sys.argv[1:]
@@ -118,7 +125,7 @@ PY
 
 copy_skills_to_agent() {
   [[ -d "$source_dir/skills" ]] || err "skills directory not found"
-  python3 - "$source_dir" <<'PY' | while IFS= read -r rel; do
+  "$PYTHON" - "$source_dir" <<'PY' | while IFS= read -r rel; do
 import sys
 from pathlib import Path
 source = Path(sys.argv[1])
@@ -131,12 +138,12 @@ PY
   done
 }
 
-manifest_version="$(python3 - "$manifest" <<'PY'
+manifest_version="$("$PYTHON" - "$manifest" <<'PY'
 import json, sys
 print(json.loads(open(sys.argv[1], encoding="utf-8").read())["version"])
 PY
 )"
-overwrite_count="$(python3 - "$manifest" "$source_dir" <<'PY'
+overwrite_count="$("$PYTHON" - "$manifest" "$source_dir" <<'PY'
 import glob, json, sys
 from pathlib import Path
 manifest, source = sys.argv[1:]
@@ -146,7 +153,7 @@ print(sum(1 for item in items for raw in glob.glob(str(Path(source) / item), rec
           and not Path(raw).name.endswith((".pyc", ".pyo")) and not Path(raw).name.startswith("test_")))
 PY
 )"
-preserved_count="$(python3 - "$manifest" "$source_dir" "$target" <<'PY'
+preserved_count="$("$PYTHON" - "$manifest" "$source_dir" "$target" <<'PY'
 import glob, json, sys
 from pathlib import Path
 manifest, source, target = sys.argv[1:]
@@ -158,7 +165,7 @@ print(sum(1 for item in items for raw in glob.glob(str(Path(source) / item), rec
 PY
 )"
 
-agent_skill_count="$(python3 - "$source_dir" <<'PY'
+agent_skill_count="$("$PYTHON" - "$source_dir" <<'PY'
 import sys
 from pathlib import Path
 source = Path(sys.argv[1])
@@ -174,7 +181,7 @@ copy_group copyIfMissing seed
 copy_skills_to_agent
 if ! $dry_run; then
   chmod +x "$target/corebase-specharness/scripts/install.sh" "$target/corebase-specharness/scripts/validate-static-audit.py"
-  python3 "$target/corebase-specharness/scripts/core/cli.py" doctor --root "$target" --json >/dev/null
+  "$PYTHON" "$target/corebase-specharness/scripts/core/cli.py" doctor --root "$target" --json >/dev/null
 fi
 log "Installed embedded runtime: python3 corebase-specharness/scripts/core/cli.py"
 log "Upgrade report: refreshed $overwrite_count kit-owned files; preserved $preserved_count adopter-owned seeds."

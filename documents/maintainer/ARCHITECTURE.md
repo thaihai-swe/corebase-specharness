@@ -137,7 +137,7 @@ upward. If the hint is a file, it starts from that file's parent.
   AGENTS.md
   EXTERNAL_SKILLS.md
   skills/
-    _shared/                 status template, handoff/artifact rules
+    _shared/                 3 contracts + status-template.md
     <skill>/SKILL.md         11 peer skills
     <skill>/references/      skill-local templates (overwrite-owned)
   references/
@@ -146,7 +146,6 @@ upward. If the hint is a file, it starts from that file's parent.
   artifacts/features/<slug>/
   corebase-specharness/
     CONTEXT_AND_MEMORY.md
-    MASTER_INDEX.md          adopter-owned after first seed
     scripts/
       install.sh
       validate-static-audit.py
@@ -155,7 +154,7 @@ upward. If the hint is a file, it starts from that file's parent.
         context_engine.py
         context_state.py
         task_graph.py
-        _lib/                artifacts, contracts, routing, yaml, tokens
+        _lib/                artifacts, routing, yaml, tokens
         handlers/            command implementations
         harness/             config, lifecycle, readiness, doctor, gates
     project/
@@ -169,7 +168,7 @@ upward. If the hint is a file, it starts from that file's parent.
       repo/                  policies, heuristics, PKB, ADR log
       domain/<name>/         glossary + patterns
       archive/
-    rules/                   caveman, security, code-design, ...
+    rules/                   security, code-design, ...
 .corebase-specharness/
   sessions/<slug>/           session.md
 ```
@@ -178,7 +177,7 @@ Installed scripts are `core/`, `install.sh`, and `validate-static-audit.py`. Art
 structure and traceability live in `corebase-specharness/scripts/core/_lib/artifact_schema.py`.
 
 Source-repo extras that are **not** the installed payload: `documents/`,
-repo-root `tests/` if present, `.github/`, `product-page/`, `scripts/`.
+`.github/`, `product-page/`.
 
 ### 2.2 Component responsibilities
 
@@ -211,7 +210,7 @@ cli.py
        ├─ handlers/sessions.py      session-start/checkpoint/end
        ├─ handlers/context.py       context-pack/load/explain
        ├─ handlers/tasks.py         task-check/start/done/block
-       ├─ handlers/diagnostics/     gates, providers, memory, adr
+       ├─ handlers/diagnostics/     gates, providers, memory, adr, evals
        └─ harness/doctor.py         package health
               │
               ▼
@@ -225,7 +224,6 @@ cli.py
        _lib/artifacts.py      slug + feature dir + status parse
        _lib/routing_metadata.py
        _lib/artifact_schema.py
-       _lib/contracts.py
        _lib/doctor_checks.py
 ```
 
@@ -248,7 +246,7 @@ a strictly budgeted, verifiable context pack for each skill invocation.
 
 ```text
 Compilation Sequence:
-1. Universal Bootstrap: caveman.md (Must) + core-policies.md (Must)
+1. Universal Bootstrap: core-policies.md (Must)
 2. Route-Declared Sources: context-routes.yaml (Must / Should tiers)
 3. Feature Artifacts: status.md (Must) + spec.md / plan.md (Route declared)
 4. Active Task Excerpt: Extracted task block when --task T-NNN is supplied
@@ -664,14 +662,10 @@ Source-repo CI additionally verifies:
 - `python3 -m compileall -q kit/corebase-specharness/scripts/core`
 - static audit validator against `kit/` (`validate-static-audit.py`)
 - `doctor --root kit`
-- product-page validator (`scripts/validate-product-page.py`)
-- source-repo `python3 -m unittest discover -s tests -v`
 - clean install smoke (`context-load --skill starter-init`, provider
   list/check/run, assert removed commands `context-index` and `task-next`
   stay gone)
 
-Source-repo `tests/` is stdlib `unittest`. It is not copied into adopter
-trees. The installer skips `test_*` basenames. There is no pytest step.
 See [RELEASING.md](RELEASING.md).
 
 ---
@@ -790,6 +784,7 @@ entry. This includes `artifacts/features/` and `.corebase-specharness/` sessions
 
 - Usage and operating notes: [WORKFLOW.md](WORKFLOW.md)
 - Skill catalog: [SKILLS.md](SKILLS.md)
+- Solution-architecture review and evolutionary suggestions: [DEEP-DIVE-REVIEW.md](DEEP-DIVE-REVIEW.md)
 - Design thesis: [DESIGN.md](DESIGN.md)
 - As-built requirements: [SPEC-REQUIREMENTS.md](SPEC-REQUIREMENTS.md)
 - Memory and budgets: [MEMORY.md](MEMORY.md)

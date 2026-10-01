@@ -1,0 +1,25 @@
+{
+  "id": "case_003_traceability_contract",
+  "skill": "spec-tasks",
+  "description": "Bidirectional AC-to-task linkage with TDD proof commands on each task.",
+  "intent": "sequence oauth2 login tasks",
+  "artifacts": {
+    "status.md": "# Feature Status: eval-oauth-login\n\n- Phase: `PlanApproved`\n- Delivery profile: `Simple`\n- Status: `Active`\n- Active task: `None`\n- Next step: `/spec-implement`\n",
+    "spec.md": "# Feature Specification\n\n## Metadata\n- Feature: `eval-oauth-login`\n- Profile: `Simple`\n- Status: `Approved`\n\n## Problem Statement\n- Users cannot sign in with an existing identity provider.\n\n## Acceptance Criteria\n- `AC-001`: Completing Google OAuth2 creates an authenticated session.\n- `AC-002`: Cancelling consent leaves the user unauthenticated.\n",
+    "plan.md": "# Implementation Plan\n\n## Metadata\n- Feature/profile: eval-oauth-login / Simple\n- Status: Approved\n\n## Approach\n- Public seams: `OAuthClient.exchange` and `SessionStore.put`.\n",
+    "tasks.md": "# Tasks\n\n## Metadata\n- Feature/profile: eval-oauth-login / Simple\n- Plan approved date: 2026-09-06\n\n## Tasks\n\n- [ ] T-001 Target — implement OAuth code exchange\n  - Covers: `AC-001`\n  - Depends on:\n  - Proof: python3 -m pytest tests/test_oauth_exchange.py -q\n  - Evidence:\n\n- [ ] T-002 Target — preserve unauthenticated state on cancelled consent\n  - Covers: `AC-002`\n  - Depends on: `T-001`\n  - Proof: python3 -m pytest tests/test_oauth_cancel.py -q\n  - Evidence:\n"
+  },
+  "rubric": {
+    "required_files": ["status.md", "spec.md", "plan.md", "tasks.md"],
+    "required_headings": {
+      "tasks.md": ["## Metadata", "## Tasks"]
+    },
+    "must_contain": {
+      "tasks.md": ["T-001", "T-002", "AC-001", "AC-002", "Proof:"]
+    },
+    "forbidden": {
+      "tasks.md": ["Covers: all ACs", "Proof: none"]
+    },
+    "require_traceability": true
+  }
+}

@@ -19,30 +19,24 @@
 - Preserved behavior:
 
 ## User Stories & Journeys (Moderate/Complex)
-<!-- Prioritize as independently testable user journeys (P1, P2, P3...). P1 is MVP. -->
 
-### User Story 1 - [Brief Title] (Priority: P1) 🎯 MVP
-- Description: [Describe this user journey in plain language]
-- Why this priority: [Value delivered by this slice]
-- Independent Test: [How to verify this story works on its own without other stories]
-- Acceptance Scenarios:
-  1. Given [initial state], When [action], Then [expected outcome]
+Prioritize independently testable journeys. P1 is MVP.
+
+### User Story 1 - [Brief Title] (Priority: P1) MVP
+- Description:
+- Why this priority:
+- Independent Test:
+- Linked ACs: `AC-001`
 
 ### User Story 2 - [Brief Title] (Priority: P2)
-- Description: [Describe this user journey in plain language]
-- Why this priority: [Value delivered by this slice]
-- Independent Test: [How to verify this story works on its own]
-- Acceptance Scenarios:
-  1. Given [initial state], When [action], Then [expected outcome]
-
-## Requirements (Moderate/Complex)
-- `REQ-001`: requirement; rationale; priority (`Must|Should|Could`); validation surface; linked story (`US1`, `US2`, ...).
+- Description:
+- Why this priority:
+- Independent Test:
+- Linked ACs: `AC-002`
 
 ## Acceptance Criteria
-- `AC-001`: Given/When/Then or observable result; linked `REQ-*`/scenario; proof command.
-
-## Success Criteria (Measurable Outcomes)
-- `SC-001`: Technology-agnostic, user/business outcome metric (e.g., user flow completes in <2 min, zero data loss on failure).
+- `AC-001`: Given/When/Then or observable result; proof command.
+- `AC-002`: Given/When/Then or observable result; proof command.
 
 ## Constraints and Risk
 - Constraints:
@@ -51,7 +45,7 @@
 - Open questions (blocking only):
 
 ## Compact Simple Checklist
-Use for Simple only; omit full requirements sections.
+Use for Simple only; omit unused sections above.
 - Problem:
 - `AC-001` expected result:
 - Expected files/components:

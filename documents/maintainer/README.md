@@ -27,6 +27,7 @@ as lookup.
 | [OVERVIEW.md](OVERVIEW.md) | Product promise, package facts, and boundaries |
 | [INSTALL.md](INSTALL.md) | Install, ownership lists, backup, upgrade, `init` vs installer |
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Installed topology, subsystem design, control flows, and technical roadmap |
+| [DEEP-DIVE-REVIEW.md](DEEP-DIVE-REVIEW.md) | Solution-architecture deep dive of skills, memory, context, and workflow, plus evolutionary suggestions |
 | [DESIGN.md](DESIGN.md) | Why the kit is shaped this way; as-built design thesis |
 | [SPEC-REQUIREMENTS.md](SPEC-REQUIREMENTS.md) | Normative as-built requirements implied by the runtime |
 | [WORKFLOW.md](WORKFLOW.md) | Usage guide, 6-phase lifecycle, transition graph, and command map |

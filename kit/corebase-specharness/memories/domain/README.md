@@ -21,7 +21,7 @@ corebase-specharness/memories/domain/
     spec.md (optional) — canonical REQ/AC contract
 ```
 
-When `context-load` or `session-start` receives an `--intent`, CoreBase SpecHarness matches its keywords against `triggers:` in each nested pack's `glossary.md` frontmatter to decide which packs to load. `corebase-specharness/MASTER_INDEX.md` documents routing but does not select packs.
+When `context-load` or `session-start` receives an `--intent`, CoreBase SpecHarness matches its keywords against `triggers:` in each nested pack's `glossary.md` frontmatter to decide which packs to load. `corebase-specharness/CONTEXT_AND_MEMORY.md` documents routing but does not select packs.
 
 ## File Schema
 

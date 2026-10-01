@@ -12,18 +12,14 @@ triggers: ['plan', 'design', 'architecture', 'technical design']
 | | |
 |---|---|
 | **Reads** | `architecture.md`, `code-design.md`, `spec.md`, `status.md` |
-| **Writes** | Required: `plan.md`. Optional: `status.md` |
+| **Writes** | Required: `plan.md`. Optional: `status.md` (`Planning`) |
 | **Key CLI** | `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-plan --feature <slug> --intent "<request>"`, `python3 corebase-specharness/scripts/core/cli.py skill-exit --skill spec-plan --feature <slug> --handoff spec-tasks` |
-| **Entry** | Direct peer skill; handoff may suggest `/spec-tasks` |
+| **Handoff** | `/spec-tasks` |
+| **Session** | `.corebase-specharness/sessions/<slug>/session.md` |
 
 ## Overview
 
-Turn approved `spec.md` into `plan.md`: module map, seams, dependency direction, complexity tracking, proof strategy. `/spec-tasks` derives the graph from this design.
-
-## When to Use & Invocation Triggers
-
-- **When to Use**: technical design for approved spec; component mapping; re-plan after a structural flaw.
-- **Triggers**: `plan`, `design`, `architecture`, `technical design`
+Turn approved `spec.md` into `plan.md`: module map, seams, dependency direction, complexity tracking, proof strategy. `/spec-tasks` derives the graph from this design. Use for technical design of an approved spec, component mapping, or re-planning after a structural flaw.
 
 ## Execution Modes & Profiles
 
@@ -33,17 +29,11 @@ Turn approved `spec.md` into `plan.md`: module map, seams, dependency direction,
 | `moderate-plan` | `Moderate` | Full design, module map, risk mitigation |
 | `complex-plan` | `Complex` | Full design + complexity tracking; halt to `/spec-research` if risk unverified |
 
-## I/O & Artifact Protocol
-
-- **Reads**: `spec.md`, `status.md`, `architecture.md`, `code-design.md`.
-- **Writes**: `plan.md`; `status.md` (`Planning`).
-- **Session**: `.corebase-specharness/sessions/<slug>/session.md`.
-
 ## Step-by-Step Execution Workflow
 
 1. **Pre-flight**:
    - `python3 corebase-specharness/scripts/core/cli.py skill-enter --skill spec-plan --feature <slug> --intent "<request>"`.
-   - Omit `--full` unless compacted, new chat on existing feature, reload requested, or pack stale. See `skills/_shared/context-loading.md`.
+   - Pass `--full` only when reloading. See `skills/_shared/context-protocol.md`.
    - Do not hand-edit `- Phase:`.
 
 2. **Author**:
