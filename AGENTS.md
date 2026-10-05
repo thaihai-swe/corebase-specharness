@@ -1,6 +1,8 @@
 
 ## 0. Priority Rules
 
+- Write all non-code output and code comments using ASD-STE100 principles: short, direct, unambiguous sentences with consistent technical terminology.
+  
 These rules override all other instructions when they conflict.
 
 **Language convention:**
