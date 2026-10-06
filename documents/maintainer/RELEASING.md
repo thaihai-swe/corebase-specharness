@@ -119,7 +119,7 @@ corebase-specharness-kit-vX.Y.Z.tar.gz
   AGENTS.md
   EXTERNAL_SKILLS.md
   skills/
-  references/
+  corebase-specharness/references/
   corebase-specharness/scripts/core/
   corebase-specharness/scripts/install.sh
   corebase-specharness/scripts/validate-*.py

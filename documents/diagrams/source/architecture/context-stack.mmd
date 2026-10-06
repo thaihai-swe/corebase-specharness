@@ -12,7 +12,7 @@ flowchart TB
 
     T1["Layer 1 — Portable Entrypoint<br/>AGENTS.md · skills/&lt;name&gt;/SKILL.md<br/>optional .agent/skills/&lt;name&gt; mirror<br/><em>Operating contract and selected procedure</em>"]:::host
     T2["Layer 2 — Mandatory Bootstrap<br/>corebase-specharness/memories/repo/core-policies.md sections<br/><em>Must sources</em>"]:::core
-    T3["Layer 3 — Named Route Sources<br/>references/context-routes.yaml<br/>project files · rules · durable memory · domain packs<br/><em>Must / Should files and H2 sections</em>"]:::core
+    T3["Layer 3 — Named Route Sources<br/>corebase-specharness/references/context-routes.yaml<br/>project files · rules · durable memory · domain packs<br/><em>Must / Should files and H2 sections</em>"]:::core
     T4["Layer 4 — Feature and Session Evidence<br/>artifacts/features/&lt;slug&gt;/ route-declared files<br/>.corebase-specharness/sessions/&lt;slug&gt;/session.md · active T-NNN excerpt<br/>session.md last_context_fingerprint + last_context_slices<br/>auto-delta skips unchanged files and H2 sections unless --full<br/>--full after compact or new chat on the same feature<br/><em>Loaded when the named route and feature require it</em>"]:::memory
     T5["Layer 5 — Retrieved Repository Evidence<br/>bounded matching excerpts from configured roots<br/><em>Intent + feature + task; exclusions and size limits applied</em>"]:::external
     T6["Layer 6 — Transient Tool Evidence<br/>command output · tests · provider results · subagent summaries<br/><em>Summarize into proof or handoff; do not bulk-inject</em>"]:::optional

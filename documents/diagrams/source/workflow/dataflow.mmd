@@ -41,7 +41,7 @@ flowchart LR
     TRIAGE --> DOMAIN["corebase-specharness/memories/domain/&lt;name&gt;/<br/>patterns and boundaries"]:::external
     TRIAGE --> POLICY["corebase-specharness/memories/repo/<br/>core-policies.md"]:::gate
 
-    ROUTES["references/context-routes.yaml<br/>named-route source declarations"]:::core
+    ROUTES["corebase-specharness/references/context-routes.yaml<br/>named-route source declarations"]:::core
     LOAD["skill-enter / context-load / context-explain<br/>bounded route compilation at runtime"]:::core
     ROUTES --> LOAD
     HEUR -.->|included only when declared| LOAD

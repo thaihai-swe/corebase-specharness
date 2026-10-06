@@ -2,7 +2,7 @@
 
 > **Audience:** adopters, developers, coding agents, platform engineers, and maintainers
 > **Status:** matches `kit/` as of this edit; definitive operating guide and workflow reference
-> **Authority:** `kit/skills/*/SKILL.md`, `kit/references/context-routes.yaml`,
+> **Authority:** `kit/skills/*/SKILL.md`, `kit/corebase-specharness/references/context-routes.yaml`,
 > `kit/corebase-specharness/project/state-machine.yaml`, `kit/corebase-specharness/scripts/core/`
 
 CoreBase SpecHarness is a **local, spec-driven delivery workflow**, not a library, a server,
@@ -21,17 +21,16 @@ After installation, an adopter repository contains:
 ```text
 your-repo/
 ├── AGENTS.md                          portable agent router
-├── manifest.json                      kit ownership and version identity
 ├── skills/
 │   ├── _shared/                       lifecycle, artifact, context contracts + status template
 │   └── <name>/SKILL.md                11 direct peer skill procedures
-├── references/
-│   ├── context-routes.yaml            skill routing authority
-│   └── tool-providers-registry.json   optional provider registry
 ├── artifacts/features/<slug>/         durable feature evidence
 ├── .corebase-specharness/
 │   ├── sessions/<slug>/               ephemeral session state
 └── corebase-specharness/
+    ├── references/
+    │   ├── context-routes.yaml        skill routing authority
+    │   └── tool-providers-registry.json optional provider registry
     ├── scripts/core/cli.py            embedded Python runtime & harness
     ├── project/                       adopter project config & architecture
     ├── memories/                      durable project memory (repo & domain)
@@ -319,7 +318,7 @@ python3 corebase-specharness/scripts/core/cli.py skill-enter   --skill spec-plan
 ```
 
 `skill-enter` performs four operations:
-1. Loads the route definition from `references/context-routes.yaml`.
+1. Loads the route definition from `corebase-specharness/references/context-routes.yaml`.
 2. Ensures `status.md` exists (defaulting delivery profile to `Moderate`) and writes the enter state.
 3. Opens or resumes `.corebase-specharness/sessions/<slug>/session.md`.
 4. Compiles and loads the bounded context pack for that skill.
@@ -629,7 +628,7 @@ Replaced on upgrade after backup. Do not customize in place:
 ```text
 corebase-specharness/scripts/core/**
 skills/**
-references/context-routes.yaml
+corebase-specharness/references/context-routes.yaml
 corebase-specharness/project/state-machine.yaml
 corebase-specharness/rules/**
 AGENTS.md

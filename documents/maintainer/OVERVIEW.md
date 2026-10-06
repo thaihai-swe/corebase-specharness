@@ -106,7 +106,7 @@ Otherwise tell it to read `skills/<name>/SKILL.md` and follow that procedure.
 | Skill catalog | 11 direct peer skills plus `_shared` guidance |
 | Deterministic CLI | 28 commands covering session, context, status, task, artifact, verification, gate, provider, memory, ADR, and evals |
 | Lifecycle state | Feature tokens in `status.md`; kit-owned `state-machine.yaml` |
-| Context routing | `references/context-routes.yaml`, profile payloads, and inspectable packs |
+| Context routing | `corebase-specharness/references/context-routes.yaml`, profile payloads, and inspectable packs |
 | Memory | Repository memory, domain packs, session state, and line-audit thresholds |
 | Verification | Artifact structure/traceability, confirmed gates, inline verification, and doctor |
 | Optional integrations | Local tool providers selected in `tool-providers.md` |

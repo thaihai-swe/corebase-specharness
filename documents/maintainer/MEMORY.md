@@ -2,7 +2,7 @@
 
 > **Audience:** platform engineers, adopter maintainers, coding agents
 > **Status:** matches `kit/` as of this edit
-> **Authority:** `kit/references/context-routes.yaml`,
+> **Authority:** `kit/corebase-specharness/references/context-routes.yaml`,
 > `kit/corebase-specharness/scripts/core/context_engine.py`,
 > `kit/corebase-specharness/project/harness-config.yaml`,
 > `kit/corebase-specharness/scripts/core/handlers/diagnostics/memory.py`
@@ -28,7 +28,7 @@ auto-promote memory.
 
 ## Context routing
 
-`references/context-routes.yaml` is the only context-routing authority. Every
+`corebase-specharness/references/context-routes.yaml` is the only context-routing authority. Every
 context compilation requires an explicit `--skill`. There is no compiled
 context index and no phase-only fallback.
 
@@ -167,7 +167,7 @@ overflow. Real token savings come from:
 1. **Task-scoped implement turns**: `spec-implement` calls `task-check`,
    locks `task-start`, then reloads `context-load --task T-NNN`. The compiler
    omits full `tasks.md` and passes only the active task and direct dependencies.
-2. **Route section slices**: `references/context-routes.yaml` slices Markdown
+2. **Route section slices**: `corebase-specharness/references/context-routes.yaml` slices Markdown
    sources to specific H2 `sections:` instead of injecting full documents.
 3. **Session auto-delta**: omitting `--full` in the same uncompacted chat
    lets `last_context_fingerprint` / `last_context_slices` in `session.md`

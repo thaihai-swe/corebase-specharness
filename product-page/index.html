@@ -802,7 +802,7 @@ cd /path/to/project</code></pre>
                         <div class="arch-box">
                             <span class="arch-layer">Layer 2</span>
                             <h4>System Contracts (Declarative YAML/JSON)</h4>
-                            <p class="arch-path"><code>references/context-routes.yaml</code> +
+                            <p class="arch-path"><code>corebase-specharness/references/context-routes.yaml</code> +
                                 <code>state-machine.yaml</code>
                             </p>
                             <p>Single source of truth for routing, prerequisites, artifact schemas, and lifecycle state
@@ -889,7 +889,7 @@ cd /path/to/project</code></pre>
                                 <p>11 peer-level skill procedures in <code>skills/</code>, an overwrite mirror at
                                     <code>.agent/skills/</code> for standard agent discovery, shared behavioral rules in
                                     <code>skills/_shared/</code>, and the central routing authority
-                                    <code>references/context-routes.yaml</code>. The CLI still reads
+                                    <code>corebase-specharness/references/context-routes.yaml</code>. The CLI still reads
                                     <code>skills/</code>. Optional specialist guides live in
                                     <code>EXTERNAL_SKILLS.md</code>.
                                 </p>
@@ -978,7 +978,7 @@ cd /path/to/project</code></pre>
                     <h3>The 8-Step Context Compilation Pipeline</h3>
                     <p>Rather than dumping entire codebases into prompts, <code>context_engine.py</code> dynamically
                         builds a bounded, verifiable context pack for each skill invocation using the single routing
-                        authority in <code>references/context-routes.yaml</code>. Session auto-delta unions
+                        authority in <code>corebase-specharness/references/context-routes.yaml</code>. Session auto-delta unions
                         <code>last_context_fingerprint</code> and <code>last_context_slices</code> from
                         <code>session.md</code> <strong>before</strong> budget math unless <code>--full</code> is
                         passed:
@@ -988,7 +988,7 @@ cd /path/to/project</code></pre>
                         <div class="pipe-step"><strong>1. Universal Bootstrap:</strong> Universal core
                             policies (<code>core-policies.md</code>) loaded as Must.</div>
                         <div class="pipe-step"><strong>2. Route Sources:</strong> Declarative files and H2 sections from
-                            <code>references/context-routes.yaml</code>.
+                            <code>corebase-specharness/references/context-routes.yaml</code>.
                         </div>
                         <div class="pipe-step"><strong>3. Feature Evidence:</strong> <code>status.md</code>,
                             <code>spec.md</code>, <code>plan.md</code>, and other route-declared feature files.
@@ -1285,7 +1285,7 @@ cd /path/to/project</code></pre>
 
                 <div class="section-card">
                     <h3>Comprehensive Skill Routing Matrix</h3>
-                    <p>Direct contract from <code>references/context-routes.yaml</code>. Context profiles determine
+                    <p>Direct contract from <code>corebase-specharness/references/context-routes.yaml</code>. Context profiles determine
                         token payload budgets: <code>bootstrap: 2500</code>, <code>research: 4000</code>,
                         <code>requirements: 3500</code>, <code>planning: 3500</code>, <code>implement: 4000</code>,
                         <code>verify: 3500</code>, <code>compact: 2500</code>.
@@ -1960,11 +1960,11 @@ gates:
                             <tbody>
                                 <tr>
                                     <td><strong><code>files.overwrite</code></strong> (kit-owned)</td>
-                                    <td><code>manifest.json</code>, <code>README.md</code>, <code>AGENTS.md</code>,
+                                    <td><code>README.md</code>, <code>AGENTS.md</code>,
                                         <code>EXTERNAL_SKILLS.md</code>, <code>skills/**</code> plus the
                                         <code>.agent/skills/**</code> overwrite mirror,
-                                        <code>references/context-routes.yaml</code>,
-                                        <code>references/tool-providers-registry.json</code>,
+                                        <code>corebase-specharness/references/context-routes.yaml</code>,
+                                        <code>corebase-specharness/references/tool-providers-registry.json</code>,
                                         <code>corebase-specharness/scripts/core/**</code>,
                                         <code>corebase-specharness/scripts/install.sh</code>,
                                         <code>corebase-specharness/rules/**</code>,

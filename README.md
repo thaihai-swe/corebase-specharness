@@ -196,8 +196,7 @@ Source checkout:
 │   ├── manifest.json             # Version + overwrite / copyIfMissing
 │   ├── AGENTS.md
 │   ├── skills/                   # 11 peer skills + _shared
-│   ├── references/context-routes.yaml
-│   └── corebase-specharness/     # Embedded CLI, installer, seeded project/memory
+│   └── corebase-specharness/     # Embedded CLI, references, installer, seeded project/memory
 ├── documents/                    # Maintainer docs (subordinate to kit)
 ├── product-page/                 # Public site
 └── .github/workflows/
@@ -206,15 +205,15 @@ Source checkout:
 After install, paths are adopter-relative (no `kit/` prefix):
 
 ```
-corebase-specharness/
-├── manifest.json                           # Package manifest & ownership definitions
+project-root/
 ├── AGENTS.md                               # Universal top-level agent instruction router
 ├── EXTERNAL_SKILLS.md                      # Catalog for optional external specialist skills
-├── references/
-│   ├── context-routes.yaml                 # Skill routing declarations & source mapping
-│   └── tool-providers-registry.json        # Optional provider registry
-├── skills/ & .agent/skills/                # 11 peer skills + _shared contracts
+├── README.md
+├── skills/ & .agents/skills/               # 11 peer skills + _shared contracts
 ├── corebase-specharness/
+│   ├── references/
+│   │   ├── context-routes.yaml             # Skill routing declarations & source mapping
+│   │   └── tool-providers-registry.json    # Optional provider registry
 │   ├── scripts/
 │   │   ├── core/                           # Embedded Python CLI runtime
 │   │   ├── install.sh                      # Idempotent installer & upgrader
@@ -255,7 +254,7 @@ When sources disagree, resolve in this order:
 1. Executable behavior in `kit/corebase-specharness/scripts/core/`
 2. `kit/manifest.json` (ownership and path membership)
 3. `kit/corebase-specharness/project/state-machine.yaml` and project configuration
-4. `kit/references/context-routes.yaml` (named-skill routes)
+4. `kit/corebase-specharness/references/context-routes.yaml` (named-skill routes)
 5. `kit/skills/*/SKILL.md` (agent procedure)
 6. Maintainer documentation (`documents/`), then `product-page/`
 

@@ -3,7 +3,7 @@
 > **Audience:** maintainers reviewing the as-built kit
 > **Status:** as-built, now part of maintainer docs
 > **Authority:** `kit/corebase-specharness/scripts/core/`, `kit/manifest.json`,
-> `kit/references/context-routes.yaml`, `kit/corebase-specharness/project/state-machine.yaml`,
+> `kit/corebase-specharness/references/context-routes.yaml`, `kit/corebase-specharness/project/state-machine.yaml`,
 > `kit/skills/*/SKILL.md`, `kit/corebase-specharness/scripts/install.sh`
 > **Version described:** `1.0.0` (`kit/manifest.json`)
 
@@ -84,7 +84,7 @@ with `status: deferred` and `details.verified: false`.
 | I-08 | The installer must not install dependencies, infer gates, write Git hooks, or create vendor-specific instruction files. |
 | I-09 | `--dry-run` reports planned copies without mutating the target. |
 | I-10 | `init` may create missing directories and seed files in an uninitialized tree. It must not overwrite existing adopter files. |
-| I-11 | An initialized root is a directory that contains both `manifest.json` and `corebase-specharness/scripts/core/cli.py`. Resolution walks upward from `--root` or cwd. If a candidate itself is not initialized, a nested `kit/` directory that is initialized is accepted (source-checkout maintainer usage). |
+| I-11 | An initialized root is a directory that contains `corebase-specharness/scripts/core/cli.py`. Resolution walks upward from `--root` or cwd. If a candidate itself is not initialized, a nested `kit/` directory that is initialized is accepted (source-checkout maintainer usage). |
 
 Kit-owned (`overwrite`) includes runtime, skills, shared skill references,
 routes, provider registry, rules, `state-machine.yaml`, and validators.
@@ -104,7 +104,7 @@ selection, memory seeds, and `artifacts/features/README.md`.
 | S-03 | A recommended delivery sequence exists as guidance only: research when needed, then requirements, plan, tasks, implement, verify, optional memory. |
 | S-04 | Every skill directory except `skills/_shared/` must contain `SKILL.md` with frontmatter `{id, name, description, tags, triggers}`. |
 | S-05 | `id` must be `skill-<dir>`; `name` must equal the directory name. Extra frontmatter keys fail doctor. |
-| S-06 | `references/context-routes.yaml` is the routing authority. Every skill must have exactly one route, and every route must name a shipped skill. |
+| S-06 | `corebase-specharness/references/context-routes.yaml` is the routing authority. Every skill must have exactly one route, and every route must name a shipped skill. |
 | S-07 | Every route must declare `{skill, phase, profile, feature, prerequisites, feature_artifacts, writes, handoff, sources}`. Writes are strings or `{path, required}`. `required_handoffs` is forbidden. |
 | S-08 | `feature` is `required` or `optional`. Required routes reject commands that omit `--feature`. |
 | S-09 | `phase` must be a state-machine phase. Optional `enter` / `exit` must be declared states. |
@@ -290,7 +290,7 @@ Coarse `artifact-check --phase` file sets (`PHASE_FILES` fallback):
 | G-11 | Providers are optional. Categories are `review` and `code-intelligence`. Modes are `optional` and `required`. |
 | G-12 | Active provider `none` is valid. Unknown active IDs fail the provider contract. |
 | G-13 | `verify` runs the review provider action `run`. Unconfigured optional providers are deferred, not failures. |
-| G-14 | Provider commands are argv lists from `references/tool-providers-registry.json`. CoreBase SpecHarness does not install those executables. |
+| G-14 | Provider commands are argv lists from `corebase-specharness/references/tool-providers-registry.json`. CoreBase SpecHarness does not install those executables. |
 | G-15 | Shipped registry IDs: `open-code-review`, `gitnexus`, `codebase-memory-mcp`. |
 
 ---
@@ -352,4 +352,4 @@ A reviewer can accept this specification when:
 1. Every SHALL above is traceable to a file under `kit/`.
 2. No requirement depends solely on `product-page/`.
 3. Advisory vs blocking, required writes, and single readiness evaluator match `readiness.py`, `envelope.py`, and `lifecycle.py`.
-4. The 11-skill table matches `references/context-routes.yaml`.
+4. The 11-skill table matches `corebase-specharness/references/context-routes.yaml`.

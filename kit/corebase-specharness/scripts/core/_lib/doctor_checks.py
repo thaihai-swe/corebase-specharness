@@ -20,7 +20,7 @@ SEMVER_RE = re.compile(
 def validate_manifest(root):
     root, path = Path(root), Path(root) / "manifest.json"
     if not path.is_file():
-        return ["manifest.json missing"]
+        return []
     try:
         manifest = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
@@ -53,7 +53,10 @@ def check_contracts(root):
 
 def check_manifest_overlap(root):
     root = Path(root)
-    manifest = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
+    path = root / "manifest.json"
+    if not path.is_file():
+        return []
+    manifest = json.loads(path.read_text(encoding="utf-8"))
     groups = manifest.get("files", {})
     entries = [(group, item) for group in ("overwrite", "copyIfMissing") for item in groups.get(group, [])]
     files = [str(path.relative_to(root)).replace("\\", "/") for path in root.rglob("*") if path.is_file()]

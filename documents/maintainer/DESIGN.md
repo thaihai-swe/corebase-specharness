@@ -2,7 +2,7 @@
 
 > **Audience:** maintainers reviewing the as-built kit
 > **Status:** as-built, now part of maintainer docs
-> **Authority:** `kit/corebase-specharness/scripts/core/`, `kit/references/context-routes.yaml`,
+> **Authority:** `kit/corebase-specharness/scripts/core/`, `kit/corebase-specharness/references/context-routes.yaml`,
 > `kit/corebase-specharness/project/state-machine.yaml`, `kit/skills/*/SKILL.md`
 
 This document explains *why* the kit is shaped the way it is and *how* the
@@ -27,7 +27,7 @@ Separate three things that most agent kits collapse:
 | Layer | Owner | Changes when |
 | --- | --- | --- |
 | Procedure | `skills/<name>/SKILL.md` | Humans refine how an agent should think |
-| Contract | `references/context-routes.yaml` + `state-machine.yaml` | Maintainers change what the runtime will load, require, and allow |
+| Contract | `corebase-specharness/references/context-routes.yaml` + `state-machine.yaml` | Maintainers change what the runtime will load, require, and allow |
 | Mechanics | `corebase-specharness/scripts/core/` | Maintainers change deterministic checks |
 
 The agent chooses a skill. The route says what to load and what must exist.

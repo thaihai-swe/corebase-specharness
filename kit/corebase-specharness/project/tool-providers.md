@@ -28,7 +28,7 @@ CoreBase SpecHarness supports its provider registry and recorded adapter outcome
   - `optional` (default): records unavailable providers as `deferred` without blocking verification or feature closeout.
   - `required`: blocks `verify` and fails the verification gate when the provider executable is missing, unconfigured, or returns an error.
 
-Provider IDs and supported local actions are listed in `references/tool-providers-registry.json`.
+Provider IDs and supported local actions are listed in `corebase-specharness/references/tool-providers-registry.json`.
 
 ## Review provider (OpenCodeReview)
 
@@ -82,7 +82,7 @@ Use capability intents rather than provider-specific names: concept exploration,
 
 ## Adding a provider
 
-1. Add the provider to `references/tool-providers-registry.json`.
+1. Add the provider to `corebase-specharness/references/tool-providers-registry.json`.
 2. Add setup and capability mapping guidance under `corebase-specharness/project/providers/<id>.md`.
 3. Add registry validation and an argv-safe local action to the provider handler when execution is required.
 4. Document whether the provider is optional or required and its failure behavior.

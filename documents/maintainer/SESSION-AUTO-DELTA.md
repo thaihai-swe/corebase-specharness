@@ -5,7 +5,7 @@
 > **Authority:** `kit/corebase-specharness/scripts/core/context_engine.py`,
 > `kit/corebase-specharness/scripts/core/context_state.py`,
 > `kit/corebase-specharness/scripts/core/handlers/context.py`,
-> `kit/references/context-routes.yaml`
+> `kit/corebase-specharness/references/context-routes.yaml`
 
 Session auto-delta is the context compiler's incremental loading and caching engine. It eliminates redundant prompt tokens across consecutive skills in the same feature delivery session by diffing files and Markdown H2 sections against an accumulated session baseline before enforcing budget limits.
 

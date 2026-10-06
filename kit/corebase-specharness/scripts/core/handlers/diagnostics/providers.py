@@ -13,7 +13,9 @@ VALID_MODES = {"optional", "required"}
 
 
 def _registry(root):
-    path = Path(root) / "references/tool-providers-registry.json"
+    path = Path(root) / "corebase-specharness/references/tool-providers-registry.json"
+    if not path.is_file():
+        path = Path(root) / "references/tool-providers-registry.json"
     try:
         data = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:

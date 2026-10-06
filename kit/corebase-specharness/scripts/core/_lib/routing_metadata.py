@@ -6,7 +6,9 @@ WRITE_OBJECT_KEYS = {"path", "required"}
 
 
 def load_routes(root):
-    path = Path(root) / "references" / "context-routes.yaml"
+    path = Path(root) / "corebase-specharness" / "references" / "context-routes.yaml"
+    if not path.is_file():
+        path = Path(root) / "references" / "context-routes.yaml"
     if not path.is_file():
         return {}
     data = load_yaml(str(path)) or {}

@@ -3,7 +3,7 @@
 > **Audience:** adopters, developers, coding agents, and maintainers
 > **Status:** matches `kit/` as of this edit
 > **Authority:** `kit/skills/*/SKILL.md`, `kit/skills/_shared/`,
-> `kit/references/context-routes.yaml`
+> `kit/corebase-specharness/references/context-routes.yaml`
 
 ## Skill model
 
@@ -21,7 +21,7 @@ Skills are Markdown procedures, not Python plugins. The Python CLI supplies
 deterministic context, session, task, artifact, gate, provider, memory, and
 ADR operations.
 
-`references/context-routes.yaml` is the only routing authority. It contains
+`corebase-specharness/references/context-routes.yaml` is the only routing authority. It contains
 exactly one route for each shipped skill.
 
 `corebase-specharness/project/state-machine.yaml` owns lifecycle tokens.
@@ -47,7 +47,7 @@ Canonical human contracts live in `skills/_shared/lifecycle-contracts.md`,
 ## Shipped skills
 
 Phase, profile, feature requirement, prerequisites, writes, enter/exit, and
-handoffs come from `references/context-routes.yaml`. Triggers come from each
+handoffs come from `corebase-specharness/references/context-routes.yaml`. Triggers come from each
 skill's frontmatter. `status.md` is never a required write.
 
 | Skill | Route | Enter → exit | Required write | Prerequisites | Triggers | Suggested handoff |
@@ -468,7 +468,7 @@ A new direct skill requires coordinated kit changes:
    procedure.
 2. Add only skill-specific references beneath its directory; place genuinely
    cross-skill contracts under `kit/skills/_shared/`.
-3. Add a route to `kit/references/context-routes.yaml`.
+3. Add a route to `kit/corebase-specharness/references/context-routes.yaml`.
 4. Add the skill path to `manifest.json` under `files.overwrite`.
 5. Update `kit/skills/README.md` and this catalog.
 6. Run skill consistency, static audit, doctor, and Python compilation checks.

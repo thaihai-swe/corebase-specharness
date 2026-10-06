@@ -15,7 +15,7 @@ promote memory. A user request becomes a named-skill `skill-enter`: route
 lookup, session open, then a budgeted context pack. Shared procedure
 contracts live in `skills/_shared/`.
 
-Authorities: `skills/<name>/SKILL.md`, `references/context-routes.yaml`,
+Authorities: `skills/<name>/SKILL.md`, `corebase-specharness/references/context-routes.yaml`,
 `corebase-specharness/project/state-machine.yaml` (extended via
 `lifecycle_overrides`), `artifacts/features/<slug>/` (`tasks.md` canonical;
 `tasks.json` generated sidecar).
@@ -31,7 +31,7 @@ Intent-matched domain packs (`glossary.md` `triggers`) join the pack as
 When a user submits a prompt or invokes a skill (e.g. `/spec-plan`):
 
 1. **Route Selection & Entry (`skill-enter`)**:
-   Resolves the skill route from `references/context-routes.yaml`, verifies required preconditions, updates `status.md`, and initializes or resumes `.corebase-specharness/sessions/<slug>/session.md`.
+   Resolves the skill route from `corebase-specharness/references/context-routes.yaml`, verifies required preconditions, updates `status.md`, and initializes or resumes `.corebase-specharness/sessions/<slug>/session.md`.
 
 2. **Context Compilation (`context_engine.py`)**:
    Gathers mandatory bootstrap policies (`core-policies.md`), route-declared files, active feature artifacts, task-specific excerpts, matching domain packs, and bounded local search excerpts.

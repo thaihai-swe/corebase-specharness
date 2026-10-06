@@ -6,7 +6,6 @@
   "homepage": "https://github.com/thaihai-swe/CoreBase-SpecHarness",
   "files": {
     "overwrite": [
-      "manifest.json",
       "AGENTS.md",
       "EXTERNAL_SKILLS.md",
       "skills/README.md",
@@ -22,8 +21,8 @@
       "skills/spec-tasks/**",
       "skills/spec-testing-scenario/**",
       "skills/starter-init/**",
-      "references/context-routes.yaml",
-      "references/tool-providers-registry.json",
+      "corebase-specharness/references/context-routes.yaml",
+      "corebase-specharness/references/tool-providers-registry.json",
       "corebase-specharness/scripts/core/**",
       "corebase-specharness/scripts/install.sh",
       "corebase-specharness/rules/**",

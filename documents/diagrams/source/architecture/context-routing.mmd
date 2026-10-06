@@ -1,10 +1,10 @@
 flowchart TD
     %% CoreBase SpecHarness Context Routing — implementation authority:
-    %% ARCHITECTURE.md §3.2 / §4.4, context_engine.py, references/context-routes.yaml
+    %% ARCHITECTURE.md §3.2 / §4.4, context_engine.py, corebase-specharness/references/context-routes.yaml
     %% Palette: documents/diagrams/source/_shared/palette.md
 
     START(["skill-enter / context-pack / context-load / context-explain<br/>--skill &lt;name&gt;"]):::terminal
-    START --> REGISTRY["references/context-routes.yaml<br/>canonical registry for 11 named skill routes"]:::core
+    START --> REGISTRY["corebase-specharness/references/context-routes.yaml<br/>canonical registry for 11 named skill routes"]:::core
     REGISTRY --> RESOLVE{Known skill route?}:::decision
     RESOLVE -->|No| ERROR["Fail: unknown route"]:::fail
     RESOLVE -->|Yes| FEATURE{Route feature requirement}:::decision

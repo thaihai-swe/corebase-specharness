@@ -2,8 +2,8 @@
 
 > **Audience:** adopters, maintainers, platform engineers, and automation agents
 > **Status:** matches `kit/` as of this edit
-> **Authority:** `kit/manifest.json`, `kit/references/context-routes.yaml`,
-> `kit/references/tool-providers-registry.json`,
+> **Authority:** `kit/manifest.json`, `kit/corebase-specharness/references/context-routes.yaml`,
+> `kit/corebase-specharness/references/tool-providers-registry.json`,
 > `kit/corebase-specharness/project/harness-config.yaml`,
 > `kit/corebase-specharness/scripts/install.sh`, `kit/corebase-specharness/scripts/core/`
 
@@ -329,7 +329,7 @@ Existing adopter config is not overwritten. See [MEMORY.md](MEMORY.md).
 
 ## Skill routes
 
-`references/context-routes.yaml` is the canonical registry for all 11 direct
+`corebase-specharness/references/context-routes.yaml` is the canonical registry for all 11 direct
 skills. See [SKILLS.md](SKILLS.md) for writes, enter/exit, and handoffs.
 
 | Skill | Phase | Profile | Feature |
@@ -523,9 +523,9 @@ unless an adopter adds that check via `lifecycle_overrides`.
 ### Authoritative external inputs
 
 - `manifest.json` defines the install payload and ownership groups.
-- `references/context-routes.yaml` is the only skill context-routing
+- `corebase-specharness/references/context-routes.yaml` is the only skill context-routing
   authority.
-- `references/tool-providers-registry.json` declares supported optional
+- `corebase-specharness/references/tool-providers-registry.json` declares supported optional
   providers.
 - `corebase-specharness/project/state-machine.yaml` is the lifecycle authority.
 - `corebase-specharness/project/harness-config.yaml` defines `lifecycle_overrides`,

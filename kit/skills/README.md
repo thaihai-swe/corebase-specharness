@@ -15,7 +15,7 @@ All 11 CoreBase SpecHarness skills are peer-level direct entrypoints. `/starter-
 4. Use the named task, artifact, and verification commands while judging.
 5. Exit a feature-bound delivery skill with `python3 corebase-specharness/scripts/core/cli.py skill-exit --skill <name> --feature <slug> [--handoff <next>]`.
 
-`references/context-routes.yaml` is the only routing authority. It contains all 11 named CoreBase SpecHarness skills. There is no phase fallback and no generated routing cache.
+`corebase-specharness/references/context-routes.yaml` is the only routing authority. It contains all 11 named CoreBase SpecHarness skills. There is no phase fallback and no generated routing cache.
 
 ## Common delivery route
 

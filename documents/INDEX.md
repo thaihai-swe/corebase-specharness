@@ -26,7 +26,7 @@ When sources disagree, resolve in this order:
 1. Executable behavior in `kit/corebase-specharness/scripts/core/` and installed paths in `kit/`.
 2. `kit/manifest.json` for installed ownership and path membership.
 3. `kit/corebase-specharness/project/state-machine.yaml` and project configuration for lifecycle states, transitions, and configured behavior.
-4. `kit/references/context-routes.yaml` for named-skill routes.
+4. `kit/corebase-specharness/references/context-routes.yaml` for named-skill routes.
 5. `kit/skills/*/SKILL.md` for agent procedure.
 6. Maintainer documentation, then public-site presentation.
 

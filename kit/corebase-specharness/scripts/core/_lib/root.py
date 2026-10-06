@@ -3,10 +3,7 @@ from pathlib import Path
 
 
 def _is_embedded_root(path):
-    return (
-        (path / "manifest.json").is_file()
-        and (path / "corebase-specharness" / "scripts" / "core" / "cli.py").is_file()
-    )
+    return (path / "corebase-specharness" / "scripts" / "core" / "cli.py").is_file()
 
 
 def resolve_root(hint=None):

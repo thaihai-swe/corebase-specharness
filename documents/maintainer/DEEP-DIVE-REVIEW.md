@@ -13,7 +13,7 @@ CoreBase SpecHarness is a **deterministic governance runtime for AI-assisted sof
 Unlike standard agent tooling that relies on conversational memory, implicit prompting, or broad workspace dumping, CoreBase SpecHarness enforces an **executable specification harness**:
 1. **Contract-First Delivery:** Work proceeds through explicit artifacts (`spec.md` $\to$ `plan.md` $\to$ `tasks.md` $\to$ `review.md`).
 2. **Deterministic State Machine:** Transitions between phases (`Specifying`, `SpecApproved`, `PlanApproved`, `Implementing`, `Verifying`, `Done`) are guarded by an embedded Python engine rather than LLM self-reporting.
-3. **Budget-Bounded Context Packs:** Compiles targeted token payloads based on explicit routing declarations in `references/context-routes.yaml`, preventing model context bloat and degradation over extended sessions.
+3. **Budget-Bounded Context Packs:** Compiles targeted token payloads based on explicit routing declarations in `corebase-specharness/references/context-routes.yaml`, preventing model context bloat and degradation over extended sessions.
 
 ---
 
@@ -31,7 +31,7 @@ The catalog ships **11 peer-level direct entrypoint skills** structured around s
 - Specialized/Utility: `/spec-adr` (immutable decision records), `/spec-testing-scenario` (manual QA fixtures), `/harness-maintain` (kit self-diagnostics), and `/starter-init` (repo tailoring).
 
 ### 2.2 Deterministic Context Engine (`context_engine.py`)
-- **Route-Driven Packaging:** Context is never assembled ad-hoc. The engine looks up routes in `references/context-routes.yaml` and enforces declared prerequisites.
+- **Route-Driven Packaging:** Context is never assembled ad-hoc. The engine looks up routes in `corebase-specharness/references/context-routes.yaml` and enforces declared prerequisites.
 - **Hierarchical Tiering:**
   - `Must`: Universal bootstrap (`core-policies.md` Normative Rules), `status.md`, and required feature artifacts. Never dropped for budget.
   - `Should`: Domain packs (`memories/domain/` matched by intent keywords), non-critical references. Dropped when channel limits or profile budgets are exceeded.

@@ -46,8 +46,7 @@ python3 corebase-specharness/scripts/core/cli.py <command>
 ```
 
 The runtime finds the repo by walking upward from `--root` or the current
-directory until it sees both `manifest.json` and
-`corebase-specharness/scripts/core/cli.py`.
+directory until it sees `corebase-specharness/scripts/core/cli.py`.
 
 ## Installer versus `init`
 
@@ -104,7 +103,6 @@ string paths or glob patterns relative to both the kit root and the target.
 Back up an existing target file, then replace it with the kit copy:
 
 ```text
-manifest.json
 AGENTS.md
 EXTERNAL_SKILLS.md
 skills/README.md
@@ -120,8 +118,8 @@ skills/spec-research/**
 skills/spec-tasks/**
 skills/spec-testing-scenario/**
 skills/starter-init/**
-references/context-routes.yaml
-references/tool-providers-registry.json
+corebase-specharness/references/context-routes.yaml
+corebase-specharness/references/tool-providers-registry.json
 corebase-specharness/scripts/core/**
 corebase-specharness/scripts/install.sh
 corebase-specharness/rules/**

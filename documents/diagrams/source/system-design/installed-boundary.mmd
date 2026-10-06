@@ -13,7 +13,7 @@ flowchart TB
     TARGET --> OVERWRITE
     TARGET --> SEED
 
-    OVERWRITE --- OW_DESC["manifest.json · README.md · AGENTS.md · EXTERNAL_SKILLS.md<br/>11 skills + shared files · references/<br/>corebase-specharness/scripts/ · rules/ · CONTEXT_AND_MEMORY.md<br/>state-machine.yaml · validators"]:::decision
+    OVERWRITE --- OW_DESC["README.md · AGENTS.md · EXTERNAL_SKILLS.md<br/>11 skills + shared files · corebase-specharness/references/<br/>corebase-specharness/scripts/ · rules/ · CONTEXT_AND_MEMORY.md<br/>state-machine.yaml · validators"]:::decision
     SEED --- SEED_DESC["corebase-specharness/MASTER_INDEX.md<br/>project configuration and provider guides<br/>repository/domain/archive memory seeds<br/>artifacts/features/README.md"]:::memory
 
     AGENT_MIRROR[".agent/skills/**<br/>overwrite mirror of skills/<br/>for standard agent discovery"]:::external

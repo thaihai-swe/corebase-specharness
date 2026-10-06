@@ -5,7 +5,7 @@
 > **Authority:** `kit/corebase-specharness/scripts/core/` → `kit/manifest.json` →
 > `kit/corebase-specharness/project/state-machine.yaml` and seeded
 > `kit/corebase-specharness/project/harness-config.yaml` →
-> `kit/references/context-routes.yaml` → `kit/skills/*/SKILL.md` → this folder
+> `kit/corebase-specharness/references/context-routes.yaml` → `kit/skills/*/SKILL.md` → this folder
 
 This folder explains the installed kit. It is not the runtime. When a claim
 here disagrees with executable kit behavior, the kit wins.

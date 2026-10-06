@@ -1,13 +1,13 @@
 # Canonical Context Protocol
 
-> **Authority:** `references/context-routes.yaml`, `core.context_engine`
+> **Authority:** `corebase-specharness/references/context-routes.yaml`, `core.context_engine`
 > **Agent procedure:** this file. `--full` is an agent flag, not a user command.
 
 The user invokes a named skill. They do not call the Python CLI. The agent enters through the envelope:
 - Loads named route, opens feature session, sets enter state.
 - Same-chat sequential skills on one feature omit `--full` (delta mode: skips already-injected files and H2 slices).
 - Auto-delta reads SHA-256 hashes from `.corebase-specharness/sessions/<slug>/session.md`. It cannot see that the chat was compacted.
-- `references/context-routes.yaml` is the only routing authority.
+- `corebase-specharness/references/context-routes.yaml` is the only routing authority.
 
 ## 1. Envelope
 

@@ -241,6 +241,11 @@ copy_file() {
   local src="$1" rel="$2" mode="$3"
   local dst="$target/$rel"
 
+  # Never copy manifest.json to the target project
+  if [[ "$rel" == "manifest.json" ]]; then
+    return 0
+  fi
+
   # Skip if source and destination point to the exact same physical file
   if [[ -e "$dst" && "$src" -ef "$dst" ]]; then
     return 0
@@ -286,7 +291,7 @@ manifest, group, source = sys.argv[1:]
 for item in json.loads(Path(manifest).read_text())['files'][group]:
     for raw in glob.glob(str(Path(source) / item), recursive=True):
         path = Path(raw)
-        if path.is_file() and path.name != '.gitkeep' and '__pycache__' not in path.parts and not path.name.endswith(('.pyc', '.pyo')) and not path.name.startswith('test_'):
+        if path.is_file() and path.name != '.gitkeep' and path.name != 'manifest.json' and '__pycache__' not in path.parts and not path.name.endswith(('.pyc', '.pyo')) and not path.name.startswith('test_'):
             print(path.relative_to(source).as_posix())
 PY
     [[ -n "$rel" ]] || continue
@@ -323,7 +328,7 @@ from pathlib import Path
 manifest, source = sys.argv[1:]
 items = json.loads(Path(manifest).read_text())["files"]["overwrite"]
 print(sum(1 for item in items for raw in glob.glob(str(Path(source) / item), recursive=True)
-          if Path(raw).is_file() and Path(raw).name != ".gitkeep" and "__pycache__" not in Path(raw).parts
+          if Path(raw).is_file() and Path(raw).name != ".gitkeep" and Path(raw).name != "manifest.json" and "__pycache__" not in Path(raw).parts
           and not Path(raw).name.endswith((".pyc", ".pyo")) and not Path(raw).name.startswith("test_")))
 PY
 )"

@@ -32,7 +32,7 @@ flowchart TD
     end
 
     subgraph ROUTER["Routing &amp; Diagnostic Engine"]
-        ROUTES["references/context-routes.yaml<br/>Only named-skill routing authority"]:::core
+        ROUTES["corebase-specharness/references/context-routes.yaml<br/>Only named-skill routing authority"]:::core
         DIAG["cli.py memory-audit / memory-gate<br/>Read-only line &amp; token threshold checks"]:::core
     end
 

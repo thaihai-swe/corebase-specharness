@@ -6,7 +6,7 @@
 > stores, subsystem specifications, and technical design
 > **Authority:** `kit/` payload as installed into an adopter repository;
 > `kit/manifest.json`, `kit/corebase-specharness/scripts/install.sh`,
-> `kit/corebase-specharness/scripts/core/`, `kit/references/context-routes.yaml`,
+> `kit/corebase-specharness/scripts/core/`, `kit/corebase-specharness/references/context-routes.yaml`,
 > `kit/corebase-specharness/project/state-machine.yaml`
 
 Companion to [SPEC-REQUIREMENTS.md](SPEC-REQUIREMENTS.md) and
@@ -40,7 +40,7 @@ The runtime maintains three non-negotiable boundaries:
 │     Owned by agent/human judgment; guides reasoning and output formats.     │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  2. SYSTEM CONTRACTS (Declarative YAML / JSON)                              │
-│     references/context-routes.yaml + corebase-specharness/project/state-machine.yaml    │
+│     corebase-specharness/references/context-routes.yaml + corebase-specharness/project/state-machine.yaml │
 │     Single source of truth for routing, prerequisites, and lifecycle tokens. │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  3. DETERMINISTIC MECHANICS (Stdlib Python CLI)                             │
@@ -71,9 +71,8 @@ service, engine directory, or background launcher.
 +------------------------------------------------------------------+
 |                     adopter repository                            |
 |  AGENTS.md          portable agent router                        |
-|  manifest.json      install ownership                            |
 |  skills/            11 procedures + _shared                      |
-|  references/        context-routes.yaml, provider registry       |
+|  corebase-specharness/references/ context-routes.yaml, provider registry |
 |  corebase-specharness/scripts/ embedded Python runtime + validators         |
 |  corebase-specharness/project/ state machine, harness config, architecture  |
 |  corebase-specharness/memories adopter durable memory                       |
@@ -84,7 +83,7 @@ service, engine directory, or background launcher.
 +------------------------------------------------------------------+
 ```
 
-Runtime identity of a root: `manifest.json` **and**
+Runtime identity of a root:
 `corebase-specharness/scripts/core/cli.py`. `resolve_root` walks from `--root` or cwd
 upward. If the hint is a file, it starts from that file's parent.
 
@@ -96,7 +95,7 @@ upward. If the hint is a file, it starts from that file's parent.
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  [Layer 1 — Direct Peer Skills & Routing]                                   │
 │  • 11 Direct Peer Skills (starter-init through harness-verify & memory)     │
-│  • Routing Authority: references/context-routes.yaml                        │
+│  • Routing Authority: corebase-specharness/references/context-routes.yaml   │
 │  • Optional External Specialist Skills: EXTERNAL_SKILLS.md                  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │  [Layer 2 — Context Compiler & Budget Engine]                               │
@@ -132,7 +131,6 @@ upward. If the hint is a file, it starts from that file's parent.
 
 ```text
 <repo>/
-  manifest.json
   README.md
   AGENTS.md
   EXTERNAL_SKILLS.md
@@ -140,11 +138,11 @@ upward. If the hint is a file, it starts from that file's parent.
     _shared/                 3 contracts + status-template.md
     <skill>/SKILL.md         11 peer skills
     <skill>/references/      skill-local templates (overwrite-owned)
-  references/
-    context-routes.yaml      routing authority
-    tool-providers-registry.json
   artifacts/features/<slug>/
   corebase-specharness/
+    references/
+      context-routes.yaml      routing authority
+      tool-providers-registry.json
     CONTEXT_AND_MEMORY.md
     scripts/
       install.sh
@@ -185,7 +183,7 @@ Source-repo extras that are **not** the installed payload: `documents/`,
 | --- | --- | --- |
 | Portable router | Directs agents to the skills-first workflow | `AGENTS.md` |
 | Skill layer | Owns procedures, judgment, artifact-writing rules, and handoffs | `skills/*/SKILL.md`, `skills/_shared/` |
-| Context router | Declares each named skill's phase, profile, artifacts, writes, handoffs, and sources | `references/context-routes.yaml` |
+| Context router | Declares each named skill's phase, profile, artifacts, writes, handoffs, and sources | `corebase-specharness/references/context-routes.yaml` |
 | Embedded CLI | Dispatches the flat command set and normalizes results | `corebase-specharness/scripts/core/cli.py` |
 | Runtime engine | Implements context, sessions, tasks, readiness, gates, diagnostics, ADR | `corebase-specharness/scripts/core/` |
 | Lifecycle definition | Kit-owned state machine | `corebase-specharness/project/state-machine.yaml` |
@@ -560,7 +558,7 @@ overlay; transitions concatenate. The shipped state machine does not use
 
 ### 5.4 Route store
 
-`references/context-routes.yaml`:
+`corebase-specharness/references/context-routes.yaml`:
 
 ```yaml
 skills:

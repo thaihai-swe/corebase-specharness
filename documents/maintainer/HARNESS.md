@@ -6,7 +6,7 @@
 > `kit/corebase-specharness/project/harness-config.yaml`,
 > `kit/corebase-specharness/project/state-machine.yaml`,
 > `kit/corebase-specharness/project/tool-providers.md`,
-> `kit/references/tool-providers-registry.json`,
+> `kit/corebase-specharness/references/tool-providers-registry.json`,
 > `kit/skills/harness-verify/SKILL.md`,
 > `kit/skills/harness-maintain/SKILL.md`
 
@@ -439,7 +439,7 @@ heuristic, or configuration changes require user review.
 | Verification enforcement | Adopter-owned: set `verification.mode` to `advisory` or `blocking` |
 | Context settings | Adopter-owned: edit the preserved harness configuration |
 | Provider selection | Adopter-owned: select a registry provider in `tool-providers.md` |
-| Provider definitions | Kit-owned: update `references/tool-providers-registry.json` |
+| Provider definitions | Kit-owned: update `corebase-specharness/references/tool-providers-registry.json` |
 | Harness runtime | Kit-owned: update `corebase-specharness/scripts/core/` |
 | Harness skills | Kit-owned: update `skills/harness-verify/` or `skills/harness-maintain/` with their routes |
 
