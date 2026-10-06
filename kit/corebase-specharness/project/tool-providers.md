@@ -34,13 +34,15 @@ Provider IDs and supported local actions are listed in `references/tool-provider
 
 ### 1. Opt-in setup
 
-Install OpenCodeReview and configure its LLM backend:
+Install OpenCodeReview:
 
 ```bash
 npm install -g @alibaba-group/open-code-review
-ocr config provider
-ocr config model
 ```
+
+Choose an operating mode:
+- **Mode A (OCR-managed LLM)**: Configure provider credentials (`ocr config provider` and `ocr config model`). Test with `ocr llm test`.
+- **Mode B (Delegation mode)**: Zero external OCR API keys required. The host agent drives the review using deterministic boundaries from `ocr delegate preview` and rules from `ocr delegate rule`.
 
 ### 2. Enable in this project
 
@@ -56,8 +58,9 @@ providers:
 ### 3. Usage and verification
 
 - Check provider status: `python3 corebase-specharness/scripts/core/cli.py provider-check --category review --json`
-- Manual diff review: `ocr review` (or `ocr review --from <base> --to <head>` for a branch range)
+- Manual diff review: `ocr review --audience agent` (or `ocr review --audience agent --from <base> --to <head>` for branch range)
 - Automatic verification: `python3 corebase-specharness/scripts/core/cli.py verify --skill harness-verify` automatically executes the active review provider action (`ocr review`).
+- Review guide and detailed rules: `corebase-specharness/project/providers/open-code-review.md`.
 - `/harness-verify` records provider status and findings in `artifacts/features/<slug>/review.md`.
 
 ## Code intelligence providers
